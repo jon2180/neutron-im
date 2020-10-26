@@ -1,0 +1,54 @@
+.site-page-header {
+  border: 1px solid rgb(235, 237, 240);
+}
+
+.input_box {
+  height: 80px;
+  display: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: "red";
+}
+
+.messageBox {
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+
+  background-color: #f5f5f5;
+}
+
+.message {
+  display: flex;
+  padding: 8px;
+}
+
+.avatar {
+  margin-top: 4px;
+  margin-right: 8px;
+}
+
+.messageText {
+  max-width: 80%;
+  padding: 8px;
+  border-radius: 8px;
+  /* line-height:; */
+  color: #333;
+  background-color: #ffffff;
+}
+
+.messageImg {
+  max-width: 80%;
+  object-fit: cover;
+}
+
+.messageSentByMe {
+  background-color: #9eea6a;
+  color: #333;
+}
+
+.operationBar {
+  display: flex;
+  justify-content: space-between;
+}

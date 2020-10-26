@@ -1,0 +1,13 @@
+.header {
+  padding: 8px;
+  height: 64px;
+  box-sizing: border-box;
+  /* border-bottom: 1px solid rgb(235, 237, 240); */
+}
+
+.tabContent {
+  min-height: 300px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
