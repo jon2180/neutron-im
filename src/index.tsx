@@ -4,7 +4,7 @@ import * as serviceWorker from "./serviceWorker";
 import { Provider } from "react-redux";
 import store from "./store/store";
 
-import App from "./pages/App";
+import App from "@/pages/App";
 import "./index.css";
 import { fetchUserInfo } from "./pages/user/userInfoSlice";
 

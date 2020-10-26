@@ -2,21 +2,21 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { Tabs, List } from "antd";
-import RecentChatItem from "../../components/recent-chat-item/RecentChatItem";
-import FriendItem from "../../components/friend-item/FriendItem";
+import RecentChatItem from "@/components/recent-chat-item/RecentChatItem";
+import FriendItem from "@/components/friend-item/FriendItem";
 import { MenuOutlined } from "@ant-design/icons";
 
 import styles from "./SideBar.module.css";
-import useWindowDimensions from "../../utils/useWindowDimensions";
+import useWindowDimensions from "@/utils/useWindowDimensions";
 // import { getRecentList } from "../../services/chat";
 
 import { /* setList, */ selectAllChats, fectchChats } from "./recentListSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 import SideBarHeader from "./PageHeader";
-// import { getFriendList } from "../../services/friend";
-import { IFriendListItem } from "../../types";
-import { IState } from "../../store/data";
+// import { getFriendList } from "@/services/friend";
+import { IFriendListItem } from "@/types";
+import { IState } from "@/store/data";
 
 const callback = (e: string) => {
   switch (e) {

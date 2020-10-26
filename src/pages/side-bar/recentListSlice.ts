@@ -1,6 +1,6 @@
 import { createSlice, /*  nanoid, */ createAsyncThunk } from "@reduxjs/toolkit";
-import { getRecentList } from "../../services/chat";
-import { IRecentList, IState } from "../../store/data";
+import { getRecentList } from "@/services/chat";
+import { IRecentList, IState } from "@/store/data";
 import { message } from "antd";
 
 const initialState: IRecentList = {

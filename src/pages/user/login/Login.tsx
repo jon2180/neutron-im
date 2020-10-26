@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 
 import { Form, Input, Button, Checkbox, Col, Row, message } from "antd";
-import styles from "./Login.module.css";
-import { postAccountLogin } from "../../../services/user";
+import { postAccountLogin } from "@/services/user";
 import { CheckOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
-import { checkEmail, checkPassword } from "../../../utils/validate";
+import { checkEmail, checkPassword } from "@/utils/validate";
 
-import { fetchUserInfo, setUserInfo } from "../userInfoSlice";
+import { setUserInfo } from "../userInfoSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { IState } from "../../../store/data";
+import { IState } from "@/store/data";
+
+import styles from "./Login.module.css";
+
 /**
  * 此方法会跳转到 redirect 参数所在的位置
  */
@@ -59,7 +61,7 @@ export default function Login() {
         // TODO 获取用户信息，并初始化 redux 中的 userInfo
         // 更新用户的登录状态
         dispatch(setUserInfo(res.data.userInfo));
-
+        console.log(userInfo);
         if (autoLogin) {
           // 写 jwt 进 cookie，下次访问此网页自动调取
         }

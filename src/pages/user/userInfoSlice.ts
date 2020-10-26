@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getUserInfo, UserinfoQueryParamsType } from "../../services/user";
+import { getUserInfo, UserinfoQueryParamsType } from "@/services/user";
 
 export const fetchUserInfo = createAsyncThunk(
   "userInfo/fetchUserInfo",

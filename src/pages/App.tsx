@@ -2,15 +2,17 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Row, Col } from "antd";
 
-import ReactIntroduction from "../pages/react-introduction/ReactIntroduction";
-import SideBarArea from "../pages/side-bar/SideBar";
-import Chat from "../pages/chat/Chat";
+import ReactIntroduction from "@/pages/react-introduction/ReactIntroduction";
+import SideBarArea from "@/pages/side-bar/SideBar";
+import Chat from "@/pages/chat/Chat";
 import Login from "./user/login/Login";
 
 import styles from "./App.module.css";
 
 function App() {
   const [isLogged /* setLoginState */] = useState(0);
+
+  console.log(isLogged);
 
   return (
     <Router>

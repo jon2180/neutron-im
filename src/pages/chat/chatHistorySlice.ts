@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { IMessage } from "../../types";
-import { IChatHistory, IState } from "../../store/data";
+import { IMessage } from "@/types";
+import { IChatHistory, IState } from "@/store/data";
 
 export interface IAction {
   type: string;

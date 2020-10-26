@@ -1,6 +1,8 @@
 import React, { useRef, useState } from "react";
 import { PageHeader, Button, Input } from "antd";
 import { Random } from "mockjs";
+import { useSelector, useDispatch } from "react-redux";
+import { RouteComponentProps } from "react-router-dom";
 
 import {
   SmileOutlined,
@@ -10,14 +12,11 @@ import {
   EnterOutlined,
 } from "@ant-design/icons";
 
-import styles from "./Chat.module.css";
-import useWindowDimensions from "../../utils/useWindowDimensions";
-
+import useWindowDimensions from "@/utils/useWindowDimensions";
+import { IMessage } from "@/types";
 import { pushToSingleChat, selectSingleChat } from "./chatHistorySlice";
-import { IMessage } from "../../types";
 
-import { useSelector, useDispatch } from "react-redux";
-import { RouteComponentProps } from "react-router-dom";
+import styles from "./Chat.module.css";
 
 export type IChatHistory = Array<IMessage>;
 

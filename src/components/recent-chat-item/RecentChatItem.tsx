@@ -1,9 +1,9 @@
 import React from "react";
 import { Avatar } from "antd";
-import useWindowDimensions from "../../utils/useWindowDimensions";
+import useWindowDimensions from "@/utils/useWindowDimensions";
 
 import styles from "./RecentChatItem.module.css";
-import { IRecentItem } from "../../types";
+import { IRecentItem } from "@/types";
 
 export interface IRecentChatItemProps {
   data: IRecentItem;
