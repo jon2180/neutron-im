@@ -4,19 +4,15 @@ import { Link } from "react-router-dom";
 import { Tabs, List } from "antd";
 import RecentChatItem from "@/components/recent-chat-item/RecentChatItem";
 import FriendItem from "@/components/friend-item/FriendItem";
-import { MenuOutlined } from "@ant-design/icons";
 
 import styles from "./SideBar.module.css";
 import useWindowDimensions from "@/utils/useWindowDimensions";
-// import { getRecentList } from "../../services/chat";
-
-import { /* setList, */ selectAllChats, fectchChats } from "./recentListSlice";
+import { fectchChats, selectAllChats } from '@/store/chatsSlice';
+import { fetchFriendList } from "@/store/friendsSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 import SideBarHeader from "./PageHeader";
-// import { getFriendList } from "@/services/friend";
-import { IFriendListItem } from "@/types";
-import { IState } from "@/store/data";
+import { RootState } from "@/types/state";
 
 const callback = (e: string) => {
   switch (e) {
@@ -37,34 +33,41 @@ const callback = (e: string) => {
   }
 };
 
+/**
+ * 获取侧边栏宽度
+ * @param width 屏幕宽度
+ */
+const getListItemWidth = (width: number) => Math.floor(width / 3) - 80;
+
+/**
+ * 获取侧边栏盒子高度
+ * @param height 屏幕高度
+ */
+const getListBoxHeight = (height: number) => Math.floor(height) - 128;
+
 export default function SideBarArea() {
-  // TODO
-  // const recentChatData: any[] = ;
   const dispatch = useDispatch();
-  const select = useSelector(selectAllChats);
+  const recentChats = useSelector(selectAllChats);
   const postStatus = useSelector(
-    (state: IState) => state.recentList.reqStatus.status
+    (state: RootState) => state.chats.recentChats.reqStatus.status
+  );
+
+  const friendList = useSelector(
+    (state: RootState) => state.friends.friendList
   );
   useEffect(() => {
     if (postStatus === "idle") dispatch(fectchChats());
-    // // 从后端获取数据
-    // getRecentList().then((res) => {
-    //   dispatch(
-    //     setList({
-    //       list: res.data,
-    //     })
-    //   );
-    // });
+    dispatch(fetchFriendList({ id: "xxx" }));
   }, [dispatch, postStatus]);
 
   // TODO　初始化加载数据　异步
-  let friendList: IFriendListItem[] = [];
-  // getFriendList().then((res) => {
-  //   console.log(res)
-  //   friendList = res.data;
-  // });
+  // let friendList: IFriendListItem[] = [];
 
-  const { height } = useWindowDimensions();
+  // TODO
+  // const recentChatData: any[] = ;
+
+  const { width, height } = useWindowDimensions();
+  console.log("SideBar: width %f  height: %f", width, height);
 
   return (
     <div>
@@ -80,11 +83,11 @@ export default function SideBarArea() {
         >
           <List
             itemLayout="horizontal"
-            dataSource={select}
+            dataSource={recentChats || []}
             renderItem={(item) => (
               <List.Item style={{ padding: "0" }}>
-                <Link to={`/recent/${item.accountId}`}>
-                  <RecentChatItem data={item} />
+                <Link to={`/app/recent/${item.accountId}`}>
+                  <RecentChatItem data={item} width={getListItemWidth(width)} />
                 </Link>
               </List.Item>
             )}
@@ -95,15 +98,15 @@ export default function SideBarArea() {
           key="2"
           className={styles.tabContent}
           style={{
-            height: `${height - 128}px`,
+            height: `${getListBoxHeight(height)}px`,
           }}
         >
           <List
             itemLayout="horizontal"
-            dataSource={friendList}
+            dataSource={friendList || []}
             renderItem={(item) => (
               <List.Item style={{ padding: "0" }}>
-                <Link to={`/friend/${item.accountId}`}>
+                <Link to={`/app/friend/${item.accountId}`}>
                   <FriendItem data={item} />
                 </Link>
               </List.Item>
@@ -111,8 +114,21 @@ export default function SideBarArea() {
           />
         </Tabs.TabPane>
         <Tabs.TabPane tab="生态" key="3">
-          <Link to="/activities">
-            <MenuOutlined></MenuOutlined>{" "}
+          <Link to="/app/activities">
+            <List>
+              <List.Item style={{ padding: "0" }}>
+                <Link to={`/app/activities/}`}>朋友圈</Link>
+              </List.Item>
+              <List.Item style={{ padding: "0" }}>
+                <Link to={`/app/snipaste`}>code board</Link>
+              </List.Item>
+              <List.Item style={{ padding: "0" }}>
+                <Link to={`/app/snipaste`}>收藏</Link>
+              </List.Item>
+              <List.Item style={{ padding: "0" }}>
+                <Link to={`/app/snipaste`}>hello</Link>
+              </List.Item>
+            </List>
           </Link>
         </Tabs.TabPane>
         <Tabs.TabPane tab="我的" key="4">

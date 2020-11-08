@@ -1,14 +1,14 @@
 import React from "react";
 import { Avatar } from "antd";
 
-export interface IFriendItemProps {
+export interface FriendItemProps {
   data: {
     avatar: string;
     accountName: string;
   };
 }
 
-export default function FriendItem(props: IFriendItemProps) {
+export default function FriendItem(props: FriendItemProps) {
   const { data } = props;
   return (
     <div

@@ -1,18 +1,16 @@
 import React from "react";
 import { Avatar } from "antd";
-import useWindowDimensions from "@/utils/useWindowDimensions";
 
 import styles from "./RecentChatItem.module.css";
-import { IRecentItem } from "@/types";
+import { RecentChatItemData } from "@/types/types";
 
-export interface IRecentChatItemProps {
-  data: IRecentItem;
+export interface RecentChatItemProps {
+  data: RecentChatItemData;
+  width: number;
 }
 
-export default function RecentChatItem(props: IRecentChatItemProps) {
-  const { data } = props;
-
-  const { width } = useWindowDimensions();
+export default function RecentChatItem(props: RecentChatItemProps) {
+  const { data, width } = props;
 
   return (
     <div className={styles.itemBox}>
@@ -23,7 +21,7 @@ export default function RecentChatItem(props: IRecentChatItemProps) {
       <div
         className={styles.infoBox}
         style={{
-          width: `${Math.floor(width / 3) - 80}px`,
+          width: `${width}px`,
         }}
       >
         <div className={styles.nameAndTimeBox}>

@@ -32,6 +32,7 @@ type A = keyof typeof codeMessage;
  */
 const errorHandler = (error: ResponseError<any>) => {
   const { response } = error;
+
   if (response && response.status) {
     const errorText = codeMessage[response.status] || response.statusText;
     const { status, url } = response;
@@ -40,6 +41,12 @@ const errorHandler = (error: ResponseError<any>) => {
       message: `请求错误 ${status}: ${url}`,
       description: errorText,
     });
+
+    if (response.status === 401) {
+      setTimeout(() => {
+        window.location.replace("/login");
+      }, 200);
+    }
   } else if (!response) {
     notification.error({
       description: "您的网络发生异常，无法连接服务器",
@@ -49,6 +56,26 @@ const errorHandler = (error: ResponseError<any>) => {
   return response;
 };
 
+export const Cookie = {
+  getCookieMap() {
+    const cookieMap: {
+      [key: string]: string;
+    } = {};
+    // cookie`s format:  xxx=xxxx; yyy=yyyyy;
+    let cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; ++i) {
+      let [key, val] = cookies[i].split("=");
+      if (key && val) cookieMap[key.trim()] = val.trim();
+    }
+    return cookieMap;
+  },
+  getCookie(key: string) {
+    let val = this.getCookieMap()[key];
+    if (val !== null && val !== undefined) return val;
+    return "";
+  },
+};
+
 /**
  * 配置request请求时的默认参数
  */
@@ -56,8 +83,31 @@ const request = extend({
   prefix: "http://localhost:3001",
   timeout: 2000,
   errorHandler, // 默认错误处理
-  mode: 'cors',
+  mode: "cors",
   credentials: "include", // 默认请求是否带上cookie
+  // headers: {
+    // 根据 https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization
+    // Authorization 头的格式如下：
+    // Authorization: <type> <credentials>
+  //   Authorization: Cookie.getCookie("Authorization"),
+  // },
 });
+
+// request.interceptors.response.use(async (response) => {
+//   // 克隆响应对象做解析处理
+//   // 这里的res就是我们请求到的数据
+//   const res = await response.clone().json();
+//   const { code, desc } = res;
+//   if (code !== 0) {
+//     console.log("error", res);
+//     notification.error({
+//       message: "请求错误",
+//       description: `${code}: ${desc}`,
+//     });
+//     // 在处理结果时判断res是否有值即可
+//     return;
+//   }
+//   return res;
+// });
 
 export default request;

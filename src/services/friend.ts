@@ -1,8 +1,7 @@
-import request from "../utils/request";
-import { Random } from "mockjs";
-import { IHTTPResponse, IFriendListItem } from "../types";
+import request from "@/utils/request";
+import { HttpResponseData, FriendListItemData } from "@/types/types";
 
-export function getFriendList(): Promise<IHTTPResponse<IFriendListItem[]>> {
+export function getFriendList(): Promise<HttpResponseData<FriendListItemData[]>> {
   const params = {
     accountId: "fafdasfsdaf",
   };

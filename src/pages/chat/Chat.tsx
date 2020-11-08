@@ -1,8 +1,8 @@
-import React, { useRef, useState } from "react";
-import { PageHeader, Button, Input } from "antd";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { PageHeader, Button, Input, List } from "antd";
 import { Random } from "mockjs";
-import { useSelector, useDispatch } from "react-redux";
-import { RouteComponentProps } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 import {
   SmileOutlined,
@@ -13,113 +13,73 @@ import {
 } from "@ant-design/icons";
 
 import useWindowDimensions from "@/utils/useWindowDimensions";
-import { IMessage } from "@/types";
-import { pushToSingleChat, selectSingleChat } from "./chatHistorySlice";
+import {
+  selectChatHistoryById,
+  pushMessage,
+  fetchChatHistory,
+} from "@/store/chatsSlice";
+
+import { useAppDispatch } from "@/store/store";
+import MessageContent from "./MessageContent";
 
 import styles from "./Chat.module.css";
+import { unwrapResult } from "@reduxjs/toolkit";
 
-export type IChatHistory = Array<IMessage>;
-
-export interface IAction {
-  type: string;
-  inputValue: string;
-  payload: any;
-}
-
-// function reducer(state: IChatHistory, action: IAction) {
-//   switch (action.type) {
-//     case "push":
-//       // console.log(state);
-//       return [...state, action.payload];
-//     default:
-//       return undefined;
-//   }
-// }
-
-// const getMessageContent = (item: {
-//   type: "text" | "image";
-//   isSentByMe: boolean;
-//   content: string;
-// }) => {
-//   if (item.type === "text") {
-//     return (
-//       <div
-//         className={[
-//           styles.messageText,
-//           item.isSentByMe ? styles.messageSentByMe : "",
-//         ].join(" ")}
-//       >
-//         {item.content}
-//       </div>
-//     );
-//   } else if (item.type === "image") {
-//     return (
-//       item.isSentByMe ? styles.messageSentByMe : "",
-//       (
-//         <img
-//           className={[styles.messageImg].join(" ")}
-//           src={item.content}
-//           alt="图片"
-//         ></img>
-//       )
-//     );
-//   }
-// };
-
-export interface IChatProps {
-  // accountId: string;
-}
-
-export default function Chat(props: RouteComponentProps) {
-  console.log(props);
-
+export default function Chat() {
   const { height } = useWindowDimensions();
-
-  // const [chatHistory, setChatHistory] = useReducer(reducer, preChatHistory);
-
-  // TODO
-  const messagesEnd = useRef(null);
-  // const scrollToBottom = () => {
-  //   messagesEnd.current.scrollIntoView({ behavior: "smooth" });
-  // };
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     scrollToBottom();
-  //   }, 500);
-  // }, [chatHistory.length]);
-
   const [inputValue, setInputValue] = useState("");
+  const dispatch = useAppDispatch();
+  const params = useParams<{
+    id: string;
+    type: "group" | "single";
+  }>();
 
-  const onChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setInputValue(event.target.value);
-    // console.log(inputValue);
+  const messagesEnd = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = (delay = 200) => {
+    setTimeout(() => {
+      if (messagesEnd && messagesEnd.current) {
+        messagesEnd.current.scrollIntoView({ behavior: "smooth" });
+      }
+    }, delay);
   };
 
-  /**
-   * onClick 事件被触发了两次
-   */
-  const dispatch = useDispatch();
-  const sendMessage = () => {
-    // setChatHistory({
-    //   type: "push",
-    //   inputValue,
-    //   payload: {
-    //     accountId: Random.id(),
-    //     avatar: Random.image("48x48"),
-    //     // accountName: Random.cname(),
-    //     type: "string",
-    //     content: inputValue,
-    //     isSentByMe: true,
-    //     // time: Random.time(),
-    //     time: Date.now(),
-    //     // unread: Random.integer(0, 100),
-    //   },
-    // });
+  /// 从 store 中获取数据
+  let chatHistory = useSelector(selectChatHistoryById(params.id));
 
+  /// 如果 store 中没有，则向服务器端请求
+  const handleGetHistory = useCallback(
+    async (params: { id: string; type: string }) => {
+      const resultAction = await dispatch(
+        fetchChatHistory({ chatId: params.id, type: params.type })
+      );
+
+      if (fetchChatHistory.fulfilled.match(resultAction)) {
+        const res = unwrapResult(resultAction);
+        console.log(res);
+        scrollToBottom(500);
+      }
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    console.log("fetch chat history...outside");
+    if (!chatHistory) {
+      console.log("fetch chat history...");
+      handleGetHistory({ id: params.id, type: "single" });
+      // dispatch(fetchChatHistory({ chatId: params.id, type: "single" }));
+    }
+  }, [handleGetHistory, chatHistory, params]);
+
+  /// 确定 数据
+  console.log("chat refreshing....");
+  // TODO
+
+  const sendMessage = () => {
     dispatch(
-      pushToSingleChat({
-        accountId: "5464561321548",
+      pushMessage({
+        accountId: params.id,
         message: {
           messageId: Random.id(),
           from: Random.id(),
@@ -134,46 +94,48 @@ export default function Chat(props: RouteComponentProps) {
         },
       })
     );
-    // console.log(chatHistory);
     setInputValue("");
+    scrollToBottom();
   };
-
-  const singleChatHistor = useSelector(selectSingleChat);
 
   return (
     <div>
       <PageHeader
         className={styles["site-page-header"]}
-        onBack={() => null}
+        // TODO 跳转到首页但不能触发页面刷新
+        onBack={() => window.history.back()}
         title="用户名"
         subTitle="状态"
-        extra={<Button title="...">hahah</Button>}
+        extra={<Button title="...">更多</Button>}
       />
+
       {/** 消息列表框 */}
       <div
         className={styles.messageBox}
         style={{ height: `${height - 200}px` }}
       >
-        {/* <List
+        <List
           itemLayout="horizontal"
-          dataSource={chatHistory}
+          dataSource={chatHistory?.messages || []}
           split={false}
-          renderItem={(item) => (
-            <List.Item style={{ padding: "0" }}>
-              <div className={styles.message}>
-                <div className={styles.avatar}>
-                  <Avatar src={item.avatar}></Avatar>
-                </div>
-                {getMessageContent(item)}
-                <div className={styles.time}>{item.time}</div>
-              </div>
-            </List.Item>
-          )}
-        /> */}
-        <div style={{ clear: "both", height: "1px" }} ref={messagesEnd}>
-          {JSON.stringify(singleChatHistor)}
-        </div>
+          renderItem={(item) => {
+            return (
+              <List.Item style={{ padding: "0" }}>
+                <MessageContent
+                  data={item}
+                  avatar={chatHistory?.avatar}
+                  // name={chatHistory?.name}
+                />
+              </List.Item>
+            );
+          }}
+        />
+        <div
+          style={{ clear: "both", height: "1px", width: "100%" }}
+          ref={messagesEnd}
+        ></div>
       </div>
+
       {/* 聊天输入框 */}
       <div className={styles.input_box}>
         <div className={styles.operationBar}>
@@ -201,7 +163,13 @@ export default function Chat(props: RouteComponentProps) {
             </Button>
           </div>
         </div>
-        <Input.TextArea value={inputValue} onChange={onChange} rows={3} />
+        <Input.TextArea
+          value={inputValue}
+          onChange={(event) => {
+            setInputValue(event.target.value);
+          }}
+          rows={3}
+        />
       </div>
     </div>
   );

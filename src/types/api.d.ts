@@ -1,6 +1,6 @@
-import { IUserInfo } from "../store/data";
+import { UserInfoSubstate } from "./state";
 
-// declare namespace API {
+declare namespace Api {
   export interface CurrentUser {
     avatar?: string;
     name?: string;
@@ -19,7 +19,7 @@ import { IUserInfo } from "../store/data";
   export interface LoginStateType {
     status?: "ok" | "error";
     type?: string;
-    userInfo: IUserInfo
+    userInfo: UserInfoSubstate
   }
 
   export interface NoticeIconData {
@@ -35,4 +35,6 @@ import { IUserInfo } from "../store/data";
     extra: any;
     status: string;
   }
-// }
+}
+
+export default Api;

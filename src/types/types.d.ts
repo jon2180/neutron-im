@@ -1,7 +1,7 @@
 /**
  * 标准 HTTP 请求的返回结果
  */
-export interface IHTTPResponse<T> {
+export interface HttpResponseData<T> {
   /**
    * 状态代码，以 10000 开始
    */
@@ -23,7 +23,10 @@ export interface IHTTPResponse<T> {
   data: T;
 }
 
-export interface IHTTPRequestStatus {
+/**
+ * 用于更新界面状态
+ */
+export interface HttpRequestStatus {
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 }
@@ -36,7 +39,7 @@ export type MessageType = "text" | "image" | "video" | "audio";
 /**
  * 消息类型
  */
-export interface IMessage {
+export interface MessageData {
   /**
    * 消息 id，用户去重
    */
@@ -46,16 +49,6 @@ export interface IMessage {
    * 消息发送者
    */
   from: string;
-
-  /**
-   * 消息提及到的用户，作用类似于 @ 符号
-   */
-  mentions?: string;
-
-  /**
-   * 本条消息引用的其他消息 id
-   */
-  refer?: string;
 
   /**
    * 消息类型
@@ -76,6 +69,17 @@ export interface IMessage {
    * 消息是否是自己发送的
    */
   isSentByMe: boolean;
+
+  /**
+   * 消息提及到的用户，作用类似于 @ 符号
+   */
+  mentions?: string;
+
+  /**
+   * 本条消息引用的其他消息 id
+   */
+  refer?: string;
+
   /**
    * 其他附属内容
    */
@@ -85,14 +89,14 @@ export interface IMessage {
 /**
  * 通知类型
  */
-export interface INotice {
+export interface GroupNoticeData {
   [propsName: string]: any;
 }
 
 /**
  * 最近列表中的消息项
  */
-export interface IRecentItem {
+export interface RecentChatItemData {
   accountId: string;
   avatar: string;
   accountName: string;
@@ -101,7 +105,7 @@ export interface IRecentItem {
   unread: number;
 }
 
-export interface IFriendListItem {
+export interface FriendListItemData {
   accountId: string;
   avatar: string;
   accountName: string;

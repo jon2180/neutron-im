@@ -1,7 +1,9 @@
-import request from "../utils/request";
+import request from "@/utils/request";
 // import { Random } from "mockjs";
-import { LoginStateType /* CurrentUser */ } from "./api";
-import { IHTTPResponse /* IFriendListItem */ } from "../types";
+import Api from "../types/api";
+import { HttpResponseData /* IFriendListItem */ } from "@/types/types";
+// import { LoginStateType /* CurrentUser */ } from "./api";
+  
 
 /**
  * 登录参数类型
@@ -18,7 +20,7 @@ export interface LoginParamsType {
  */
 export function postAccountLogin(
   params: LoginParamsType
-): Promise<IHTTPResponse<LoginStateType>> {
+): Promise<HttpResponseData<Api.LoginStateType>> {
   return request.post("/login", {
     data: params,
   });
@@ -56,7 +58,7 @@ export interface RegisterParamsType {
  */
 export function postAccount(
   params: RegisterParamsType
-): Promise<IHTTPResponse<any>> {
+): Promise<HttpResponseData<any>> {
   return request.post("/account", {
     data: params,
   });
@@ -71,7 +73,7 @@ export interface UserinfoQueryParamsType {
  */
 export function getUserInfo(
   params: UserinfoQueryParamsType
-): Promise<IHTTPResponse<any>> {
+): Promise<HttpResponseData<any>> {
   // TODO
   return request.get(`/account/${params.id}`);
 }
