@@ -15,7 +15,6 @@
   overflow-x: hidden;
   overflow-y: auto;
   scroll-behavior: smooth;
-
   background-color: #f5f5f5;
 }
 
@@ -29,23 +28,33 @@
   margin-right: 8px;
 }
 
-.messageText {
-  max-width: 80%;
-  padding: 8px;
+.messageContent {
+  max-width: 70%;
+  padding: 16px;
   border-radius: 8px;
-  /* line-height:; */
+  box-sizing: border-box;
+}
+
+.messageText {
+  max-width: 100%;
+  word-wrap: break-word;
+  word-break: break-all;
+  overflow: hidden; /*这个参数根据需要来绝对要不要*/
+}
+
+.messageSentByMe {
+  color: #333;
+  background-color: #9eea6a;
+}
+
+.messageSentByOthers {
   color: #333;
   background-color: #ffffff;
 }
 
 .messageImg {
-  max-width: 80%;
+  width: 100%;
   object-fit: cover;
-}
-
-.messageSentByMe {
-  background-color: #9eea6a;
-  color: #333;
 }
 
 .operationBar {

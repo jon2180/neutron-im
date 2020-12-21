@@ -1,6 +1,6 @@
 import { getFriendList } from "@/services/friend";
-import { FriendsSubstate } from "@/types/state";
-import { FriendListItemData, HttpResponseData } from "@/types/types";
+import { FriendsSubstate } from "@/@types/state";
+import { FriendListItemData, HttpResponseData } from "@/@types/types";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { message } from "antd";
 

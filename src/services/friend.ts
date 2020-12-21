@@ -1,5 +1,5 @@
 import request from "@/utils/request";
-import { HttpResponseData, FriendListItemData } from "@/types/types";
+import { HttpResponseData, FriendListItemData } from "@/@types/types";
 
 export function getFriendList(): Promise<HttpResponseData<FriendListItemData[]>> {
   const params = {

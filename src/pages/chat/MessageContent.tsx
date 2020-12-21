@@ -1,5 +1,5 @@
 import React from "react";
-import { MessageData } from "@/types/types";
+import { MessageData } from "@/@types/types";
 import { Avatar } from "antd";
 
 import styles from "./Chat.module.css";
@@ -14,23 +14,14 @@ const getMessageContent = (data: MessageData) => {
       <div
         className={[
           styles.messageText,
-          data.isSentByMe ? styles.messageSentByMe : "",
+          data.isSentByMe ? styles.messageSentByMe : styles.messageSentByOthers,
         ].join(" ")}
       >
         {data.content}
       </div>
     );
   } else if (data.type === "image") {
-    return (
-      data.isSentByMe ? styles.messageSentByMe : "",
-      (
-        <img
-          className={[styles.messageImg].join(" ")}
-          src={data.content}
-          alt="图片"
-        ></img>
-      )
-    );
+    return <img className={styles.messageImg} src={data.content} alt="图片" />;
   }
 };
 
@@ -48,7 +39,7 @@ const MessageContent = ({
       <div className={styles.avatar}>
         <Avatar src={avatar}></Avatar>
       </div>
-      <div>{getMessageContent(data)}</div>
+      <div className={styles.messageContent}>{getMessageContent(data)}</div>
       <div className={styles.time}>{data.time}</div>
     </div>
   );

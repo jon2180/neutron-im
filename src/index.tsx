@@ -1,28 +1,24 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import * as serviceWorker from "./serviceWorker";
-import { Provider, useSelector } from "react-redux";
-import store from "./store/store";
+import reportWebVitals from '@/reportWebVitals';
+
+import store from "@/store/store";
+import { Provider } from "react-redux";
+import { setUserInfo } from "@/store/userInfoSlice";
+import { UserInfoSubstate } from "@/@types/state";
+import { Cookie } from "@/utils/cookie";
 
 import App from "@/pages/App";
 import "./index.css";
-import { fetchUserInfo, setUserInfo } from "@/store/userInfoSlice";
-import { UserInfoSubstate } from "@/types/state";
-import { Cookie } from "./utils/request";
-// import { IState } from "./store/data";
-// import { Cookie } from "./utils/request";
+
+// import "./socket";
 
 // 获取 登录 状态
 // 向服务端发出请求，用于验证 token 是否有效
 // 如果有效，直接进入主页
 // 否则保持登录状态
-// store.dispatch(fetchUserInfo({ id: "1234567987" }));
-// const userinfoState = useSelector((state:IState) => state.userInfo);
-// if (Cookie.getCookie('Autorization'))
-//   store.dispatch()
-
 // TODO get user info from localStorage
-// if exists, logged
 let token =
   Cookie.getCookie("authorization") || Cookie.getCookie("Authorization");
 if (token) {
@@ -54,3 +50,8 @@ ReactDOM.render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals(console.log);

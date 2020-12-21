@@ -4,7 +4,6 @@ import { Form, Input, Button, Col, Row, message } from "antd";
 import { postAccountLogin } from "@/services/user";
 import { CheckOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
 import { isEmail, isPassword } from "@/utils/validate";
-
 import { setUserInfo } from "@/store/userInfoSlice";
 
 import styles from "./Login.module.css";
@@ -63,12 +62,12 @@ export default function Login() {
       return;
     }
 
-    // TODO 验证登录结果，需要重新实现验证效果
-    if (res.code !== 10001 || res.status !== "success") {
-      message.error("登录失败，请重试");
-      setSubmitting(false);
-      return;
-    }
+    // // TODO 验证登录结果，需要重新实现验证效果
+    // if (res.code !== 10001 || res.status !== "success") {
+    //   message.error("登录失败，请重试");
+    //   setSubmitting(false);
+    //   return;
+    // }
 
     message.info("登录成功", 0.5);
     // TODO 获取用户信息，并初始化 redux 中的 userInfo

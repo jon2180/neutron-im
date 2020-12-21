@@ -1,6 +1,9 @@
+
 /**
  * 标准 HTTP 请求的返回结果
  */
+// export type HttpResponseData<T> = T;
+
 export interface HttpResponseData<T> {
   /**
    * 状态代码，以 10000 开始
@@ -21,6 +24,12 @@ export interface HttpResponseData<T> {
    * 实际数据
    */
   data: T;
+}
+
+export interface HttpErrResponse {
+  readonly error: string;
+  readonly desc: string;
+  readonly data?: T;
 }
 
 /**

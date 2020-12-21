@@ -1,25 +1,17 @@
 import request from "@/utils/request";
-// import { Random } from "mockjs";
-import Api from "../types/api";
-import { HttpResponseData /* IFriendListItem */ } from "@/types/types";
-// import { LoginStateType /* CurrentUser */ } from "./api";
-  
-
-/**
- * 登录参数类型
- */
-export interface LoginParamsType {
-  email: string;
-  password: string;
-  captcha: string;
-}
+import Api from "../@types/api";
+import { HttpResponseData /* IFriendListItem */ } from "@/@types/types";
 
 /**
  * 登录接口
  * @param data 登录参数
  */
 export function postAccountLogin(
-  params: LoginParamsType
+  params: {
+    email: string;
+    password: string;
+    captcha: string;
+  }
 ): Promise<HttpResponseData<Api.LoginStateType>> {
   return request.post("/login", {
     data: params,
@@ -42,6 +34,58 @@ export function getOutLogin() {
   return request.get("/login/outLogin");
 }
 
+
+
+/**
+ * 注册
+ */
+export function postAccount(
+  params: {
+    // TODO 设计接口
+    username: string;
+    password: string;
+    captcha: string;
+  }
+): Promise<HttpResponseData<any>> {
+  return request.post("/accounts", {
+    data: params,
+  });
+}
+
+/**
+ * 获取用户信息
+ */
+export function getUserInfo(
+  params: {
+    id: string;
+  }
+): Promise<HttpResponseData<any>> {
+  // TODO
+  return request.get(`/accounts/${params.id}`);
+}
+
+
+/**
+ * 更新用户信息
+ * @param params 更新用户信息
+ */
+export function putUserInfo(params: {
+  id: string;
+  username?: string;
+  avatar?: string;
+  signature?: string;
+}) {
+  return request.put(`/accounts/${params.id}`, {
+    data: params,
+  });
+}
+
+export function deleteUser(params: {
+  id: string;
+}) {
+  return request.delete(`/accounts/${params.id}`);
+}
+
 /**
  *
  * @param params 注册参数类型
@@ -54,31 +98,6 @@ export interface RegisterParamsType {
 }
 
 /**
- * 注册
- */
-export function postAccount(
-  params: RegisterParamsType
-): Promise<HttpResponseData<any>> {
-  return request.post("/account", {
-    data: params,
-  });
-}
-
-export interface UserinfoQueryParamsType {
-  id: string;
-}
-
-/**
- * 获取用户信息
- */
-export function getUserInfo(
-  params: UserinfoQueryParamsType
-): Promise<HttpResponseData<any>> {
-  // TODO
-  return request.get(`/account/${params.id}`);
-}
-
-/**
  * 用户信息更新参数
  */
 export interface UserInfoUpdateParamsType {
@@ -88,16 +107,17 @@ export interface UserInfoUpdateParamsType {
   signature?: string;
 }
 
-/**
- * 更新用户信息
- * @param params 更新用户信息
- */
-export function putUserInfo(params: UserInfoUpdateParamsType) {
-  return request.put(`/account/${params.id}`, {
-    data: params,
-  });
-}
 
-export function deleteUser(params: UserinfoQueryParamsType) {
-  return request.delete(`/account/${params.id}`);
+export interface UserinfoQueryParamsType {
+  id: string;
+}
+// import { LoginStateType /* CurrentUser */ } from "./api";
+
+/**
+ * 登录参数类型
+ */
+export interface LoginParamsType {
+  email: string;
+  password: string;
+  captcha: string;
 }

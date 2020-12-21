@@ -11,8 +11,8 @@ import { fectchChats, selectAllChats } from '@/store/chatsSlice';
 import { fetchFriendList } from "@/store/friendsSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-import SideBarHeader from "./PageHeader";
-import { RootState } from "@/types/state";
+import SideBarHeader from "./SideBarHeader";
+import { RootState } from "@/@types/state";
 
 const callback = (e: string) => {
   switch (e) {

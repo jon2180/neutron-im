@@ -77,6 +77,10 @@ export default function Chat() {
   // TODO
 
   const sendMessage = () => {
+    if (inputValue === "") {
+      return;
+    }
+
     dispatch(
       pushMessage({
         accountId: params.id,
@@ -84,13 +88,10 @@ export default function Chat() {
           messageId: Random.id(),
           from: Random.id(),
           avatar: Random.image("48x48"),
-          // accountName: Random.cname(),
           type: "text",
           content: inputValue,
           isSentByMe: true,
-          // time: Random.time(),
           time: Date.now(),
-          // unread: Random.integer(0, 100),
         },
       })
     );
@@ -124,7 +125,6 @@ export default function Chat() {
                 <MessageContent
                   data={item}
                   avatar={chatHistory?.avatar}
-                  // name={chatHistory?.name}
                 />
               </List.Item>
             );
@@ -165,6 +165,7 @@ export default function Chat() {
         </div>
         <Input.TextArea
           value={inputValue}
+          autoSize={false}
           onChange={(event) => {
             setInputValue(event.target.value);
           }}

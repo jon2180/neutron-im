@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { MessageData } from "@/types/types";
-import { ChatsSubstate, RootState } from "@/types/state";
+import { MessageData } from "@/@types/types";
+import { ChatsSubstate, RootState } from "@/@types/state";
 import { queryChatHistory, QueryType,getRecentList } from "@/services/chat";
 import { message } from "antd";
 

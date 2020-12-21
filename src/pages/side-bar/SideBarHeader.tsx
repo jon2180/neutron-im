@@ -51,7 +51,7 @@ export const DropdownMenu = (
   </Dropdown>
 );
 
-export default function () {
+export default function SideBarHeader() {
   return (
     <PageHeader
       className={styles.header}

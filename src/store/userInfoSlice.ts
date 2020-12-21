@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getUserInfo, UserinfoQueryParamsType } from "@/services/user";
-import { UserInfoSubstate } from "@/types/state";
+import { UserInfoSubstate } from "@/@types/state";
 
 export const fetchUserInfo = createAsyncThunk<any, UserinfoQueryParamsType, {}>(
   "userInfo/fetchUserInfo",

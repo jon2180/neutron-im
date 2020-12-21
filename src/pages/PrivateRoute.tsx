@@ -5,7 +5,7 @@ import {
   Route,
   RouteProps,
 } from "react-router-dom";
-import { RootState } from "@/types/state";
+import { RootState } from "@/@types/state";
 
 /**
  * 私有页面专用路由封装，如果页面需要在为登录状态下跳转至登录界面，则使用该路由封装器
