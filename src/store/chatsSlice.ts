@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { MessageData } from "@/@types/types";
 import { ChatsSubstate, RootState } from "@/@types/state";
-import { queryChatHistory, QueryType,getRecentList } from "@/services/chat";
+import { queryChatHistory, QueryType, getRecentList } from "@/services/chat";
 import { message } from "antd";
 
 export const fetchChatHistory = createAsyncThunk<
@@ -12,14 +12,18 @@ export const fetchChatHistory = createAsyncThunk<
   try {
     const res = await queryChatHistory(data);
     // TODO
-    if (res.code === 10001) {
-      return {
-        data: res.data,
-        params: data,
-      };
-    }
+    // if (res.code === 10001) {
+    return {
+      data: res,
+      params: data,
+    };
+    // }
   } catch (err) {
     console.log(err);
+    return {
+      data: err,
+      params: data,
+    }
   }
 });
 
@@ -33,7 +37,8 @@ export const fectchChats = createAsyncThunk(
     // });
     const res = await getRecentList();
     message.destroy(key);
-    return res.data;
+    return res;
+    // return res.data;
   }
 );
 

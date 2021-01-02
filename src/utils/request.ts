@@ -2,10 +2,10 @@
  * request 网络请求工具
  * 更详细的 api 文档: https://github.com/umijs/umi-request
  */
-import { extend, ResponseError } from "umi-request";
-import { notification } from "antd";
+import { extend } from "umi-request";
+import { message, notification } from "antd";
 
-const codeMessage: {
+export const codeMessage: {
   [id: number]: string;
 } = {
   200: "服务器成功返回请求的数据。",
@@ -26,47 +26,33 @@ const codeMessage: {
 };
 
 /**
- * 异常处理程序
- */
-const errorHandler = (error: ResponseError<any>) => {
-  const { response } = error;
-
-  if (!response) {
-    notification.error({
-      description: "无法连接服务器，可能是您的网络发生异常，或服务器未运行,",
-      message: "网络异常",
-    });
-    return null;
-  }
-
-  if (response.status === 401) {
-    setTimeout(() => {
-      window.location.replace("/login");
-    }, 200);
-
-    return null;
-  }
-
-  const errorText = codeMessage[response.status] || response.statusText;
-  
-  const { status, url } = response;
-  console.error({
-    message: `请求错误 ${status}: ${url}`,
-    description: errorText,
-  });
-
-  return response;
-};
-
-/**
  * 配置request请求时的默认参数
  */
 const request = extend({
   prefix: "http://localhost:3001",
   timeout: 2000,
-  errorHandler, // 默认错误处理
   mode: "cors",
   credentials: "include", // 默认请求是否带上cookie
+  // 默认错误处理
+  errorHandler: (error) => {
+    const { response } = error;
+
+    if (!response) {
+      message.error('无法连接服务器，可能是您的网络发生异常，或服务器未运行');
+    } else if (response.status === 401) {
+      message.error('登录验证失败，请登陆')
+      setTimeout(() => {
+        notification.destroy()
+        message.destroy()
+        window.location.replace("/login");
+      }, 200);
+    } else {
+      const errorText = codeMessage[response.status] || response.statusText;
+      const { status, url } = response;
+      console.error(`请求错误 ${status}: ${url} ${errorText}`);
+    }
+    throw error
+  },
 });
 
 export default request;

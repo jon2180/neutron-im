@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import url from 'url'
+
 import { Form, Input, Button, Col, Row, message } from "antd";
 import { postAccountLogin } from "@/services/user";
 import { CheckOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
@@ -7,19 +9,13 @@ import { isEmail, isPassword } from "@/utils/validate";
 import { setUserInfo } from "@/store/userInfoSlice";
 
 import styles from "./Login.module.css";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect, withRouter } from "react-router-dom";
 import { useAppDispatch } from "@/store/store";
-import { hp } from "@/utils/wrapper";
+import { hp, hpre } from "@/utils/wrapper";
 
-// import {  useHistory } from "react-router";
 const loginBG = "http://localhost:3001/login-bg-hnpoppcv.jpeg";
 
-export default function Login() {
-  const [email, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [captcha, setCaptcha] = useState("");
-  // const [autoLogin, setAutoLogin] = useState(true);
-  const [submitting, setSubmitting] = useState(false);
+export function RedirectTo(props: { url: string }) {
 
   const history = useHistory();
   /**
@@ -28,6 +24,7 @@ export default function Login() {
   const replaceGoto = () => {
     setTimeout(() => {
       // const { search } = history.location;
+      // history.location.search
       // const { redirect } = search as { redirect: string };
       // if (!redirect) {
       //   history.replace("/");
@@ -37,48 +34,74 @@ export default function Login() {
       history.replace("/app");
     }, 10);
   };
+  return <Redirect to={props.url} />
+}
+
+export default withRouter(function Login(props) {
+  const [email, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [captcha, setCaptcha] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   const dispatch = useAppDispatch();
 
+  console.log(props);
+
   // 处理提交
   // @param event 提交登录请求
-  // event: React.MouseEvent<HTMLElement, MouseEvent>
   const onSubmit = async () => {
     // TODO 检查验证码的合理性
     if (!isEmail(email) || !isPassword(password)) {
       message.error("账号或密码格式不符合规则", 0.5);
       return;
     }
-    setSubmitting(true);
-    const [err, res] = await hp(postAccountLogin({
-      email: email,
-      password,
-      captcha,
-    }));
 
-    if (err || res === null) {
-      console.log(err);
+    setSubmitting(true);
+
+    try {
+      // const [err, res] = await hpre(postAccountLogin({
+      //   email: email,
+      //   password,
+      //   captcha,
+      // }));
+
+      const res = await postAccountLogin({
+        email: email,
+        password,
+        captcha,
+      });
+
+      // TODO 验证登录结果，需要重新实现验证效果
+      // if (res.code !== 10001 || res.status !== "success") {
+      //   message.error("登录失败，请重试");
+      //   setSubmitting(false);
+      //   return;
+      // }
+
+      message.info("登录成功", 0.5);
+      // TODO 获取用户信息，并初始化 redux 中的 userInfo
+      // 更新用户的登录状态
+      dispatch(setUserInfo({ ...res.userInfo, hasLogin: true }));
+
+      localStorage.setItem("userInfo", JSON.stringify(res.userInfo));
+      // dispatch(setUserInfo({ ...res.data.userInfo, hasLogin: true }));
+
+      // localStorage.setItem("userInfo", JSON.stringify(res.data.userInfo));
+
+      // TODO 跳转页面
+      setSubmitting(false);
+      // replaceGoto();
+      props.history.push('/app')
+      const data = url.parse(props.location.search, true).query
+
+      // props.history.push('/test')
+    } catch (err) {
+      console.log(err?.message);
+      console.log(err?.data);
       message.error("发送登录请求失败，请重试");
-      return;
+      setSubmitting(false);
     }
 
-    // // TODO 验证登录结果，需要重新实现验证效果
-    // if (res.code !== 10001 || res.status !== "success") {
-    //   message.error("登录失败，请重试");
-    //   setSubmitting(false);
-    //   return;
-    // }
-
-    message.info("登录成功", 0.5);
-    // TODO 获取用户信息，并初始化 redux 中的 userInfo
-    // 更新用户的登录状态
-    dispatch(setUserInfo({ ...res.data.userInfo, hasLogin: true }));
-
-    localStorage.setItem("userInfo", JSON.stringify(res.data.userInfo));
-
-    // TODO 跳转页面
-    setSubmitting(false);
-    replaceGoto();
   };
 
   return (
@@ -176,4 +199,4 @@ export default function Login() {
     </Row>
     // </div>
   );
-}
+})

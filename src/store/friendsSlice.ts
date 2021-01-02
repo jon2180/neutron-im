@@ -13,15 +13,17 @@ export const fetchFriendList = createAsyncThunk<
 >("friends/fetchFriendList", async (params) => {
   try {
     const res = await getFriendList();
-    if (res.code === 10001) {
-      return res.data;
-    }
-    message.info("没有好友列表信息");
-    return res.data;
+    return res;
+
+    // if (res.code === 10001) {
+    //   return res.data;
+    // }
   } catch (err) {
     message.error({
       content: err.message,
     });
+    message.info("没有好友列表信息");
+    return err;
   }
 });
 

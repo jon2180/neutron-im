@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.3.0",
-    "@reduxjs/toolkit": "^1.5.0", 
+    "@reduxjs/toolkit": "^1.5.0",
     "antd": "^4.9.4",
     "mockjs": "^1.1.0",
     "react": "^17.0.1",
@@ -36,7 +36,8 @@
     "@types/react-redux": "^7.1.12",
     "@types/react-router-dom": "^5.1.6",
     "customize-cra": "^1.0.0",
-    "react-app-rewired": "^2.1.8"
+    "react-app-rewired": "^2.1.8",
+    "ts-node": "^9.1.1"
   },
   "eslintConfig": {
     "extends": [

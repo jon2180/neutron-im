@@ -10,6 +10,7 @@ import PrivateRoute from "./PrivateRoute";
 import FriendProfile from "@/pages/friends/profile";
 
 import styles from "./App.module.css";
+import TestPage from "./test/TestPage";
 
 export default function App() {
   return (
@@ -17,6 +18,10 @@ export default function App() {
       <Switch>
         <Route path="/" exact>
           <div style={{ fontSize: "40px", textAlign: "center" }}>官网首页</div>
+        </Route>
+
+        <Route path="/test" exact>
+          <TestPage />
         </Route>
 
         <Route path="/login" exact>

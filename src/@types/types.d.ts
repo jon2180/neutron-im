@@ -2,29 +2,29 @@
 /**
  * 标准 HTTP 请求的返回结果
  */
-// export type HttpResponseData<T> = T;
+export type HttpResponseData<T> = T;
 
-export interface HttpResponseData<T> {
-  /**
-   * 状态代码，以 10000 开始
-   */
-  readonly code: number;
+// export interface HttpResponseData<T> {
+//   /**
+//    * 状态代码，以 10000 开始
+//    */
+//   readonly code: number;
 
-  /**
-   * 状态文本
-   */
-  readonly status: "success" | "warning" | "failed";
+//   /**
+//    * 状态文本
+//    */
+//   readonly status: "success" | "warning" | "failed";
 
-  /**
-   * 描述文本，具体描述请求的情况
-   */
-  readonly desc: string;
+//   /**
+//    * 描述文本，具体描述请求的情况
+//    */
+//   readonly desc: string;
 
-  /**
-   * 实际数据
-   */
-  data: T;
-}
+//   /**
+//    * 实际数据
+//    */
+//   data: T;
+// }
 
 export interface HttpErrResponse {
   readonly error: string;
