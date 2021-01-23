@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "@/assets/logo.svg";
 
-import './ReactIntroduction.css'
+import './ReactIntroduction.less'
 
 export default function ReactIntroduction() {
     return (

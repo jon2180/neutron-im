@@ -6,6 +6,7 @@ export const fetchUserInfo = createAsyncThunk<any, UserinfoQueryParamsType, {}>(
   "userInfo/fetchUserInfo",
   async (params) => {
     const res = await getUserInfo(params);
+    localStorage.setItem("userInfo", JSON.stringify(res.userInfo));
     return res.data;
   }
 );
@@ -13,7 +14,7 @@ export const fetchUserInfo = createAsyncThunk<any, UserinfoQueryParamsType, {}>(
 const userInfoSlice = createSlice({
   name: "userInfo",
   initialState: {
-    hasLogin: false,
+    hasLogin: true,
     id: "",
     nickname: "",
     avatar: "",

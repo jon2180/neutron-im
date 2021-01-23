@@ -42,12 +42,13 @@ export function getOutLogin() {
 export function postAccount(
   params: {
     // TODO 设计接口
-    username: string;
+    email: string;
+    nickname: string;
     password: string;
     captcha: string;
   }
 ): Promise<HttpResponseData<any>> {
-  return request.post("/accounts", {
+  return request.post("/register", {
     data: params,
   });
 }

@@ -2,7 +2,7 @@ import React from "react";
 import { MessageData } from "@/@types/types";
 import { Avatar } from "antd";
 
-import styles from "./Chat.module.css";
+import styles from "./Chat.module.less";
 
 /**
  * 把 消息数据 转成 jsx

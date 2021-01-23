@@ -5,7 +5,7 @@ import { Tabs, List } from "antd";
 import RecentChatItem from "@/components/recent-chat-item/RecentChatItem";
 import FriendItem from "@/components/friend-item/FriendItem";
 
-import styles from "./SideBar.module.css";
+import styles from "./SideBar.module.less";
 import useWindowDimensions from "@/utils/useWindowDimensions";
 import { fectchChats, selectAllChats } from '@/store/chatsSlice';
 import { fetchFriendList } from "@/store/friendsSlice";
@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import SideBarHeader from "./SideBarHeader";
 import { RootState } from "@/@types/state";
+import { RecentChatItemData } from "@/@types/types";
 
 const callback = (e: string) => {
   switch (e) {
@@ -83,7 +84,8 @@ export default function SideBarArea() {
         >
           <List
             itemLayout="horizontal"
-            dataSource={recentChats || []}
+            dataSource={[] as RecentChatItemData[] }
+            // dataSource={recentChats || []}
             renderItem={(item) => (
               <List.Item style={{ padding: "0" }}>
                 <Link to={`/app/recent/${item.accountId}`}>

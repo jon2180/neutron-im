@@ -9,15 +9,16 @@ import Login from "./user/login/Login";
 import PrivateRoute from "./PrivateRoute";
 import FriendProfile from "@/pages/friends/profile";
 
-import styles from "./App.module.css";
+import styles from "./App.module.less";
 import TestPage from "./test/TestPage";
+import Home from "./Home";
 
 export default function App() {
   return (
     <Router>
       <Switch>
         <Route path="/" exact>
-          <div style={{ fontSize: "40px", textAlign: "center" }}>官网首页</div>
+          <Home />
         </Route>
 
         <Route path="/test" exact>

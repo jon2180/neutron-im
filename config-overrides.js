@@ -1,4 +1,4 @@
-const { override, addWebpackAlias } = require('customize-cra')
+const { override, addWebpackAlias, fixBabelImports, addLessLoader } = require('customize-cra')
 const path = require('path')
 
 module.exports = {
@@ -6,6 +6,21 @@ module.exports = {
   webpack: override(
     addWebpackAlias({
       '@': path.resolve(__dirname, 'src')
+    }),
+    // Load antd
+    fixBabelImports('import', {
+      libraryName: 'antd',
+      libraryDirectory: 'es',
+      style: true,
+    }),
+    // Add `javascriptEnabled` and antd theme configuration
+    // to the Less loader
+    addLessLoader({
+      lessOptions: {
+        modules: true,
+        javascriptEnabled: true,
+        modifyVars: { '@primary-color': '#1DA57A' },
+      }
     }),
     // enableEslintTypescript()
   ),

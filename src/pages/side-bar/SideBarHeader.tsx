@@ -2,7 +2,7 @@ import React from "react";
 import { Menu } from "antd";
 import { PageHeader, Dropdown } from "antd";
 import { DownOutlined } from "@ant-design/icons";
-import styles from "./SideBar.module.css";
+import styles from "./SideBar.module.less";
 
 export function SideBarMenu() {
   return (

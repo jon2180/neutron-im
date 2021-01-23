@@ -22,7 +22,7 @@ import {
 import { useAppDispatch } from "@/store/store";
 import MessageContent from "./MessageContent";
 
-import styles from "./Chat.module.css";
+import styles from "./Chat.module.less";
 import { unwrapResult } from "@reduxjs/toolkit";
 
 export default function Chat() {
