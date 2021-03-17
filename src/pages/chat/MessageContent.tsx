@@ -1,5 +1,5 @@
 import React from "react";
-import { MessageData } from "@/@types/types";
+import { MessageData } from "@/types/http";
 import { Avatar } from "antd";
 
 import styles from "./Chat.module.less";

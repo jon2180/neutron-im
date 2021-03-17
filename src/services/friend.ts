@@ -1,9 +1,6 @@
 import request from "@/utils/request";
-import { HttpResponseData, FriendListItemData } from "@/@types/types";
+import { HttpResponseData } from "@/types/http";
 
-export function getFriendList(): Promise<HttpResponseData<FriendListItemData[]>> {
-  const params = {
-    accountId: "fafdasfsdaf",
-  };
+export function getFriendList(params: { accountId: string; }): Promise<HttpResponseData> {
   return request.get(`/friends/${params.accountId}`);
 }

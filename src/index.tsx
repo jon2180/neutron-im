@@ -1,53 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
-// import * as serviceWorker from "./serviceWorker";
-// import reportWebVitals from '@/reportWebVitals';
 
 import store from "@/store/store";
 import { Provider } from "react-redux";
-import { setUserInfo } from "@/store/userInfoSlice";
-import { UserInfoSubstate } from "@/@types/state";
-import { Cookie } from "@/utils/cookie";
 
 import App from "@/pages/App";
-// import "./index.css";
-import './index.less';
-// import "./socket";
+import "./index.less";
+import { initializeUserInfo } from "./utils/localStorage";
 
-// 获取 登录 状态
-// 向服务端发出请求，用于验证 token 是否有效
-// 如果有效，直接进入主页
-// 否则保持登录状态
-// TODO get user info from localStorage
-// http only 设置之后，不能通过脚本来查看 cookie
-// let token =
-//   Cookie.getCookie("authorization") || Cookie.getCookie("Authorization");
-//   console.log(window.document.cookie);
-// if (token) {
-  
-// }
-
-function setUserInfoToLocalStorage() {
-  
-}
-
-function getUserInfoFromLocalStorage() {
-  let userInfoJsonStr = localStorage.getItem("userInfo");
-
-  if (userInfoJsonStr) {
-    let userInfo: UserInfoSubstate = JSON.parse(userInfoJsonStr);
-
-    if (userInfo.id && userInfo.avatar && userInfo.nickname)
-      store.dispatch(
-        setUserInfo({
-          ...userInfo,
-          hasLogin: true,
-        })
-      );
-  }
-}
-
-getUserInfoFromLocalStorage();
+initializeUserInfo();
 
 ReactDOM.render(
   <React.StrictMode>

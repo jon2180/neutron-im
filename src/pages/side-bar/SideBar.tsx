@@ -6,14 +6,14 @@ import RecentChatItem from "@/components/recent-chat-item/RecentChatItem";
 import FriendItem from "@/components/friend-item/FriendItem";
 
 import styles from "./SideBar.module.less";
-import useWindowDimensions from "@/utils/useWindowDimensions";
-import { fectchChats, selectAllChats } from '@/store/chatsSlice';
-import { fetchFriendList } from "@/store/friendsSlice";
+import useWindowDimensions from "@/utils/hooks";
+// import { fectchChats, selectAllChats } from '@/store/chatsSlice';
+// import { fetchFriendList } from "@/store/friendsSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 import SideBarHeader from "./SideBarHeader";
-import { RootState } from "@/@types/state";
-import { RecentChatItemData } from "@/@types/types";
+import { RootState } from "@/types/state";
+import { RecentChatItemData } from "@/types/http";
 
 const callback = (e: string) => {
   switch (e) {
@@ -48,7 +48,7 @@ const getListBoxHeight = (height: number) => Math.floor(height) - 128;
 
 export default function SideBarArea() {
   const dispatch = useDispatch();
-  const recentChats = useSelector(selectAllChats);
+  // const recentChats = useSelector(selectAllChats);
   const postStatus = useSelector(
     (state: RootState) => state.chats.recentChats.reqStatus.status
   );
@@ -57,8 +57,8 @@ export default function SideBarArea() {
     (state: RootState) => state.friends.friendList
   );
   useEffect(() => {
-    if (postStatus === "idle") dispatch(fectchChats());
-    dispatch(fetchFriendList({ id: "xxx" }));
+    // if (postStatus === "idle") dispatch(fectchChats());
+    // dispatch(fetchFriendList({ accountId: "xxx" }));
   }, [dispatch, postStatus]);
 
   // TODO　初始化加载数据　异步

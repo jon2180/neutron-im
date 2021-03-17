@@ -12,7 +12,7 @@ import {
   EnterOutlined,
 } from "@ant-design/icons";
 
-import useWindowDimensions from "@/utils/useWindowDimensions";
+import useWindowDimensions from "@/utils/hooks";
 import {
   selectChatHistoryById,
   pushMessage,

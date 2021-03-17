@@ -3,16 +3,34 @@ import {
   HttpRequestStatus,
   MessageData,
   RecentChatItemData,
-} from "./types";
+} from "./http";
 
 /**
  * 用户信息
  */
 export interface UserInfoSubstate {
   hasLogin: boolean;
-  id: string;
-  avatar: string;
+
+  id: number;
+  uid: string;
+  username: string;
+  avatar: string | null;
   nickname: string;
+  avatar: string;
+  birthday: string | null;
+  email: string;
+  nickname: string;
+  registerTime: string | null;
+  signature: string | null;
+  status: number;
+  tel: string | null;
+
+  enabled: boolean;
+  accountNonExpired: boolean;
+  accountNonLocked: boolean;
+  credentialsNonExpired: boolean;
+  authorities: string[];
+
   [propName: string]: any;
 }
 

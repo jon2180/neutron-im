@@ -48,10 +48,10 @@ class Header extends React.Component {
                   {childItem.children.map(getChildrenToRender)}
                 </a>
               ) : (
-                <div {...childItem}>
-                  {childItem.children.map(getChildrenToRender)}
-                </div>
-              );
+                  <div {...childItem}>
+                    {childItem.children.map(getChildrenToRender)}
+                  </div>
+                );
               return (
                 <Item key={$item.name || ii.toString()} {...$item}>
                   {child}
@@ -104,15 +104,15 @@ class Header extends React.Component {
             animation={
               isMobile
                 ? {
-                    height: 0,
-                    duration: 300,
-                    onComplete: (e) => {
-                      if (this.state.phoneOpen) {
-                        e.target.style.height = 'auto';
-                      }
-                    },
-                    ease: 'easeInOutQuad',
-                  }
+                  height: 0,
+                  duration: 300,
+                  onComplete: (e) => {
+                    if (this.state.phoneOpen) {
+                      e.target.style.height = 'auto';
+                    }
+                  },
+                  ease: 'easeInOutQuad',
+                }
                 : null
             }
             moment={moment}

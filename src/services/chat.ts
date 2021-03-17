@@ -1,7 +1,7 @@
 import request from "@/utils/request";
-import { HttpResponseData, MessageData, RecentChatItemData } from "@/@types/types";
+import { HttpResponseData } from "@/types/http";
 
-export function getRecentList(): Promise<HttpResponseData<RecentChatItemData[]>> {
+export function getRecentList(): Promise<HttpResponseData> {
   return request.get("/chats/", {
     data: {},
   });
@@ -12,9 +12,7 @@ export interface QueryType {
   [propName: string]: string;
 }
 
-export function queryChatHistory(
-  data: QueryType
-): Promise<HttpResponseData<MessageData[]>> {
+export function queryChatHistory(data: QueryType): Promise<HttpResponseData> {
   const { chatId } = data;
   return request.get(`/chats/${chatId}`);
 }

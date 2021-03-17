@@ -4,6 +4,7 @@
  */
 import { extend } from "umi-request";
 import { message, notification } from "antd";
+import { Cookie } from "./cookie";
 
 export const codeMessage: {
   [id: number]: string;
@@ -25,6 +26,10 @@ export const codeMessage: {
   504: "网关超时。",
 };
 
+export const otherErrorMessage = {
+  NETWORK_ERROR: "无法连接服务器，可能是您的网络发生异常，或服务器未运行"
+}
+
 /**
  * 配置request请求时的默认参数
  */
@@ -34,18 +39,21 @@ const request = extend({
   mode: "cors",
   credentials: "include", // 默认请求是否带上cookie
   // 默认错误处理
-  errorHandler: (error) => {
+  headers: {
+    "Authorization": `Bearer ${Cookie.getCookie("Authorization")}`
+  },
+  errorHandler(error) {
     const { response } = error;
-
     if (!response) {
-      message.error('无法连接服务器，可能是您的网络发生异常，或服务器未运行');
+      message.error(otherErrorMessage.NETWORK_ERROR);
     } else if (response.status === 401) {
       message.error('登录验证失败，请登陆')
-      setTimeout(() => {
-        notification.destroy()
-        message.destroy()
-        window.location.replace("/login");
-      }, 200);
+      if (window.location.pathname !== "/login")
+        setTimeout(() => {
+          notification.destroy()
+          message.destroy()
+          window.location.replace("/login");
+        }, 200);
     } else {
       const errorText = codeMessage[response.status] || response.statusText;
       const { status, url } = response;

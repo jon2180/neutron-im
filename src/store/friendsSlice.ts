@@ -1,18 +1,18 @@
 import { getFriendList } from "@/services/friend";
-import { FriendsSubstate } from "@/@types/state";
-import { FriendListItemData, HttpResponseData } from "@/@types/types";
+import { FriendsSubstate } from "@/types/state";
+import { FriendListItemData } from "@/types/http";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { message } from "antd";
 
 export const fetchFriendList = createAsyncThunk<
   FriendListItemData[] | undefined,
   {
-    id: string;
+    accountId: string;
   },
   {}
 >("friends/fetchFriendList", async (params) => {
   try {
-    const res = await getFriendList();
+    const res = await getFriendList(params);
     return res;
 
     // if (res.code === 10001) {

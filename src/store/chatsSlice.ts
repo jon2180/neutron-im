@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { MessageData } from "@/@types/types";
-import { ChatsSubstate, RootState } from "@/@types/state";
+import { MessageData } from "@/types/http";
+import { ChatsSubstate, RootState } from "@/types/state";
 import { queryChatHistory, QueryType, getRecentList } from "@/services/chat";
 import { message } from "antd";
 
@@ -27,19 +27,17 @@ export const fetchChatHistory = createAsyncThunk<
   }
 });
 
-export const fectchChats = createAsyncThunk(
-  "recentList/fetchChats",
-  async () => {
-    const key = "fetch";
-    message.loading({ content: "加载最近数据", key });
-    // notification.info({
-    //   message: "加载中"
-    // });
-    const res = await getRecentList();
-    message.destroy(key);
-    return res;
-    // return res.data;
-  }
+export const fectchChats = createAsyncThunk("recentList/fetchChats", async () => {
+  const key = "fetch";
+  message.loading({ content: "加载最近数据", key });
+  // notification.info({
+  //   message: "加载中"
+  // });
+  const res = await getRecentList();
+  message.destroy(key);
+  return res;
+  // return res.data;
+}
 );
 
 export interface IAction {
@@ -108,7 +106,8 @@ export const chatsSlice = createSlice({
     });
     builder.addCase(fectchChats.fulfilled, (state, action) => {
       state.recentChats.reqStatus.status = "succeeded";
-      state.recentChats.list = state.recentChats.list.concat(action.payload);
+      // TODO
+      // state.recentChats.list = state.recentChats.list.concat(action.payload);
     });
     builder.addCase(fectchChats.rejected, (state, action) => {
       state.recentChats.reqStatus.status = "failed";

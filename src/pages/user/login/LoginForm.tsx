@@ -4,6 +4,11 @@ import { Form, Input, Button, Col, Row } from "antd";
 import { CheckOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
 
 import styles from "./Login.module.less";
+import { generateCaptcha } from "@/utils/generator";
+
+const getCaptchaUrl = () => {
+  return `//localhost:3001/captcha-pic?id=${generateCaptcha()}`
+}
 
 export default function LoginForm(props: {
   onSubmit: (email: string, password: string, captcha: string) => void;
@@ -13,12 +18,19 @@ export default function LoginForm(props: {
   const [captcha, setCaptcha] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
-  const submitForm = () => { 
+  const [captchaUrl, setCaptchaUrl] = useState(getCaptchaUrl);
+
+
+  const reloadCaptcha = () => {
+    setCaptchaUrl(getCaptchaUrl())
+  }
+
+  const submitForm = () => {
     setSubmitting(true);
     props.onSubmit(email, password, captcha);
     setSubmitting(false);
   }
-  
+
   return (
     <Form name="login" initialValues={{ remember: true }}>
       <Form.Item
@@ -64,7 +76,7 @@ export default function LoginForm(props: {
             />
           </Col>
           <Col span={11}>
-            <img src="" alt="captcha" />
+            <img src={captchaUrl} alt="captcha" onClick={reloadCaptcha} />
           </Col>
         </Row>
       </Form.Item>

@@ -1,4 +1,4 @@
-import { UserInfoSubstate } from "./state";
+// import { UserInfoSubstate } from "./state";
 
 declare namespace Api {
   export interface CurrentUser {
@@ -17,9 +17,10 @@ declare namespace Api {
   }
 
   export interface LoginStateType {
-    status?: "ok" | "error";
-    type?: string;
-    userInfo: UserInfoSubstate
+    email: string
+    // status?: "ok" | "error";
+    // type?: string;
+    // userInfo: UserInfoSubstate
   }
 
   export interface NoticeIconData {

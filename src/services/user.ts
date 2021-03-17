@@ -1,21 +1,16 @@
 import request from "@/utils/request";
-import Api from "../@types/api";
-import { HttpResponseData /* IFriendListItem */ } from "@/@types/types";
+import { HttpResponseData /* IFriendListItem */ } from "@/types/http";
 
 /**
  * 登录接口
  * @param data 登录参数
  */
-export function postAccountLogin(
-  params: {
-    email: string;
-    password: string;
-    captcha: string;
-  }
-): Promise<HttpResponseData<Api.LoginStateType>> {
-  return request.post("/login", {
-    data: params,
-  });
+export function postAccountLogin(params: {
+  email: string;
+  password: string;
+  captcha: string;
+}): Promise<HttpResponseData> {
+  return request.post("/login", { data: params });
 }
 
 /**
@@ -39,30 +34,24 @@ export function getOutLogin() {
 /**
  * 注册
  */
-export function postAccount(
-  params: {
-    // TODO 设计接口
-    email: string;
-    nickname: string;
-    password: string;
-    captcha: string;
-  }
-): Promise<HttpResponseData<any>> {
-  return request.post("/register", {
-    data: params,
-  });
+export function postAccount(params: {
+  // TODO 设计接口
+  email: string;
+  nickname: string;
+  password: string;
+  captcha: string;
+}): Promise<HttpResponseData> {
+  return request.post("/register", { data: params });
 }
 
 /**
  * 获取用户信息
  */
-export function getUserInfo(
-  params: {
-    id: string;
-  }
-): Promise<HttpResponseData<any>> {
+export function getUserInfo(params: { id?: string; }): Promise<HttpResponseData> {
   // TODO
-  return request.get(`/accounts/${params.id}`);
+  if (params.id)
+    return request.get(`/accounts/${params.id}`);
+  return request.get(`/accounts/`);
 }
 
 
@@ -110,7 +99,7 @@ export interface UserInfoUpdateParamsType {
 
 
 export interface UserinfoQueryParamsType {
-  id: string;
+  id?: string;
 }
 // import { LoginStateType /* CurrentUser */ } from "./api";
 

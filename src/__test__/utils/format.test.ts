@@ -1,5 +1,4 @@
-
-import { addPrefix0, formatTimestamp, formatWeek } from "./format";
+import { addPrefix0, formatTimestamp, formatWeek } from "../../utils/format";
 
 describe('Format Timestamp', () => {
   test('错误参数应该返回原样返回', () => {

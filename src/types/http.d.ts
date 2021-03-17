@@ -1,34 +1,31 @@
-
 /**
  * 标准 HTTP 请求的返回结果
  */
-export type HttpResponseData<T> = T;
+export interface HttpResponseData {
+  /**
+   * 状态代码，以 10000 开始，拓展 http 标准状态码
+   */
+  readonly status: number;
 
-// export interface HttpResponseData<T> {
-//   /**
-//    * 状态代码，以 10000 开始
-//    */
-//   readonly code: number;
+  /**
+   * 状态文本
+   */
+  readonly message: string;
 
-//   /**
-//    * 状态文本
-//    */
-//   readonly status: "success" | "warning" | "failed";
+  /**
+   * 描述文本，具体描述请求的情况
+   */
+  readonly data: unknown;
 
-//   /**
-//    * 描述文本，具体描述请求的情况
-//    */
-//   readonly desc: string;
-
-//   /**
-//    * 实际数据
-//    */
-//   data: T;
-// }
+  /**
+   * 实际数据
+   */
+  readonly timestamp: string;
+}
 
 export interface HttpErrResponse {
   readonly error: string;
-  readonly desc: string;
+  readonly message: string;
   readonly data?: T;
 }
 

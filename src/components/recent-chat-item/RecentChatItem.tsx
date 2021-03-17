@@ -2,7 +2,7 @@ import React from "react";
 import { Avatar } from "antd";
 
 import styles from "./RecentChatItem.module.less";
-import { RecentChatItemData } from "@/@types/types";
+import { RecentChatItemData } from "@/types/http";
 
 export interface RecentChatItemProps {
   data: RecentChatItemData;

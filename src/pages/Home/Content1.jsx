@@ -13,17 +13,17 @@ function Content1(props) {
     queue: isMobile ? 'bottom' : 'right',
     one: isMobile
       ? {
-          scaleY: '+=0.3',
-          opacity: 0,
-          type: 'from',
-          ease: 'easeOutQuad',
-        }
+        scaleY: '+=0.3',
+        opacity: 0,
+        type: 'from',
+        ease: 'easeOutQuad',
+      }
       : {
-          x: '-=30',
-          opacity: 0,
-          type: 'from',
-          ease: 'easeOutQuad',
-        },
+        x: '-=30',
+        opacity: 0,
+        type: 'from',
+        ease: 'easeOutQuad',
+      },
   };
   return (
     <div {...tagProps} {...dataSource.wrapper}>
