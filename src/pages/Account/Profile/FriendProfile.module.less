@@ -1,0 +1,83 @@
+.container {
+  width: 1000px;
+  margin: 0 auto;
+
+  .topArea {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    // background-color: #abc2d2;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .profileCard {
+    background-color: #ffffff;
+    margin: 16px 0;
+    // width: 80%;
+    // margin: 30px auto;
+
+    // .profileBGContainer {
+    // }
+    .metaInfoBox {
+      display: flex;
+      justify-content: space-between;
+
+      .metaInfoMain {
+        width: 100%;
+        margin: 0 16px;
+
+        .metaInfoMainContainer {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          height: 100%;
+          // align-items: center;
+          // text-align: center;
+        }
+
+        .metaInfoMain_nickname {
+          font-size: 24px;
+          font-weight: 600;
+        }
+
+        .metaInfoMain_email {
+          font-size: 20px;
+        }
+      }
+      .metaInfoOption {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 200px;
+        height: inherit;
+        .metaInfoOption_social {
+          display: flex;
+          justify-content: space-between;
+        }
+
+        .metaInfoOption_social_icon svg {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+
+    .avatar {
+      // width: 80px;
+      // height: 80px;
+      // border-radius: 50%;
+      // border: #f2f2f2 solid 5px;
+    }
+
+    .moreinfo {
+      // display: flex;
+      // margin-top: 16px;
+      padding: 40px 0 0;
+    }
+  }
+}

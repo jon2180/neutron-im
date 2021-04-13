@@ -1,62 +1,71 @@
-import { getFriendList } from "@/services/friend";
-import { FriendsSubstate } from "@/types/state";
-import { FriendListItemData } from "@/types/http";
+import { getFriends } from "@/services/friend";
+import { FriendData } from "@/types/http";
+import { exportFriends } from "@/utils/localStorage";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { message } from "antd";
+import { RootState } from "./store";
 
-export const fetchFriendList = createAsyncThunk<
-  FriendListItemData[] | undefined,
-  {
-    accountId: string;
-  },
-  {}
->("friends/fetchFriendList", async (params) => {
-  try {
-    const res = await getFriendList(params);
-    return res;
+export const fetchFriendList = createAsyncThunk<FriendData[], undefined, {}>(
+  "friends/fetchFriendList",
+  async () => {
+    try {
+      const res = await getFriends();
+      console.log(res);
 
-    // if (res.code === 10001) {
-    //   return res.data;
-    // }
-  } catch (err) {
-    message.error({
-      content: err.message,
-    });
-    message.info("没有好友列表信息");
-    return err;
+      if (res.status === 20000) {
+        if (Array.isArray(res.data)) {
+          exportFriends(res.data);
+          return res.data as FriendData[];
+        } else return [] as FriendData[];
+      }
+    } catch (err) {
+      message.info("没有好友列表信息");
+    }
+    return [] as FriendData[];
   }
-});
+);
 
 const friendListSlice = createSlice({
   name: "friends",
-  initialState: {
-    lastUpdated: Date.now(),
-    friendList: [],
-  } as FriendsSubstate,
+  initialState: [] as FriendData[],
   reducers: {
+    pushFriends(state, action: { payload: FriendData[] | FriendData }) {
+      if (!action.payload) {
+        return;
+      }
+      if (Array.isArray(action.payload)) {
+        const len = state.length;
+        state.splice(len, 0, ...action.payload);
+      } else {
+        state.push(action.payload);
+      }
+    },
     setFriendList(state, action) {
-      console.log(state);
-      console.log(action);
-      state.friendList = action.payload;
-      // return state.friendList;
+      if (!action.payload || !Array.isArray(action.payload)) {
+        return;
+      }
+      state.splice(0, state.length);
+      for (let i = 0; i < action.payload.length; ++i) {
+        state.push(action.payload[i]);
+      }
     },
   },
   extraReducers(builder) {
     builder.addCase(fetchFriendList.fulfilled, (state, action) => {
-      console.log(action);
-      if (action.payload) {
-        state.friendList = action.payload;
-        state.lastUpdated = Date.now();
+      if (action.payload && Array.isArray(action.payload)) {
+        console.log(action.payload);
+
+        state.splice(0, state.length, ...action.payload);
       } else {
-        console.log('更新好友列表失败')
+        console.log("更新好友列表失败");
       }
     });
     builder.addCase(fetchFriendList.rejected, (state, action) => {
-      console.log(action);
-      // return state.friendList;
+      console.error(action);
     });
   },
 });
+export const selectFriendList = (state: RootState) => state.friends;
 
 export const { setFriendList } = friendListSlice.actions;
 

@@ -2,29 +2,19 @@
  * 标准 HTTP 请求的返回结果
  */
 export interface HttpResponseData {
-  /**
-   * 状态代码，以 10000 开始，拓展 http 标准状态码
-   */
+  /** 状态代码，以 10000 开始，拓展 http 标准状态码 */
   readonly status: number;
-
-  /**
-   * 状态文本
-   */
+  /** 状态文本 */
   readonly message: string;
-
-  /**
-   * 描述文本，具体描述请求的情况
-   */
+  /** 描述文本，具体描述请求的情况 */
   readonly data: unknown;
-
-  /**
-   * 实际数据
-   */
+  /** 实际数据 */
   readonly timestamp: string;
 }
 
 export interface HttpErrResponse {
   readonly error: string;
+  readonly status: string;
   readonly message: string;
   readonly data?: T;
 }
@@ -37,59 +27,31 @@ export interface HttpRequestStatus {
   error: string | null;
 }
 
-/**
- * 消息类型的允许值
- */
+/** 消息类型的允许值 */
 export type MessageType = "text" | "image" | "video" | "audio";
 
 /**
  * 消息类型
  */
 export interface MessageData {
-  /**
-   * 消息 id，用户去重
-   */
-  messageId: string;
-
-  /**
-   * 消息发送者
-   */
-  from: string;
-
-  /**
-   * 消息类型
-   */
-  type: MessageType;
-
-  /**
-   * 消息具体内容
-   */
+  /** 消息 id，用户去重 */
+  id: string;
+  chat_id: string;
+  /** 消息发送者 */
+  sender_id: string;
+  receiver_id: string;
+  /** 消息类型 */
+  content_type: "text" | "image" | "video" | "audio";
+  /** 消息具体内容 */
   content: string;
-
-  /**
-   * 消息发送时间，应该以某一个时区的标准事件来计算
-   */
+  /** 消息提及到的用户，作用类似于 @ 符号 */
+  mentions?: string[];
+  /** 本条消息引用的其他消息 id */
+  refer?: string[];
+  file_info?: Record<string, any>;
+  /** 消息发送时间，应该以某一个时区的标准事件来计算 */
   time: number;
-
-  /**
-   * 消息是否是自己发送的
-   */
-  isSentByMe: boolean;
-
-  /**
-   * 消息提及到的用户，作用类似于 @ 符号
-   */
-  mentions?: string;
-
-  /**
-   * 本条消息引用的其他消息 id
-   */
-  refer?: string;
-
-  /**
-   * 其他附属内容
-   */
-  [propsName: string]: any;
+  status?: number;
 }
 
 /**
@@ -102,17 +64,107 @@ export interface GroupNoticeData {
 /**
  * 最近列表中的消息项
  */
-export interface RecentChatItemData {
-  accountId: string;
-  avatar: string;
-  accountName: string;
-  lastMsg: string;
+
+export interface ChatData {
+  id: string;
+  account_id: string;
+  target_id: string;
+  type: number;
+  sender_id: string;
+  receiver_id: string;
+  last_msg_time: number;
+  last_msg_id: string;
+  last_msg_content: string;
+  unread_count: number;
+  status: number;
+
   time: number;
-  unread: number;
+  avatar: string;
+  account_name: string;
 }
 
-export interface FriendListItemData {
-  accountId: string;
+export interface FriendData {
+  /** 数据库中  的序列号 id */
+  id: number;
+  /** 对方的个性化 id */
+  account_id: string;
+  /** 对方的昵称 */
+  nickname: string;
+  remark_name: string;
+  /** 对方的签名 */
+  signature: string;
+  /** 对方的头像 */
   avatar: string;
-  accountName: string;
+  /** 对方所在分组 */
+  category: string;
+  /** 加为好友的时间 */
+  link_time: string;
+  /** 朋友关系的状态 */
+  status: number;
+  /** 朋友的类型 */
+  type: number;
 }
+
+export interface RequestType {
+  id: number;
+  initiator_id: number;
+  target_id: number;
+  type: number;
+  submit_reason: string;
+  submit_time: string;
+  solved_result: number;
+  solved_reason: string;
+  solved_time: string;
+  extra: string;
+}
+
+export type RequestsType = RequestType[];
+
+// export interface ChatData {
+//   accountId: string;
+//   avatar: string;
+//   accountName: string;
+//   lastMsg: string;
+//   time: number;
+//   unread: number;
+// }
+
+// export interface Chat {
+//   id: number;
+//   cid: string;
+//   account_id: string;
+//   type: number;
+//   opposite_name: string;
+//   sender_id: number;
+//   receiver_id: number;
+//   last_msg_time: string;
+//   last_msg_id: number;
+//   last_msg_content: string;
+//   unread_count: number;
+
+//   time: number;
+//   avatar: string;
+//   account_name: string;
+// }
+// /**
+//  * 单聊的聊天记录
+//  */
+// export interface ISingleChatHistory {
+//   [id: string]: {
+//     name: string;
+//     avatar: string;
+//     chatHistory: Array<IMessage>;
+//   };
+// }
+
+// /**
+//  * 群聊的聊天记录
+//  */
+// export interface IGroupChatHistory {
+//   [groupId: string]: {
+//     name: string;
+//     avatar: string;
+//     groupNotices: Array<INotice>;
+//     chatHistory: Array<IMessage>;
+//   };
+// }

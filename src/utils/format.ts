@@ -1,13 +1,10 @@
-import { isInteger } from "./validate";
-
 export const formatWeek = (function WeekFormatCreater() {
-  const weekMap = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+  const weekMap = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
 
   return (week: number) => {
     return weekMap[week % 7];
-  }
-}
-)();
+  };
+})();
 
 /**
  *
@@ -23,13 +20,12 @@ export function addPrefix0(m: number) {
  * @param datePrev 之前的时间， 时间戳必须小于 dateNow 参数，否则直接 false
  */
 function isSameWeek(dateNow: Date, datePrev: Date): boolean {
-  if (dateNow.getTime() < datePrev.getTime())
-    return false;
+  if (dateNow.getTime() < datePrev.getTime()) return false;
   // TODO 目前只是时间差在一周之内
-  if ((dateNow.getTime() - datePrev.getTime()) >= 7 * 24 * 60 * 60 * 1000)
+  if (dateNow.getTime() - datePrev.getTime() >= 7 * 24 * 60 * 60 * 1000)
     return false;
 
-  return (dateNow.getDay() > datePrev.getDay());
+  return dateNow.getDay() > datePrev.getDay();
 }
 
 /**
@@ -38,13 +34,12 @@ function isSameWeek(dateNow: Date, datePrev: Date): boolean {
  * @param datePrev 之前的时间， 时间戳必须小于 dateNow 参数，否则直接 false
  */
 function isSameDay(dateNow: Date, datePrev: Date): boolean {
-  if (dateNow.getTime() < datePrev.getTime())
-    return false;
+  if (dateNow.getTime() < datePrev.getTime()) return false;
   // TODO 目前只是时间差在一周之内
-  if ((dateNow.getTime() - datePrev.getTime()) >= 24 * 60 * 60 * 1000)
+  if (dateNow.getTime() - datePrev.getTime() >= 24 * 60 * 60 * 1000)
     return false;
 
-  return (dateNow.getDate() === datePrev.getDate());
+  return dateNow.getDate() === datePrev.getDate();
 }
 
 /**
@@ -70,7 +65,11 @@ function isSameDay(dateNow: Date, datePrev: Date): boolean {
  */
 export function formatTimestamp(timestamp: string | number): string {
   // validate param
-  if (!isInteger(timestamp) || timestamp < 0) {
+  if (!Number.isInteger(timestamp)) {
+    return timestamp as string;
+  }
+
+  if (timestamp < 0) {
     return timestamp.toString();
   }
 
@@ -88,10 +87,18 @@ export function formatTimestamp(timestamp: string | number): string {
     showMonth = true;
   }
 
-  let day = isCurrentWeek ? `${formatWeek(date.getDay())}` : [
-    showYear ? `${date.getFullYear()}年` : '',
-    showMonth ? `${addPrefix0(date.getMonth() + 1)}月${addPrefix0(date.getDate())}日` : '',
-  ].join('');
+  let day = isCurrentWeek
+    ? `${formatWeek(date.getDay())}`
+    : [
+        showYear ? `${date.getFullYear()}年` : "",
+        showMonth
+          ? `${addPrefix0(date.getMonth() + 1)}月${addPrefix0(
+              date.getDate()
+            )}日`
+          : "",
+      ].join("");
 
-  return `${isCurrentDay ? '' : day} ${addPrefix0(date.getHours())}:${addPrefix0(date.getMinutes())}`
+  return `${isCurrentDay ? "" : day} ${addPrefix0(
+    date.getHours()
+  )}:${addPrefix0(date.getMinutes())}`;
 }

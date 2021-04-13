@@ -29,8 +29,6 @@ export function getOutLogin() {
   return request.get("/login/outLogin");
 }
 
-
-
 /**
  * 注册
  */
@@ -44,16 +42,20 @@ export function postAccount(params: {
   return request.post("/register", { data: params });
 }
 
+export function getUserInfo(): Promise<HttpResponseData> {
+  return request.get("/accounts/");
+}
+
 /**
  * 获取用户信息
  */
-export function getUserInfo(params: { id?: string; }): Promise<HttpResponseData> {
+export function getAccountInfo(params: {
+  uid?: string;
+}): Promise<HttpResponseData> {
   // TODO
-  if (params.id)
-    return request.get(`/accounts/${params.id}`);
+  if (params.uid) return request.get(`/accounts/${params.uid}`);
   return request.get(`/accounts/`);
 }
-
 
 /**
  * 更新用户信息
@@ -70,9 +72,7 @@ export function putUserInfo(params: {
   });
 }
 
-export function deleteUser(params: {
-  id: string;
-}) {
+export function deleteUser(params: { id: string }) {
   return request.delete(`/accounts/${params.id}`);
 }
 
@@ -97,11 +97,9 @@ export interface UserInfoUpdateParamsType {
   signature?: string;
 }
 
-
 export interface UserinfoQueryParamsType {
-  id?: string;
+  uid?: string;
 }
-// import { LoginStateType /* CurrentUser */ } from "./api";
 
 /**
  * 登录参数类型

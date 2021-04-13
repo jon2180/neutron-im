@@ -19,7 +19,9 @@ module.exports = {
       lessOptions: {
         modules: true,
         javascriptEnabled: true,
-        modifyVars: { '@primary-color': '#1DA57A' },
+        modifyVars: { 
+          // '@primary-color': '#1DA57A' 
+        },
       }
     }),
     // enableEslintTypescript()

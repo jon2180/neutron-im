@@ -26,40 +26,46 @@ export const codeMessage: {
   504: "网关超时。",
 };
 
-export const otherErrorMessage = {
-  NETWORK_ERROR: "无法连接服务器，可能是您的网络发生异常，或服务器未运行"
-}
-
 /**
  * 配置request请求时的默认参数
  */
+
+console.log(process.env)
 const request = extend({
-  prefix: "http://localhost:3001",
-  timeout: 2000,
+  prefix: process.env.REACT_APP_API_BASE_URL || "//localhost:3001",
+  timeout: 10000,
   mode: "cors",
   credentials: "include", // 默认请求是否带上cookie
   // 默认错误处理
   headers: {
-    "Authorization": `Bearer ${Cookie.getCookie("Authorization")}`
+    Authorization: Cookie.getCookie("Authorization"),
   },
-  errorHandler(error) {
+  errorHandler(error): Response {
     const { response } = error;
-    if (!response) {
-      message.error(otherErrorMessage.NETWORK_ERROR);
-    } else if (response.status === 401) {
-      message.error('登录验证失败，请登陆')
-      if (window.location.pathname !== "/login")
-        setTimeout(() => {
-          notification.destroy()
-          message.destroy()
-          window.location.replace("/login");
-        }, 200);
-    } else {
+    if (response && response.status) {
       const errorText = codeMessage[response.status] || response.statusText;
       const { status, url } = response;
-      console.error(`请求错误 ${status}: ${url} ${errorText}`);
+
+      notification.error({
+        message: `请求错误 ${status}: ${url}`,
+        description: errorText,
+      });
+
+      if (response.status === 401 && window.location.pathname !== "/login") {
+        message.error("登录验证失败，请登录");
+        setTimeout(() => {
+          notification.destroy();
+          message.destroy();
+          window.location.replace("/login");
+        }, 200);
+      }
+    } else if (!response) {
+      notification.error({
+        description: "您的网络发生异常，无法连接服务器",
+        message: "网络异常",
+      });
     }
-    throw error
+    return response;
   },
 });
 

@@ -5,15 +5,23 @@ import store from "@/store/store";
 import { Provider } from "react-redux";
 
 import App from "@/pages/App";
-import "./index.less";
+import "./themes/index.less";
 import { initializeUserInfo } from "./utils/localStorage";
+import { ConfigProvider } from "antd";
+import zh_CN from "antd/lib/locale/zh_CN";
+// import { IntlProvider } from "react-intl";
+// import zhCN from "./locales/zh_CN";
 
 initializeUserInfo();
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <ConfigProvider locale={zh_CN}>
+        {/* <IntlProvider locale="zh_CN" messages={zhCN}> */}
+        <App />
+        {/* </IntlProvider> */}
+      </ConfigProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")

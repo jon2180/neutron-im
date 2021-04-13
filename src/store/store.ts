@@ -1,16 +1,19 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import chatHistoryReducer from "@/store/chatsSlice";
+import chatHistoriesReducer from "@/store/chatsHistoriesSlice";
 import userInfoReducer from "@/store/userInfoSlice";
-import friendListSlice from "@/store/friendsSlice";
-
+import friendsReducer from "@/store/friendsSlice";
+import recentChatsReducer from "@/store/recentChatsSlice";
 import { useDispatch } from "react-redux";
+import notificationsSlice from "./notificationsSlice";
 
 const store = configureStore({
   reducer: {
-    chats: chatHistoryReducer,
+    chatHistories: chatHistoriesReducer,
+    recentChats: recentChatsReducer,
     userInfo: userInfoReducer,
-    friends: friendListSlice,
+    friends: friendsReducer,
+    notifications: notificationsSlice,
   },
 });
 

@@ -1,17 +1,22 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Row, Col } from "antd";
 
-import ReactIntroduction from "@/pages/react-introduction/ReactIntroduction";
-import SideBarArea from "@/pages/side-bar/SideBar";
-import Chat from "@/pages/chat/Chat";
-import Login from "./user/login/Login";
-import PrivateRoute from "./PrivateRoute";
-import FriendProfile from "@/pages/friends/profile";
-
-import styles from "./App.module.less";
-import TestPage from "./test/TestPage";
+// imported components
+import PrivateRoute from "../components/PrivateRoute";
 import Home from "./Home";
+import ReactIntroduction from "@/components/ReactIntroduction/ReactIntroduction";
+import Login from "./Account/Login/Login";
+import Activities from "./Activities/Activities";
+import Search from "./Search/Search";
+import Management from "./Mangement/Management";
+import CodeSnips from "./CodeSnips/CodeSnips";
+import { Empty } from "antd";
+import IMFrame from "@/pages/IM/IMFrame";
+import { Editor } from "./Editor/Editor";
+import AccountProfile from "./Account/Profile/AccountProfile";
+import DefaultFrame from "@/components/layout/AppFrame";
+import Activity from "./Activities/Activity";
+import ProfileSetting from "./Account/Settings/ProfileSetting";
 
 export default function App() {
   return (
@@ -20,48 +25,105 @@ export default function App() {
         <Route path="/" exact>
           <Home />
         </Route>
-
-        <Route path="/test" exact>
-          <TestPage />
-        </Route>
-
         <Route path="/login" exact>
           <Login />
         </Route>
-
         <Route path="/register" exact>
           <Login />
         </Route>
 
-        <Route path="/app">
-          <Row className={styles.antRow}>
-            <Col span={8}>
-              <SideBarArea></SideBarArea>
-            </Col>
-            <Col span={16}>
-              <Switch>
-                <PrivateRoute path="/app/recent/:id" exact={true}>
-                  <Chat />
-                </PrivateRoute>
+        <PrivateRoute path="/im">
+          <IMFrame />
+        </PrivateRoute>
 
-                <PrivateRoute path="/app/friend/:id" exact={true}>
-                  <FriendProfile />
-                </PrivateRoute>
+        <PrivateRoute
+          path={[
+            "/activities",
+            "/codesnips",
+            "/mine",
+            "/management",
+            "/search",
+            "/accounts",
+          ]}
+        >
+          <DefaultFrame>
+            <Switch>
+              <PrivateRoute path={["/activities"]} exact>
+                <Activities />
+              </PrivateRoute>
+              <PrivateRoute path={["/activities/:id"]} exact>
+                <Activity />
+              </PrivateRoute>
 
-                <PrivateRoute path="/app/activities/:id" exact={true}>
-                  <FriendProfile />
-                </PrivateRoute>
+              <PrivateRoute path={["/codesnips"]} exact>
+                <CodeSnips detailPath="/codesnips/:id" detailExact />
+              </PrivateRoute>
 
-                <PrivateRoute path="/app" exact={true}>
-                  <ReactIntroduction />
-                </PrivateRoute>
+              <PrivateRoute path={["/codesnips/:id"]} exact>
+                <CodeSnips detailPath="/codesnips/:id" detailExact />
+              </PrivateRoute>
 
-                <PrivateRoute path="/app/*">
-                  <div>恭喜您进入了未知领域(404 - NOT FOUND)</div>
-                </PrivateRoute>
-              </Switch>
-            </Col>
-          </Row>
+              <PrivateRoute path="/management">
+                <Management>
+                  <Switch></Switch>
+                </Management>
+              </PrivateRoute>
+
+              <PrivateRoute path="/search" exact>
+                <Search />
+              </PrivateRoute>
+
+              {/* <PrivateRoute path={["/accounts"]}>
+                <Switch> */}
+              <PrivateRoute path={["/accounts/"]} exact>
+                <AccountProfile />
+              </PrivateRoute>
+
+              <PrivateRoute path={["/accounts/:id"]} exact>
+                <AccountProfile />
+              </PrivateRoute>
+
+              <PrivateRoute path="/accounts/settings/profile" exact>
+                <ProfileSetting />
+              </PrivateRoute>
+
+              <PrivateRoute path="/accounts/settings/bind" exact>
+                <ProfileSetting />
+              </PrivateRoute>
+              {/* </Switch>
+              </PrivateRoute> */}
+            </Switch>
+          </DefaultFrame>
+        </PrivateRoute>
+
+        <PrivateRoute path="/editor" exact>
+          <Editor />
+        </PrivateRoute>
+
+        <Route path="react">
+          <ReactIntroduction />
+        </Route>
+
+        <Route path="*">
+          <div
+            style={{
+              position: "absolute",
+              left: "0",
+              right: "0",
+              top: "0",
+              bottom: "0",
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            <Empty
+              description={"404 NOT FOUNT 您要找的页面丢失了"}
+              style={{
+                margin: "0 auto",
+              }}
+            ></Empty>
+          </div>
         </Route>
       </Switch>
     </Router>
