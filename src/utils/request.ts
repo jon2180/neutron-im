@@ -29,13 +29,11 @@ export const codeMessage: {
 /**
  * 配置request请求时的默认参数
  */
-
-console.log(process.env)
 const request = extend({
   prefix: process.env.REACT_APP_API_BASE_URL || "//localhost:3001",
   timeout: 10000,
   mode: "cors",
-  credentials: "include", // 默认请求是否带上cookie
+  credentials: "omit", // 默认请求是否带上cookie
   // 默认错误处理
   headers: {
     Authorization: Cookie.getCookie("Authorization"),

@@ -6,11 +6,11 @@ import { Provider } from "react-redux";
 
 import App from "@/pages/App";
 import "./themes/index.less";
+import reportWebVitals from "./reportWebVitals";
 import { initializeUserInfo } from "./utils/localStorage";
 import { ConfigProvider } from "antd";
 import zh_CN from "antd/lib/locale/zh_CN";
-// import { IntlProvider } from "react-intl";
-// import zhCN from "./locales/zh_CN";
+import { IntlProvider } from "react-intl";
 
 initializeUserInfo();
 
@@ -18,9 +18,9 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ConfigProvider locale={zh_CN}>
-        {/* <IntlProvider locale="zh_CN" messages={zhCN}> */}
-        <App />
-        {/* </IntlProvider> */}
+        <IntlProvider locale={IntlProvider.defaultProps.defaultLocale}>
+          <App />
+        </IntlProvider>
       </ConfigProvider>
     </Provider>
   </React.StrictMode>,
@@ -35,4 +35,4 @@ ReactDOM.render(
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-// reportWebVitals(console.log);
+reportWebVitals(console.log);

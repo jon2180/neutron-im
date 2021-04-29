@@ -1,5 +1,4 @@
-// import React, { useState } from "react";
-// import { postAccountLogin } from "@/services/user";
+import React from "react";
 import CombinedPage from "@/pages/IM/CombinedPage";
 
 export default function CodeSnips({
@@ -11,7 +10,6 @@ export default function CodeSnips({
 }) {
   return (
     <CombinedPage
-      // sider={<FriendsSider />}
       content={<div>helloworld, this is codesnips</div>}
       detailPath={detailPath}
       detailExact={detailExact}

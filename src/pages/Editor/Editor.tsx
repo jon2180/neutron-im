@@ -1,12 +1,11 @@
-import { Avatar, Button, Col, Form, Input, Popover, Row } from "antd";
 import React, { useState } from "react";
-import { MDRender } from "@/components/MarkdownRender";
+import { Avatar, Button, Col, Input, Popover, Row } from "antd";
+import MdRenderer from "@/components/MdRenderer";
 import styles from "./Editor.module.less";
 import { Helmet } from "react-helmet";
 import { useSelector } from "react-redux";
 import { selectUserInfo } from "@/store/userInfoSlice";
 import useWindowDimensions from "@/utils/hooks";
-// import {  } from "lodash";
 
 export function Editor() {
   const [str, setStr] = useState("");
@@ -82,7 +81,7 @@ export function Editor() {
             height: `${height - 70}px`,
           }}
         >
-          <MDRender>{escape(str)}</MDRender>
+          <MdRenderer>{escape(str)}</MdRenderer>
         </Col>
       </Row>
     </div>

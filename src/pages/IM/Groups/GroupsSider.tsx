@@ -1,23 +1,22 @@
-import React from "react";
-import {
-  Link,
-  // useParams
-} from "react-router-dom";
-// import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
   // Input,
   List,
   //  Avatar
 } from "antd";
+import { group } from "@/services";
 // import { useAppDispatch } from "@/store/store";
 // import { fetchFriendList } from "@/store/friendsSlice";
 
 export function GroupsSider() {
   // const dispatch = useAppDispatch();
 
-  // useEffect(() => {
-  //   dispatch(fetch);
-  // }, []);
+  useEffect(() => {
+    // dispatch(fetch);
+
+    group.postGroups().then(console.log).catch(console.error);
+  }, []);
 
   return (
     <div>

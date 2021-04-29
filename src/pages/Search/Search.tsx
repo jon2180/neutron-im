@@ -1,8 +1,8 @@
 import { postAddFriendRequest, searchAccount } from "@/services/friend";
 import { UserInfoSubstate } from "@/types/state";
 import { SearchOutlined, UserAddOutlined } from "@ant-design/icons";
-import { Avatar, Button, Card, Input, List, Modal, Popover, Tabs } from "antd";
-import React, { useMemo, useState } from "react";
+import { Avatar, Button, Card, Input, List, Tabs } from "antd";
+import React, { useCallback, useState } from "react";
 import { Link, withRouter } from "react-router-dom";
 import styles from "./Search.module.less";
 
@@ -10,23 +10,26 @@ export default withRouter(function SearchBox(props) {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [result, setResult] = useState([] as UserInfoSubstate[]);
 
-  // console.log(props);
-  // useMemo(() => {
-  //   if (searchKeyword && searchKeyword !== "") {
-  //     searchAccount({ keyword: searchKeyword, type: "all" })
-  //       .then((res) => {
-  //         console.log(res);
-  //         if (res.status === 20000 && res.data && Array.isArray(res.data)) {
-  //           setResult(res.data);
-  //         } else {
-  //           console.log("搜索失败");
-  //         }
-  //       })
-  //       .catch((err) => {
-  //         console.error(err);
-  //       });
-  //   }
-  // }, [searchKeyword]);
+  const onSearch = useCallback(
+    (val: string) => {
+      console.log(val);
+      if (searchKeyword && searchKeyword !== "") {
+        searchAccount({ keyword: searchKeyword, type: "all" })
+          .then((res) => {
+            console.log(res);
+            if (res.status === 20000 && res.data && Array.isArray(res.data)) {
+              setResult(res.data);
+            } else {
+              console.log("搜索失败");
+            }
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }
+    },
+    [searchKeyword]
+  );
 
   const requestAddFriend = (id: string) => {
     postAddFriendRequest({ id, reason: "测试" })
@@ -48,27 +51,7 @@ export default withRouter(function SearchBox(props) {
           </Button>
         }
         onChange={(e) => setSearchKeyword(e.target.value)}
-        onSearch={(e) => {
-          console.log(e);
-          if (searchKeyword && searchKeyword !== "") {
-            searchAccount({ keyword: searchKeyword, type: "all" })
-              .then((res) => {
-                console.log(res);
-                if (
-                  res.status === 20000 &&
-                  res.data &&
-                  Array.isArray(res.data)
-                ) {
-                  setResult(res.data);
-                } else {
-                  console.log("搜索失败");
-                }
-              })
-              .catch((err) => {
-                console.error(err);
-              });
-          }
-        }}
+        onSearch={onSearch}
       />
 
       <Tabs>

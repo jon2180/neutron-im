@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { PageHeader, Button } from "antd";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, withRouter } from "react-router-dom";
 import { useAppDispatch } from "@/store/store";
 
 import styles from "./Chats.module.less";
@@ -9,7 +9,7 @@ import { selectRecentChatById, setUnread } from "@/store/recentChatsSlice";
 import ChatHistories from "./panels/ChatHistories";
 import MessageInputArea from "./panels/MessageInputArea";
 
-export default function ChatPanel() {
+export default withRouter(function ChatPanel(props) {
   const dispatch = useAppDispatch();
   const params = useParams<{
     id: string;
@@ -31,8 +31,8 @@ export default function ChatPanel() {
     <div>
       <PageHeader
         className={styles["site-page-header"]}
-        onBack={() => window.history.back()}
-        title={recentChat ? recentChat.account_name : "unknown"}
+        onBack={() => props.history.replace("/im/chats")}
+        title={recentChat ? recentChat.account_nickname : "unknown"}
         style={{
           height: "64px",
         }}
@@ -46,4 +46,4 @@ export default function ChatPanel() {
       <MessageInputArea />
     </div>
   );
-}
+});

@@ -1,5 +1,3 @@
-// import { UserInfoSubstate } from "./state";
-
 declare namespace Api {
   export interface CurrentUser {
     avatar?: string;
@@ -17,7 +15,7 @@ declare namespace Api {
   }
 
   export interface LoginStateType {
-    email: string
+    email: string;
     // status?: "ok" | "error";
     // type?: string;
     // userInfo: UserInfoSubstate

@@ -15,12 +15,21 @@ import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import { UserInfoSubstate } from "@/types/state";
 
-const loginBG = `${process.env.REACT_APP_API_BASE_URL || '//localhost:3001'}/login-bg-hnpoppcv.jpeg`;
+const loginBG = `${
+  process.env.REACT_APP_API_BASE_URL || "//localhost:3001"
+}/login-bg-hnpoppcv.jpeg`;
 
 export default withRouter(function Login(props) {
+  console.log(props.location.search);
   const dispatch = useAppDispatch();
+
   // 处理提交
   const onSubmit = async (email: string, password: string, captcha: string) => {
+    const MESSAGE_KEY = "MESSAGE_KEY";
+    message.loading({
+      content: "登录中...",
+      key: MESSAGE_KEY,
+    });
     // TODO 检查验证码的合理性
     if (!isEmail(email) || !isPassword(password)) {
       message.error("账号或密码格式不符合规则", 0.5);
@@ -62,6 +71,7 @@ export default withRouter(function Login(props) {
         }
       }
     }
+    message.destroy(MESSAGE_KEY);
   };
 
   const submitReg = async (params: {

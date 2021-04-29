@@ -110,7 +110,7 @@ export default function RegisterForm(props: {
           onClick={submitForm}
           loading={submitting}
           icon={<LoginOutlined />}
-          className={styles.loginFormButton}
+          block
         >
           Submit
         </Button>

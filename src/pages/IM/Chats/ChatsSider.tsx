@@ -8,8 +8,26 @@ import { fetchRecentChats, selectAllChats } from "@/store/recentChatsSlice";
 import { formatTimestamp } from "@/utils/format";
 import styles from "./Chats.module.less";
 
+import {
+  Menu,
+  Item,
+  Separator,
+  Submenu,
+  useContextMenu,
+} from "react-contexify";
+
+import "react-contexify/dist/ReactContexify.css";
+
+const MENU_ID = "menu-id";
+
 export function RecentChatItem(props: { data: ChatData }) {
   const { data } = props;
+
+    // 🔥 you can use this hook from everywhere. All you need is the menu id
+    const { show } = useContextMenu({
+      id: MENU_ID,
+    });
+
   return (
     <Link
       to={`/im/chats/${data.id}`}
@@ -17,14 +35,15 @@ export function RecentChatItem(props: { data: ChatData }) {
         display: "block",
         width: "100%",
       }}
+      onContextMenu={show}
     >
       <div className={styles.itemBox}>
         <div className={styles.avatarBox}>
-          <Avatar size={48} src={data.avatar} />
+          <Avatar size={48} src={data.account_avatar} />
         </div>
         <div className={styles.infoBox}>
           <div className={styles.nameAndTimeBox}>
-            <div className={styles.name}>{data.account_name}</div>
+            <div className={styles.name}>{data.account_nickname}</div>
             <div className={styles.time}>
               {formatTimestamp(data.last_msg_time)}
             </div>
@@ -51,6 +70,10 @@ export default function ChatsSider() {
   // TODO
   const recentChats = useSelector(selectAllChats);
   const params = useParams<{ id: string }>();
+  
+  function handleItemClick({ event, props, triggerEvent, data }: any){
+    console.log(event, props, triggerEvent, data );
+  }
 
   useEffect(() => {
     dispatch(fetchRecentChats());
@@ -75,6 +98,23 @@ export default function ChatsSider() {
           </List.Item>
         )}
       />
+       <Menu id={MENU_ID}>
+        <Item onClick={handleItemClick}>
+          Item 1
+        </Item>
+        <Item onClick={handleItemClick}>
+          Item 2
+        </Item>
+        <Separator />
+        <Item disabled>Disabled</Item>
+        <Separator />
+        <Submenu label="Submenu">
+          <Item onClick={handleItemClick}>
+            Sub Item 1
+          </Item>
+          <Item onClick={handleItemClick}>Sub Item 2</Item>
+        </Submenu>
+      </Menu>
     </div>
   );
 }

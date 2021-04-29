@@ -80,14 +80,12 @@ export default function LoginForm(props: {
       </Form.Item>
       <Form.Item>
         <Button
-          // icon={<LoginOutlined />}
           type="primary"
           htmlType="submit"
           onClick={submitForm}
           loading={submitting}
           icon={<LoginOutlined />}
           block
-          // className={styles.loginFormButton}
         >
           Submit
         </Button>

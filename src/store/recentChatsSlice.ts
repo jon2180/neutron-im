@@ -86,13 +86,13 @@ export const recentChatsSlice = createSlice({
           status: 0,
           type: 0,
           unread_count: 1,
-          avatar: "",
-          account_name: "",
+          account_avatar: "",
+          account_nickname: "",
           last_msg_id: message.id,
           last_msg_time: message.time,
           last_msg_content: lastMsg,
           time: message.time,
-        });
+        } as ChatData);
       } else {
         state[i].last_msg_id = message.id;
         state[i].last_msg_content = lastMsg;

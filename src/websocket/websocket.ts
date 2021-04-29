@@ -98,15 +98,15 @@ export class MyWebSocket {
     else return WebSocket.CLOSED;
   }
 
-connect(): WebSocket {
-  const ws = new WebSocket(this.url);
-  ws.onopen = this.onopen;
-  ws.onclose = this.onclose;
-  ws.onerror = this.onerror;
-  ws.onmessage = this.onmessage;
-  this.lastMsgTimestamp = Date.now();
-  return ws;
-}
+  connect(): WebSocket {
+    const ws = new WebSocket(this.url);
+    ws.onopen = this.onopen;
+    ws.onclose = this.onclose;
+    ws.onerror = this.onerror;
+    ws.onmessage = this.onmessage;
+    this.lastMsgTimestamp = Date.now();
+    return ws;
+  }
 
   updateTimestamp(timestamp: number = Date.now()) {
     this.lastMsgTimestamp = timestamp;
@@ -116,13 +116,13 @@ connect(): WebSocket {
     console.log("建立连接", ev);
   };
 
-onclose = (cev: CloseEvent) => {
-  this.close();
-  setTimeout(() => {
-    this.websocket = this.connect();
-  }, this.reconnectDelay);
-  console.log("连接关闭", cev);
-};
+  onclose = (cev: CloseEvent) => {
+    this.close();
+    setTimeout(() => {
+      this.websocket = this.connect();
+    }, this.reconnectDelay);
+    console.log("连接关闭", cev);
+  };
 
   reconnect() {
     if (this.websocket) this.send(MyWebSocket.QUIT);
@@ -180,7 +180,7 @@ onclose = (cev: CloseEvent) => {
   // }
 }
 
-export default function connectWebSocket() {
+export function connectWebSocket() {
   // 在进入应用的时候开始读取 localStorage 中是否存在用户信息
   // 先检测是否存在授权
   const token =
@@ -191,7 +191,11 @@ export default function connectWebSocket() {
   // 如果存在用户信息，就将用户信息设置进 redux
   const userInfo = importUserInfo() as UserInfoSubstate | null;
   if (userInfo && userInfo.id && userInfo.email) {
-    return new MyWebSocket(`${process.env.REACT_APP_WS_BASE_URL || 'ws://localhost:3001'}/relay/${userInfo.id}`);
+    return new MyWebSocket(
+      `${process.env.REACT_APP_WS_BASE_URL || "ws://localhost:3001"}/relay/${
+        userInfo.id
+      }`
+    );
   } else {
     return undefined;
   }
@@ -234,129 +238,4 @@ export function connect() {
   }
 }
 
-// export default webSocketStore;
-
-// import { websocket } from "./Websocket"
-
-// class createWebSocket extends WebSocket {
-//   myUrl: string;
-//   ws: WebSocket;
-//   status: string;
-//   lockReconnect: boolean;
-//   messageList: string;
-//   pingPong: string;
-//   pingInterval: NodeJS.Timeout;
-//   pongInterval: NodeJS.Timeout;
-
-//   constructor(url: string) {
-//     this.connect(url)
-//// console.log(url)
-//     this.myUrl = url
-//     //this.getMessage()
-//   }
-
-//   connect(url) {//连接服务器
-//     this.ws = new WebSocket(url)
-//     this.ws.onopen = (e) => {
-//       this.status = 'open'
-//       message.info('link succeed')
-//       console.log("connection to server is opened")
-//       //this.heartCheck.reset().start()
-//       this.ws.send('succeed')
-//       this.heartCheck()
-//     }
-//   }
-//   async getMessage() {//异步获取数据
-//     this.lockReconnect = true
-//     this.messageList = '';
-//     await new Promise((resolve) => {
-//       this.ws.onmessage = (e) => {
-//         //console.log(e.data)
-//         this.messageList = e.data
-//         //console.log(this.messageList)
-//         resolve(e.data)
-//       }
-//     })
-//     console.log(this.messageList)
-//     return this.messageList
-//   }
-
-//   heartCheck() {//心跳
-//     this.pingPong = 'ping'
-//     this.pingInterval = setInterval(() => {
-//       if (this.ws.readyState === 1) {
-//         this.ws.send('ping')
-//       }
-//     }, 10000);
-//     this.pongInterval = setInterval(() => {
-//       if (this.pingPong === 'ping') {
-//         this.closeHandle('pingPong没有改为pong')
-//       }
-//       console.log('return the pong')
-//     }, 20000)
-//   }
-
-//   closeHandle(res: string) {
-//     if (this.status !== 'close') {
-//       console.log('断开，重连websocket', res)
-//       if (this.pongInterval !== undefined && this.pingInterval !== undefined) {
-//         clearInterval(this.pongInterval)
-//         clearInterval(this.pingInterval)
-//       }
-//       this.connect(this.myUrl)
-//     } else {
-//       console.log('websocket手动关闭了，或者正在连接')
-//     }
-//   }
-
-//   close() {//关闭连接
-//     clearInterval(this.pingInterval)
-//     clearInterval(this.pongInterval)
-//     this.ws.send('close')
-//     this.status = 'close'
-//     this.ws.onclose = e => {
-//       console.log('close')
-//     }
-//   }
-// }
-// export default createWebSocket
-// ————————————————
-// 版权声明：本文为CSDN博主「月大侠」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
-// 原文链接：https://blog.csdn.net/weixin_41400375/article/details/108629917
-
-// export default connectWebSocket;
-
-// export function createWebSocket(id: number) {
-//   let ws = new WebSocket(`${process.env.REACT_APP_WS_BASE_URL || 'ws://localhost:3001'}/relay/${id}`);
-//   ws.onopen = (ev: Event) => {
-//     console.log('建立连接', ev);
-//   }
-
-//   ws.onclose = (cev: CloseEvent) => {
-//     setTimeout(() => {
-
-//     })
-//     console.log('连接关闭', cev);
-//   }
-
-//   ws.onerror = (ev: Event) => {
-//     console.log('连接错误', ev);
-//   }
-
-//   ws.onmessage = (mev: MessageEvent<any>) => {
-//     console.log(mev);
-//     console.log(mev.data)
-//     let data = null;
-//     try {
-//       data = JSON.parse(mev.data);
-//     } catch (err) {
-//       console.error(err);
-//       return;
-//     }
-//     if (data.type === 'single') {
-//       console.log(data.body)
-//     } else if (data.type === 'notify') {
-//     }
-//   }
-
-// }
+export default webSocketStore;

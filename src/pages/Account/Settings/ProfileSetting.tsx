@@ -1,27 +1,17 @@
+import React, { useState } from "react";
 import { UserOutlined } from "@ant-design/icons";
 import {
-  // Button,
   Card,
   message,
-  // DatePicker,
-  // Input,
-  // Switch,
-  // TimePicker,
   Upload,
 } from "antd";
-// import React from "react";
 
-import React, { useState } from "react";
 import {
   Form,
   Input,
   Button,
-  Radio,
   Select,
-  Cascader,
   DatePicker,
-  InputNumber,
-  TreeSelect,
   Switch,
 } from "antd";
 import styles from "./ProfileSetting.module.less";
@@ -31,7 +21,6 @@ import { UploadChangeParam } from "antd/lib/upload";
 import { UploadFile } from "antd/lib/upload/interface";
 import { useSelector } from "react-redux";
 import { selectUserInfo } from "@/store/userInfoSlice";
-import { UserInfoSubstate } from "@/types/state";
 
 export function ProfileSetting() {
   return (
@@ -89,8 +78,6 @@ export function ProfileSetting() {
 }
 
 type SizeType = Parameters<typeof Form>[0]["size"];
-
-
 
 const props = {
   name: "file",
@@ -191,18 +178,6 @@ export default function FormSizeDemo() {
               />
             </Form.Item>
 
-            {/* <Form.Item label="Password">
-              <Input />
-            </Form.Item> */}
-
-            {/* <Form.Item label="Birthday">
-              <DatePicker
-                onChange={(e) => {
-                  console.log(e);
-                }}
-              />
-            </Form.Item> */}
-
             <Form.Item label="Gender">
               <Select>
                 <Select.Option value="male">Male</Select.Option>
@@ -216,53 +191,10 @@ export default function FormSizeDemo() {
                 Submit
               </Button>
               <Button htmlType="button">Cancel</Button>
-              {/* <Button type="link" htmlType="button" onClick={onFill}>
-                Fill form
-              </Button> */}
             </Form.Item>
-
-            {/* <Form.Item label="TreeSelect">
-              <TreeSelect
-                treeData={[
-                  {
-                    title: "Light",
-                    value: "light",
-                    children: [{ title: "Bamboo", value: "bamboo" }],
-                  },
-                ]}
-              />
-            </Form.Item>
-            <Form.Item label="Cascader">
-              <Cascader
-                options={[
-                  {
-                    value: "zhejiang",
-                    label: "Zhejiang",
-                    children: [
-                      {
-                        value: "hangzhou",
-                        label: "Hangzhou",
-                      },
-                    ],
-                  },
-                ]}
-              />
-            </Form.Item>
-
-            <Form.Item label="InputNumber">
-              <InputNumber />
-            </Form.Item>
-            <Form.Item label="Switch">
-              <Switch />
-            </Form.Item>
-            <Form.Item label="Button">
-              <Button>Button</Button>
-            </Form.Item> */}
           </Form>
         </>
       </Card>
     </div>
   );
 }
-
-// ReactDOM.render(<FormSizeDemo />, mountNode);

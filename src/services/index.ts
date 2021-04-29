@@ -4,6 +4,17 @@ export * as chat from "./chat";
 export * as friend from "./friend";
 export * as user from "./user";
 
+export const group = {
+  postGroups() {
+    return request.post("/groups/", {
+      data: {
+        keyw: "iamiron",
+        time: Date.now(),
+      },
+    });
+  },
+};
+
 export interface BingWallpaperResponse {
   images: {
     startdate: string;

@@ -21,7 +21,7 @@ const renderers = {
   math: ({ value }: { value: any }) => <Tex block math={value} />,
 };
 
-export function MDRender({ children }: { children: string }) {
+export default function MdRenderer({ children }: { children: string }) {
   return (
     <div>
       <Typography>

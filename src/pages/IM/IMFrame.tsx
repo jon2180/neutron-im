@@ -95,10 +95,10 @@ function NavLinks() {
     >
       <Menu.Item>
         <NavLink to="/im/chats" title="最近">
-          <Badge size="small" dot count={unreadCount}>
-            <MessageOutlined />
-            最近
-          </Badge>
+          {/* <Badge size="small" dot count={unreadCount}> */}
+          <MessageOutlined />
+          最近
+          {/* </Badge> */}
         </NavLink>
       </Menu.Item>
       <Menu.Item>
@@ -161,11 +161,6 @@ export default function IMFrame() {
             }}
           >
             <Space>
-              {/* <Button
-                type="text"
-                title="切换主题"
-                icon={<BgColorsOutlined />}
-              ></Button> */}
               <Button type="text" title="搜索">
                 <Link target="_blank" to="/search">
                   <SearchOutlined style={{ color: "#000000" }} />
@@ -175,6 +170,13 @@ export default function IMFrame() {
               <Dropdown
                 overlay={
                   <Menu>
+                    <Menu.Item>
+                      <Button
+                        type="text"
+                        title="切换主题"
+                        icon={<BgColorsOutlined />}
+                      ></Button>
+                    </Menu.Item>
                     <Menu.Item>切换语言</Menu.Item>
                     <Menu.Item>
                       <a

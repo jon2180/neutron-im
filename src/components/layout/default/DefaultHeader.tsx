@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
-import { Dropdown, Layout, Menu, Avatar, Image, Input } from "antd";
+import { Dropdown, Layout, Menu, Avatar } from "antd";
 import { selectUserInfo } from "@/store/userInfoSlice";
 import styles from "./Layout.module.less";
 import logo from "@/assets/neutron-im-logo-2.png";

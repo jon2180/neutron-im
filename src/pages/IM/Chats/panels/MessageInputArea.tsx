@@ -6,7 +6,6 @@ import {
   SmileOutlined,
   PictureOutlined,
   AudioOutlined,
-  VideoCameraAddOutlined,
   EnterOutlined,
 } from "@ant-design/icons";
 import { pushMessage } from "@/store/chatsHistoriesSlice";
@@ -23,13 +22,13 @@ import {
 } from "@/store/recentChatsSlice";
 import { useSelector } from "react-redux";
 import { selectUserInfo } from "@/store/userInfoSlice";
-import { chat } from "@/services";
-
-// function PictureUpload() {}
+import websocketStore from "@/websocket/websocket";
 
 const props = {
   name: "file",
-  action: `${process.env.REACT_APP_API_BASE_URL || '//localhost:3001'}/upload/chat-img`,
+  action: `${
+    process.env.REACT_APP_API_BASE_URL || "//localhost:3001"
+  }/upload/chat-img`,
   headers: {
     Authorization: Cookie.getCookie("Authorization"),
   },
@@ -95,29 +94,22 @@ export default function MessageInputArea() {
     dispatch(pushMessage(msg));
     dispatch(pushLastMessage(msg));
 
-    chat
-      .sendMessage(msg)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    // console.log(getters.websocket);
-    // if (getters.websocket && getters.websocket.readyState === WebSocket.OPEN) {
-    //   getters.websocket.send(
-    //     JSON.stringify({
-    //       sender: userInfo.id,
-    //       receiver: chatData.target_id,
-    //       timestamp: Date.now(),
-    //       type: "single",
-    //       body: msg,
-    //     })
-    //   );
-    // } else {
-    //   console.error("本地已离线，或程序逻辑错误");
-    // }
+    if (
+      websocketStore.websocket &&
+      websocketStore.websocket.readyState === WebSocket.OPEN
+    ) {
+      websocketStore.websocket.send(
+        JSON.stringify({
+          sender: userInfo.id,
+          receiver: chatData.target_id,
+          timestamp: Date.now(),
+          type: "single",
+          body: msg,
+        })
+      );
+    } else {
+      console.error("本地已离线，或程序逻辑错误");
+    }
 
     setInputValue("");
   };
@@ -130,9 +122,9 @@ export default function MessageInputArea() {
             content={
               <div>
                 <EmojiPicker
-                // addEmoji={(e) => {
-                //   console.log(e);
-                // }}
+                  addEmoji={(e) => {
+                    console.log(e);
+                  }}
                 />
               </div>
             }

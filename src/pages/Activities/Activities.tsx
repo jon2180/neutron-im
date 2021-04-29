@@ -1,20 +1,17 @@
-import {
-  Button,
-  Card,
-  Comment,
-  Input,
-  /*  Dropdown, Layout,  */ List,
-  /* Menu,  */ Tooltip,
-} from "antd";
-import Avatar from "antd/lib/avatar/avatar";
-import { ActivityContent } from "./Activity";
+import React from "react";
+import { Card, /* Menu,  */ Tooltip, List } from "antd";
 import styles from "./Activities.module.less";
-import React, { useState } from "react";
 import moment from "moment";
-// import AppFrame from "@/components/layout/AppFrame";
-import DefaultFrame from "@/components/layout/AppFrame";
 
-const data = [
+interface IActivity {
+  actions: JSX.Element[];
+  author: string;
+  avatar: string;
+  content: JSX.Element;
+  datetime: JSX.Element;
+}
+
+const data: IActivity[] = [
   {
     actions: [<span key="comment-list-reply-to-0">Reply to</span>],
     author: "Han Solo",
@@ -55,15 +52,22 @@ const data = [
   },
 ];
 
-export default function Activities() {
-  // const activityData =
-  // const [activityData, setActivityData] = useState({});
-
+function renderItem(item: IActivity, index: number) {
   return (
-    // <DefaultFrame>
+    <List.Item>
+      <div>{item.content}</div>
+      <div>{item.datetime}</div>
+      <div>{item.author}</div>
+    </List.Item>
+  );
+}
+
+export default function Activities() {
+  return (
     <div className={styles.content}>
-      <Card>Hello Activities</Card>
+      <Card title="Hello Activities">
+        <List dataSource={data} renderItem={renderItem}></List>
+      </Card>
     </div>
-    // </DefaultFrame>
   );
 }

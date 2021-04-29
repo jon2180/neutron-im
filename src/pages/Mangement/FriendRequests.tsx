@@ -1,12 +1,11 @@
-import React, { useCallback, useMemo, useState } from "react";
-import { searchAccount } from "@/services/friend";
-import { Input, List } from "antd";
+import React from "react";
+import { List } from "antd";
 
 import styles from "./FriendRequests.module.less";
 
 export default function FriendsRequest() {
   return (
-    <div>
+    <div className={styles.container}>
       <List>
         <List.Item>
           <div></div>

@@ -77,10 +77,14 @@ export interface ChatData {
   last_msg_content: string;
   unread_count: number;
   status: number;
-
   time: number;
-  avatar: string;
-  account_name: string;
+
+  account_nickname: string;
+  account_email: string;
+  account_avatar: string;
+  account_id: string;
+  account_signature: string;
+  account_status: string;
 }
 
 export interface FriendData {
@@ -119,52 +123,3 @@ export interface RequestType {
 }
 
 export type RequestsType = RequestType[];
-
-// export interface ChatData {
-//   accountId: string;
-//   avatar: string;
-//   accountName: string;
-//   lastMsg: string;
-//   time: number;
-//   unread: number;
-// }
-
-// export interface Chat {
-//   id: number;
-//   cid: string;
-//   account_id: string;
-//   type: number;
-//   opposite_name: string;
-//   sender_id: number;
-//   receiver_id: number;
-//   last_msg_time: string;
-//   last_msg_id: number;
-//   last_msg_content: string;
-//   unread_count: number;
-
-//   time: number;
-//   avatar: string;
-//   account_name: string;
-// }
-// /**
-//  * 单聊的聊天记录
-//  */
-// export interface ISingleChatHistory {
-//   [id: string]: {
-//     name: string;
-//     avatar: string;
-//     chatHistory: Array<IMessage>;
-//   };
-// }
-
-// /**
-//  * 群聊的聊天记录
-//  */
-// export interface IGroupChatHistory {
-//   [groupId: string]: {
-//     name: string;
-//     avatar: string;
-//     groupNotices: Array<INotice>;
-//     chatHistory: Array<IMessage>;
-//   };
-// }
