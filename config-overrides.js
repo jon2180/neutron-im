@@ -1,4 +1,4 @@
-const { override, addWebpackAlias, fixBabelImports, addLessLoader, enableEslintTypescript } = require('customize-cra')
+const { override, addWebpackAlias, fixBabelImports, addLessLoader } = require('customize-cra')
 const path = require('path')
 
 module.exports = {
@@ -23,8 +23,7 @@ module.exports = {
           // '@primary-color': '#1DA57A' 
         },
       }
-    }),
-    enableEslintTypescript()
+    })
   ),
   // The Jest config to use when running your jest tests - note that the normal rewires do not
   // work here.

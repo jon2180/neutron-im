@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Avatar, Button, Col, Input, Popover, Row } from "antd";
 import MdRenderer from "@/components/MdRenderer";
 import styles from "./Editor.module.less";
-import { Helmet } from "react-helmet";
+import Helmet from "@/components/Helmet";
 import { useSelector } from "react-redux";
 import { selectUserInfo } from "@/store/userInfoSlice";
 import useWindowDimensions from "@/utils/hooks";

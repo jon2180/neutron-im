@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from "react";
 import { UserOutlined } from "@ant-design/icons";
 import {
@@ -21,6 +22,7 @@ import { UploadChangeParam } from "antd/lib/upload";
 import { UploadFile } from "antd/lib/upload/interface";
 import { useSelector } from "react-redux";
 import { selectUserInfo } from "@/store/userInfoSlice";
+import AppConstants from "@/config/url.const";
 
 export function ProfileSetting() {
   return (
@@ -81,7 +83,7 @@ type SizeType = Parameters<typeof Form>[0]["size"];
 
 const props = {
   name: "file",
-  action: `${process.env.REACT_APP_API_BASE_URL || '//localhost:3001'}/upload/chat-img`,
+  action: AppConstants.AVATAR_UPLOAD_URL,
   headers: {
     Authorization: Cookie.getCookie("Authorization"),
   },

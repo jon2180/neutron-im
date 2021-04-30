@@ -23,12 +23,11 @@ import {
 import { useSelector } from "react-redux";
 import { selectUserInfo } from "@/store/userInfoSlice";
 import websocketStore from "@/websocket/websocket";
+import AppConstants from "@/config/url.const";
 
 const props = {
   name: "file",
-  action: `${
-    process.env.REACT_APP_API_BASE_URL || "//localhost:3001"
-  }/upload/chat-img`,
+  action: AppConstants.PIC_UPLOAD_URL,
   headers: {
     Authorization: Cookie.getCookie("Authorization"),
   },

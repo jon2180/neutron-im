@@ -64,7 +64,7 @@ function MessageContent({
   }
 }
 
-const MS_IN_DAY = 1e3 * 3600 * 24;
+// const MS_IN_DAY = 1e3 * 3600 * 24;
 
 /**
  * 消息列表框

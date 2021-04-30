@@ -11,8 +11,14 @@ import {
 import styles from "./Login.module.less";
 import Captcha from "./Captcha";
 
+export interface LoginParams {
+  email: string;
+  password: string;
+  captcha: string;
+}
+
 export default function LoginForm(props: {
-  onSubmit: (email: string, password: string, captcha: string) => void;
+  onSubmit: (params: LoginParams) => void;
 }) {
   const [email, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -21,7 +27,7 @@ export default function LoginForm(props: {
 
   const submitForm = () => {
     setSubmitting(true);
-    props.onSubmit(email, password, captcha);
+    props.onSubmit({ email, password, captcha });
     setSubmitting(false);
   };
 

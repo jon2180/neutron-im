@@ -12,13 +12,15 @@ import {
 import styles from "./Login.module.less";
 import Captcha from "./Captcha";
 
+export interface RegisterParams {
+  email: string;
+  password: string;
+  nickname: string;
+  captcha: string;
+}
+
 export default function RegisterForm(props: {
-  onSubmit: (data: {
-    email: string;
-    password: string;
-    nickname: string;
-    captcha: string;
-  }) => void;
+  onSubmit: (data: RegisterParams) => void;
 }) {
   const [email, setEmail] = useState("");
   const [nickname, setNickname] = useState("");

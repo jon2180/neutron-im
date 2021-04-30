@@ -2,7 +2,7 @@ import React from "react";
 import { Layout } from "antd";
 import { Footer } from "./DefaultFooter";
 import Header from "./DefaultHeader";
-import { Helmet } from "react-helmet";
+import Helmet from "@/components/Helmet";
 import useWindowDimensions from "@/utils/hooks";
 
 export function DefaultFrame({

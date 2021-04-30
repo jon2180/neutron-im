@@ -5,6 +5,7 @@
 import { extend } from "umi-request";
 import { message, notification } from "antd";
 import { Cookie } from "./cookie";
+import AppConstants from "@/config/url.const";
 
 export const codeMessage: {
   [id: number]: string;
@@ -30,10 +31,10 @@ export const codeMessage: {
  * 配置request请求时的默认参数
  */
 const request = extend({
-  prefix: process.env.REACT_APP_API_BASE_URL || "//localhost:3001",
+  prefix: AppConstants.API_BASE_URL,
   timeout: 10000,
   mode: "cors",
-  credentials: "omit", // 默认请求是否带上cookie
+  credentials: "include", // 默认请求是否带上cookie
   // 默认错误处理
   headers: {
     Authorization: Cookie.getCookie("Authorization"),

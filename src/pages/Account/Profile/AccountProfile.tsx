@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import styles from "./FriendProfile.module.less";
-import { Helmet } from "react-helmet";
+import Helmet from "@/components/Helmet";
 import { Card, Avatar, Skeleton, Button, message } from "antd";
 import {
   GithubOutlined,

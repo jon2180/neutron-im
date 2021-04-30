@@ -8,17 +8,7 @@ import {
   SearchOutlined,
   BgColorsOutlined,
 } from "@ant-design/icons";
-import {
-  Avatar,
-  Button,
-  Badge,
-  Menu,
-  Space,
-  Row,
-  Col,
-  Dropdown,
-  message,
-} from "antd";
+import { Avatar, Button, Menu, Space, Row, Col, Dropdown, message } from "antd";
 import { useSelector } from "react-redux";
 
 import { Link, NavLink, Switch } from "react-router-dom";
@@ -56,6 +46,7 @@ const navLinks = [
 ];
 
 function NavLinks() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [unreadCount, setUnreadCount] = useState(0);
   const recentChats = useSelector(selectAllChats);
 
@@ -95,10 +86,8 @@ function NavLinks() {
     >
       <Menu.Item>
         <NavLink to="/im/chats" title="最近">
-          {/* <Badge size="small" dot count={unreadCount}> */}
           <MessageOutlined />
           最近
-          {/* </Badge> */}
         </NavLink>
       </Menu.Item>
       <Menu.Item>

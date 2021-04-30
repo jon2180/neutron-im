@@ -6,6 +6,7 @@ import { UserInfoSubstate } from "@/types/state";
 import { Cookie } from "@/utils/cookie";
 import { importUserInfo } from "@/utils/localStorage";
 import { pushMessage } from "@/store/chatsHistoriesSlice";
+import AppConstants from "@/config/url.const";
 
 export interface WebSocketMessage {
   sender: string;
@@ -192,9 +193,7 @@ export function connectWebSocket() {
   const userInfo = importUserInfo() as UserInfoSubstate | null;
   if (userInfo && userInfo.id && userInfo.email) {
     return new MyWebSocket(
-      `${process.env.REACT_APP_WS_BASE_URL || "ws://localhost:3001"}/relay/${
-        userInfo.id
-      }`
+      `${AppConstants.WEBSOCKET_URL}/relay/${userInfo.id}`
     );
   } else {
     return undefined;
