@@ -1,7 +1,11 @@
+@header-height: 48px;
+
 .header {
   display: flex;
   justify-content: space-between;
-  color: #ffffff;
+  background-color: #fff;
+  height: @header-height;
+  line-height: @header-height;
 
   .iconAndNav {
     display: flex;
@@ -9,17 +13,41 @@
 
   .iconLink {
     display: inline-block;
-    height: 100%;
+    height: 96%;
+    box-shadow: none;
 
     img {
-      height: inherit;
+      height: 100%;
     }
+  }
+
+  .menu {
+    height: @header-height;
+    line-height: @header-height;
   }
 
   .nav {
     margin-left: 16px;
     // color: #ffffff;
     background-color: transparent;
+  }
+
+  .rightCol {
+    display: flex;
+    justify-content: flex-end;
+
+    .accountLink {
+      padding: 0 8px;
+    }
+
+    .accountLink:hover {
+      background-color: #f9f9f9;
+    }
+
+    .username {
+      line-height: @header-height;
+      margin-left: 8px;
+    }
   }
 }
 
@@ -29,38 +57,45 @@
   margin: 10px auto;
 }
 
-.rightCol {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.searchBox {
-  margin: 16px 16px 0 16px;
-  width: 200px;
-  // height: 48px;
-  // line-height: 48px;
-  // color: #333;
-  // border-radius: 24px;
-  // outline: none;
-  // border: none;
-  // padding: 4px 8px;
-}
+@main-color: #666666;
+@link-color: #848587;
+@link-hover-color: #333333;
 
 .footer {
   width: 100%;
-  // width: 800px;
-  // margin: 16px auto;
-  text-align: center;
-}
 
-.footerContent {
-  display: flex;
-  justify-content: space-around;
-}
+  a,
+  a:active,
+  a:visited {
+    color: @link-color;
+  }
 
-.nav1,
-.nav2,
-.nav3 {
-  list-style: none;
-  width: 200px;
+  a:hover {
+    color: @link-hover-color;
+  }
+
+  .linksTitle {
+    color: @main-color;
+  }
+
+  .footerContent {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .nav1,
+  .nav2,
+  .nav3 {
+    list-style: none;
+    width: 200px;
+
+    li {
+      margin: 4px 0;
+    }
+  }
+
+  .copyright {
+    color: @main-color;
+    text-align: center;
+  }
 }

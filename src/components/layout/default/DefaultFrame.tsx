@@ -3,7 +3,6 @@ import { Layout } from "antd";
 import { Footer } from "./DefaultFooter";
 import Header from "./DefaultHeader";
 import Helmet from "@/components/Helmet";
-import useWindowDimensions from "@/utils/hooks";
 
 export function DefaultFrame({
   children,
@@ -12,10 +11,12 @@ export function DefaultFrame({
   children: JSX.Element;
   title?: string;
 }) {
-  const { height } = useWindowDimensions();
+  const layoutStyle: React.CSSProperties = {
+    minHeight: "100vh",
+  };
 
   return (
-    <Layout>
+    <>
       {title ? (
         <Helmet>
           <title>{title}</title>
@@ -23,15 +24,11 @@ export function DefaultFrame({
       ) : (
         <span></span>
       )}
-      <Header></Header>
-      <Layout.Content
-        style={{
-          minHeight: `${height - 64 - 180}px`,
-        }}
-      >
-        {children}
-      </Layout.Content>
-      <Footer></Footer>
-    </Layout>
+      <Layout style={layoutStyle}>
+        <Header></Header>
+        <Layout.Content>{children}</Layout.Content>
+        <Footer></Footer>
+      </Layout>
+    </>
   );
 }
