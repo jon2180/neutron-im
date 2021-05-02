@@ -55,6 +55,7 @@
     "@types/react-redux": "^7.1.16",
     "@types/react-router-dom": "^5.1.7",
     "@types/react-syntax-highlighter": "^13.5.0",
+    "babel-plugin-dynamic-import-node": "^2.3.3",
     "babel-plugin-import": "^1.13.3",
     "customize-cra": "^1.0.0",
     "less": "^4.1.1",
@@ -78,6 +79,28 @@
         }
       }
     }
+  },
+  "babel": {
+    "presets": [
+      "react-app"
+    ],
+    "env": {
+      "development": {
+        "plugins": [
+          "dynamic-import-node"
+        ]
+      }
+    },
+    "plugins": [
+      [
+        "import",
+        {
+          "libraryName": "antd",
+          "libraryDirectory": "es",
+          "style": "less"
+        }
+      ]
+    ]
   },
   "browserslist": {
     "production": [

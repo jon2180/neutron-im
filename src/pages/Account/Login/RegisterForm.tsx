@@ -11,6 +11,7 @@ import {
 
 import styles from "./Login.module.less";
 import Captcha from "./Captcha";
+import { FormattedMessage } from "react-intl";
 
 export interface RegisterParams {
   email: string;
@@ -114,7 +115,7 @@ export default function RegisterForm(props: {
           icon={<LoginOutlined />}
           block
         >
-          Submit
+          <FormattedMessage id="app.register.submit" defaultMessage="Sign On" />
         </Button>
       </Form.Item>
     </Form>

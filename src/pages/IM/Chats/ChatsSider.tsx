@@ -23,10 +23,10 @@ const MENU_ID = "menu-id";
 export function RecentChatItem(props: { data: ChatData }) {
   const { data } = props;
 
-    // 🔥 you can use this hook from everywhere. All you need is the menu id
-    const { show } = useContextMenu({
-      id: MENU_ID,
-    });
+  // 🔥 you can use this hook from everywhere. All you need is the menu id
+  const { show } = useContextMenu({
+    id: MENU_ID,
+  });
 
   return (
     <Link
@@ -70,9 +70,9 @@ export default function ChatsSider() {
   // TODO
   const recentChats = useSelector(selectAllChats);
   const params = useParams<{ id: string }>();
-  
-  function handleItemClick({ event, props, triggerEvent, data }: any){
-    console.log(event, props, triggerEvent, data );
+
+  function handleItemClick({ event, props, triggerEvent, data }: any) {
+    console.log(event, props, triggerEvent, data);
   }
 
   useEffect(() => {
@@ -98,20 +98,14 @@ export default function ChatsSider() {
           </List.Item>
         )}
       />
-       <Menu id={MENU_ID}>
-        <Item onClick={handleItemClick}>
-          Item 1
-        </Item>
-        <Item onClick={handleItemClick}>
-          Item 2
-        </Item>
+      <Menu id={MENU_ID}>
+        <Item onClick={handleItemClick}>Item 1</Item>
+        <Item onClick={handleItemClick}>Item 2</Item>
         <Separator />
         <Item disabled>Disabled</Item>
         <Separator />
         <Submenu label="Submenu">
-          <Item onClick={handleItemClick}>
-            Sub Item 1
-          </Item>
+          <Item onClick={handleItemClick}>Sub Item 1</Item>
           <Item onClick={handleItemClick}>Sub Item 2</Item>
         </Submenu>
       </Menu>

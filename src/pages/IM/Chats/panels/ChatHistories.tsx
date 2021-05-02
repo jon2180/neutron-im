@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef } from "react";
-import { List, Avatar, Button } from "antd";
+import { List, Avatar, Button, Spin } from "antd";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import useWindowDimensions from "@/utils/hooks";
@@ -17,6 +17,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { useAppDispatch } from "@/store/store";
 import { selectRecentChatById } from "@/store/recentChatsSlice";
 import { ReloadOutlined } from "@ant-design/icons";
+import { useIntl } from "react-intl";
 
 /**
  * 把 消息数据 转成 jsx
@@ -70,6 +71,7 @@ function MessageContent({
  * 消息列表框
  */
 export default function ChatHistories() {
+  const intl = useIntl();
   const userInfo = useSelector(selectUserInfo);
   const { height } = useWindowDimensions();
   const dispatch = useAppDispatch();
@@ -82,11 +84,12 @@ export default function ChatHistories() {
   let chatHistory = useSelector(selectChatHistoryById(params.id));
   let currentChat = useSelector(selectRecentChatById(params.id));
   const messagesEnd = useRef<HTMLDivElement>(null);
+  const messagesBox = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = (delay = 0) => {
     setTimeout(() => {
       if (messagesEnd && messagesEnd.current) {
-        messagesEnd.current.scrollIntoView({ behavior: "smooth" });
+        messagesEnd.current.scrollIntoView({ behavior: "auto" });
       }
     }, delay);
   };
@@ -101,7 +104,6 @@ export default function ChatHistories() {
       if (fetchChatHistory.fulfilled.match(resultAction)) {
         const res = unwrapResult(resultAction);
         console.log(res);
-        scrollToBottom();
       }
     },
     [dispatch]
@@ -112,6 +114,7 @@ export default function ChatHistories() {
       console.log("fetch chat history...");
       handleGetHistory({ id: params.id, type: "single" });
       // dispatch(fetchChatHistory({ chatId: params.id, type: "single" }));
+      scrollToBottom();
     }
   }, [handleGetHistory, chatHistory, params]);
 
@@ -119,16 +122,58 @@ export default function ChatHistories() {
     scrollToBottom();
   }, [chatHistory]);
 
+  const renderMessage = (item: MessageData, index: number) => {
+    let shouldShowTime = true;
+    // 时间差小于 150s 不显示
+    if (index > 0 && item.time - chatHistory[index - 1].time < 150 * 1000) {
+      shouldShowTime = false;
+    }
+
+    return (
+      <>
+        {shouldShowTime ? (
+          <List.Item style={{ padding: "0" }}>
+            <div
+              className={styles.time}
+              style={{
+                margin: "0 auto",
+              }}
+            >
+              {typeof item.time === "number"
+                ? formatTimestamp(item.time)
+                : item.time}
+            </div>
+          </List.Item>
+        ) : (
+          <span />
+        )}
+
+        <List.Item style={{ padding: "0" }}>
+          <div className={styles.message}>
+            <div className={styles.avatar}>
+              {userInfo.id === item.sender_id ? (
+                <Avatar src={userInfo.avatar}></Avatar>
+              ) : (
+                <Avatar src={currentChat?.account_avatar}></Avatar>
+              )}
+            </div>
+            <div className={styles.messageContent}>
+              <MessageContent myid={userInfo.id} data={item} />
+            </div>
+          </div>
+        </List.Item>
+      </>
+    );
+  };
+
   return (
-    <div className={styles.messageBox} style={{ height: `${height - 200}px` }}>
-      <div
-        style={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "center",
-          margin: "16px 0",
-        }}
-      >
+    <div
+      className={styles.messageBox}
+      ref={messagesBox}
+      style={{ height: `${height - 200}px` }}
+    >
+      <div className={styles.loadMore}>
+        <Spin spinning={true} size="small" />
         <Button
           type="text"
           shape="circle"
@@ -136,59 +181,17 @@ export default function ChatHistories() {
             console.log(e);
           }}
           icon={<ReloadOutlined />}
-          title="加载更多"
+          title={intl.formatMessage({
+            id: "loadmore",
+            defaultMessage: "Load more",
+          })}
         ></Button>
       </div>
       <List
         itemLayout="horizontal"
         dataSource={chatHistory || []}
         split={false}
-        renderItem={(item, index) => {
-          let shouldShowTime = true;
-          // 时间差小于 150s 不显示
-          if (
-            index > 0 &&
-            item.time - chatHistory[index - 1].time < 150 * 1000
-          ) {
-            shouldShowTime = false;
-          }
-
-          return (
-            <>
-              {shouldShowTime ? (
-                <List.Item style={{ padding: "0" }}>
-                  <div
-                    className={styles.time}
-                    style={{
-                      margin: "0 auto",
-                    }}
-                  >
-                    {typeof item.time === "number"
-                      ? formatTimestamp(item.time)
-                      : item.time}
-                  </div>
-                </List.Item>
-              ) : (
-                <span />
-              )}
-
-              <List.Item style={{ padding: "0" }}>
-                <div className={styles.message}>
-                  <div className={styles.avatar}>
-                    {userInfo.id === item.sender_id ? (
-                      <Avatar src={userInfo.avatar}></Avatar>
-                    ) : (
-                      <Avatar src={currentChat?.account_avatar}></Avatar>
-                    )}
-                  </div>
-                  <div className={styles.messageContent}>
-                    <MessageContent myid={userInfo.id} data={item} />
-                  </div>
-                </div>
-              </List.Item>
-            </>
-          );
-        }}
+        renderItem={renderMessage}
       />
       <div
         style={{ clear: "both", height: "1px", width: "100%" }}

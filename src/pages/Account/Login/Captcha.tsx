@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import AppConstants from "@/config/url.const";
 import styles from "./Captcha.module.less";
+import { useIntl } from "react-intl";
 
 export default function Captcha(props: any) {
+  const intl = useIntl();
   const [captchaUrl, setCaptchaUrl] = useState(AppConstants.CAPTCHA_URL);
 
   const reloadCaptcha = () => {
@@ -13,7 +15,7 @@ export default function Captcha(props: any) {
     <img
       src={captchaUrl}
       className={styles.captchaPic}
-      alt="captcha"
+      alt={intl.formatMessage({ id: "alt.captcha", defaultMessage: "Captcha" })}
       onClick={reloadCaptcha}
       {...props}
     />

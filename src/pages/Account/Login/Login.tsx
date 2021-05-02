@@ -17,22 +17,32 @@ import { UserInfoSubstate } from "@/types/state";
 import AppConstans from "@/config/url.const";
 import { exportUserInfo } from "@/utils/localStorage";
 import Helmet from "@/components/Helmet";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export default withRouter(function Login(props) {
   const dispatch = useAppDispatch();
   const [redirect] = useState(url.parse(props.location.search, true).query);
-
+  const intl = useIntl();
   // 处理提交
   const onSubmit = useCallback(
     async ({ email, password, captcha }: LoginParams) => {
       const MESSAGE_KEY = "MESSAGE_KEY";
       message.loading({
-        content: "登录中...",
+        content: intl.formatMessage({
+          id: "app.login.logging",
+          defaultMessage: "Logging in...",
+        }),
         key: MESSAGE_KEY,
       });
       // 检查验证码的合理性
       if (!isEmail(email) || !isPassword(password) || !captcha) {
-        message.error("账号或密码格式不符合规则", 0.5);
+        message.error(
+          intl.formatMessage({
+            id: "app.login.form.invalid_account_password_format",
+            defaultMessage: "Invalid format of account or password",
+          }),
+          0.5
+        );
         message.destroy(MESSAGE_KEY);
         return;
       }
@@ -44,7 +54,13 @@ export default withRouter(function Login(props) {
           captcha,
         });
         if (res.status === 20000) {
-          message.info("登录成功", 0.5);
+          message.info(
+            intl.formatMessage({
+              id: "app.login.logged",
+              defaultMessage: "Logged in",
+            }),
+            0.5
+          );
 
           // 获取用户信息，并初始化 redux 中的 userInfo
           // 更新用户的登录状态
@@ -73,56 +89,69 @@ export default withRouter(function Login(props) {
       }
       message.destroy(MESSAGE_KEY);
     },
-    [dispatch, redirect, props.history]
+    [dispatch, redirect, props.history, intl]
   );
 
-  const submitReg = useCallback(async (params: RegisterParams) => {
-    const MESSAGE_KEY = "MESSAGE_KEY";
-    message.loading({
-      content: "注册中...",
-      key: MESSAGE_KEY,
-    });
-    // 检查验证码的合理性
-    if (
-      !isEmail(params.email) ||
-      !isPassword(params.password) ||
-      !params.nickname ||
-      !params.captcha
-    ) {
-      message.error("账号或密码格式不符合规则", 0.5);
-      message.destroy(MESSAGE_KEY);
-      return;
-    }
-
-    const [err, res] = await hpre(
-      postAccount({
-        email: params.email,
-        password: params.password,
-        nickname: params.nickname,
-        captcha: params.captcha,
-      })
-    );
-
-    // 验证登录结果，需要重新实现验证效果
-    if (err) {
-      if (err.response.status !== 400) {
-        message.error(`表单数据不合法 ${err.data.error}`);
-        console.error(err.data);
+  const submitReg = useCallback(
+    async (params: RegisterParams) => {
+      const MESSAGE_KEY = "MESSAGE_KEY";
+      message.loading({
+        content: "注册中...",
+        key: MESSAGE_KEY,
+      });
+      // 检查验证码的合理性
+      if (
+        !isEmail(params.email) ||
+        !isPassword(params.password) ||
+        !params.nickname ||
+        !params.captcha
+      ) {
+        message.error(
+          intl.formatMessage({
+            id: "app.login.form.invalid_account_password_format",
+            defaultMessage: "Invalid format of account or password",
+          }),
+          0.5
+        );
+        message.destroy(MESSAGE_KEY);
+        return;
       }
+
+      const [err, res] = await hpre(
+        postAccount({
+          email: params.email,
+          password: params.password,
+          nickname: params.nickname,
+          captcha: params.captcha,
+        })
+      );
+
+      // 验证登录结果，需要重新实现验证效果
+      if (err) {
+        if (err.response.status !== 400) {
+          message.error(`表单数据不合法 ${err.data.error}`);
+          console.error(err.data);
+        }
+        message.destroy(MESSAGE_KEY);
+        return;
+      }
+
+      if (!res) {
+        message.destroy(MESSAGE_KEY);
+        return;
+      }
+
+      message.info(
+        intl.formatMessage({
+          id: "app.register.registered",
+          defaultMessage: "Register successfully",
+        }),
+        0.5
+      );
       message.destroy(MESSAGE_KEY);
-      return;
-    }
-
-    if (!res) {
-      message.destroy(MESSAGE_KEY);
-      return;
-    }
-
-    message.info("注册成功", 0.5);
-    message.destroy(MESSAGE_KEY);
-  }, []);
-
-  document.title = "Sign In to Neutron IM";
+    },
+    [intl]
+  );
 
   return (
     <div
@@ -132,15 +161,43 @@ export default withRouter(function Login(props) {
       className={styles.fullscreenContainer}
     >
       <Helmet>
-        <title>Sign In to Neutron IM</title>
+        {/* <title><FormattedMessage id="app.login" defaultMessage="Sign in to Neutron-IM"/></title> */}
+        <title>
+          {intl.formatMessage({
+            id: "app.login",
+            defaultMessage: "Sign in to Neutron-IM",
+          })}
+        </title>
       </Helmet>
       <div className={styles.formContainer}>
-        <div className={styles.title}>Sign in to Neutron-IM</div>
+        <div className={styles.title}>
+          <FormattedMessage
+            id="app.login.greeting"
+            description="Greeting to welcome the user to the app"
+            defaultMessage="Hello, {name}!"
+            values={{
+              name: "Eric",
+            }}
+          />
+          {/* Sign in to Neutron-IM */}
+        </div>
         <Tabs defaultActiveKey="1" centered>
-          <Tabs.TabPane tab="登录" key="1">
+          <Tabs.TabPane
+            tab={intl.formatMessage({
+              id: "app.login",
+              defaultMessage: "Login",
+            })}
+            key="1"
+          >
             <LoginForm onSubmit={onSubmit} />
           </Tabs.TabPane>
-          <Tabs.TabPane tab="注册" key="2">
+          <Tabs.TabPane
+            tab={intl.formatMessage({
+              id: "app.register",
+              defaultMessage: "Register",
+            })}
+            key="2"
+          >
             <RegisterForm onSubmit={submitReg} />
           </Tabs.TabPane>
         </Tabs>

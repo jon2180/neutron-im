@@ -13,7 +13,7 @@ import { useAppDispatch } from "@/store/store";
 import { MessageData } from "@/types/http";
 
 import styles from "./MessageInputArea.module.less";
-import EmojiPicker from "./EmojiPicker";
+import EmojiPicker, { EmojiSelectHandler } from "./EmojiPicker";
 import { UploadChangeParam, UploadFile } from "antd/lib/upload/interface";
 import { Cookie } from "@/utils/cookie";
 import {
@@ -24,24 +24,6 @@ import { useSelector } from "react-redux";
 import { selectUserInfo } from "@/store/userInfoSlice";
 import websocketStore from "@/websocket/websocket";
 import AppConstants from "@/config/url.const";
-
-const props = {
-  name: "file",
-  action: AppConstants.PIC_UPLOAD_URL,
-  headers: {
-    Authorization: Cookie.getCookie("Authorization"),
-  },
-  onChange(info: UploadChangeParam<UploadFile<any>>): void {
-    if (info.file.status !== "uploading") {
-      console.log(info.file, info.fileList);
-    }
-    if (info.file.status === "done") {
-      message.success(`${info.file.name} file uploaded successfully`);
-    } else if (info.file.status === "error") {
-      message.error(`${info.file.name} file upload failed.`);
-    }
-  },
-};
 
 // TODO 录音
 const recordSound: React.MouseEventHandler<HTMLElement> = (e) => {
@@ -64,6 +46,7 @@ const recordSound: React.MouseEventHandler<HTMLElement> = (e) => {
  */
 export default function MessageInputArea() {
   const [inputValue, setInputValue] = useState("");
+  const [urls, setUrls] = useState<string[]>([]);
   const dispatch = useAppDispatch();
   const params = useParams<{
     id: string;
@@ -72,6 +55,27 @@ export default function MessageInputArea() {
 
   const chatData = useSelector(selectRecentChatById(params.id));
   const userInfo = useSelector(selectUserInfo);
+
+  const props = {
+    name: "file",
+    action: AppConstants.PIC_UPLOAD_URL,
+    headers: {
+      Authorization: Cookie.getCookie("Authorization"),
+    },
+    onChange(info: UploadChangeParam<UploadFile<any>>): void {
+      if (info.file.status !== "uploading") {
+        console.log(info.fileList);
+      }
+      if (info.file.status === "done") {
+        const currentUrls = urls;
+        currentUrls.push("string");
+        setUrls(currentUrls);
+        message.success(`${info.file.name} file uploaded successfully`);
+      } else if (info.file.status === "error") {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
+  };
 
   const sendMessage = () => {
     if (inputValue === "") return;
@@ -113,6 +117,10 @@ export default function MessageInputArea() {
     setInputValue("");
   };
 
+  const selectEmoji: EmojiSelectHandler = (e) => {
+    setInputValue(inputValue + e.native);
+  };
+
   return (
     <div className={styles.input_box}>
       <div className={styles.operationBar}>
@@ -120,15 +128,13 @@ export default function MessageInputArea() {
           <Popover
             content={
               <div>
-                <EmojiPicker
-                  addEmoji={(e) => {
-                    console.log(e);
-                  }}
-                />
+                <EmojiPicker addEmoji={selectEmoji} />
               </div>
             }
             // title="Title"
+            overlayClassName="overlayEmojiPicker"
             trigger="click"
+            destroyTooltipOnHide={false}
             placement="topLeft"
           >
             <Button type="text" icon={<SmileOutlined />}></Button>

@@ -1,20 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from "react";
 import { UserOutlined } from "@ant-design/icons";
-import {
-  Card,
-  message,
-  Upload,
-} from "antd";
+import { Card, message, Upload } from "antd";
 
-import {
-  Form,
-  Input,
-  Button,
-  Select,
-  DatePicker,
-  Switch,
-} from "antd";
+import { Form, Input, Button, Select, DatePicker, Switch } from "antd";
 import styles from "./ProfileSetting.module.less";
 import Avatar from "antd/lib/avatar/avatar";
 import { Cookie } from "@/utils/cookie";
@@ -24,7 +13,7 @@ import { useSelector } from "react-redux";
 import { selectUserInfo } from "@/store/userInfoSlice";
 import AppConstants from "@/config/url.const";
 
-export function ProfileSetting() {
+export default function ProfileSetting() {
   return (
     <div>
       <Card title="用户信息设置" className={styles.settingCard}>
@@ -101,7 +90,7 @@ const props = {
 const tailLayout = {
   wrapperCol: { offset: 4, span: 16 },
 };
-export default function FormSizeDemo() {
+export function FormSizeDemo() {
   const userInfo = useSelector(selectUserInfo);
   // const [newUserInfo, setNewUserInfo] = useState<UserInfoSubstate>(userInfo);
   const [avatar, setAvatar] = useState(userInfo.avatar);

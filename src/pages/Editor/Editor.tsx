@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { selectUserInfo } from "@/store/userInfoSlice";
 import useWindowDimensions from "@/utils/hooks";
 
-export function Editor() {
+export default function Editor() {
   const [str, setStr] = useState("");
   const userInfo = useSelector(selectUserInfo);
   const [title, setTitle] = useState("");

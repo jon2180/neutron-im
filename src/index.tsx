@@ -11,6 +11,7 @@ import { initializeUserInfo } from "./utils/localStorage";
 import { ConfigProvider } from "antd";
 import zh_CN from "antd/lib/locale/zh_CN";
 import { IntlProvider } from "react-intl";
+import { zh_CN as myZhCN } from "@/locales";
 
 initializeUserInfo();
 
@@ -18,7 +19,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ConfigProvider locale={zh_CN}>
-        <IntlProvider locale={IntlProvider.defaultProps.defaultLocale}>
+        <IntlProvider {...myZhCN}>
           <App />
         </IntlProvider>
       </ConfigProvider>
