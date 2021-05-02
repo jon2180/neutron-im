@@ -23,6 +23,7 @@ import ProfileSetting from "./pages/Account/Settings/ProfileSetting";
 import Editor from "./pages/Editor/Editor";
 import Error404 from "./pages/Error/Error404";
 import Search from "./pages/Search/Search";
+import Logout from "./pages/Account/Logout";
 // import Activity from "./Activities/Activity";
 // import ProfileSetting from "./Account/Settings/ProfileSetting";
 
@@ -73,10 +74,14 @@ const routes: RouterConfig[] = [
         component: ReactIntroduction,
       },
       {
-        path: "/",
+        name: "logout",
+        path: "/logout",
+        component: Logout,
+        exact: true,
+      },
+      {
         name: "topLayout",
         component: DefaultFrame,
-        // exact: true,
         authority: ["admin"],
         children: [
           {
