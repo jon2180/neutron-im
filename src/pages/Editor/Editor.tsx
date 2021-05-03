@@ -67,6 +67,7 @@ export default function Editor() {
             value={str}
             onChange={(ev) => {
               setStr(ev.target.value);
+              // console.log(ev.target.value);
             }}
             style={{
               height: `${height - 70}px`,
@@ -81,7 +82,7 @@ export default function Editor() {
             height: `${height - 70}px`,
           }}
         >
-          <MdRenderer>{escape(str)}</MdRenderer>
+          <MdRenderer>{str}</MdRenderer>
         </Col>
       </Row>
     </div>

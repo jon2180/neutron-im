@@ -3,10 +3,11 @@ import { Link, useParams } from "react-router-dom";
 import { List, Avatar } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 
-import { ChatData } from "@/types/http";
 import { fetchRecentChats, selectAllChats } from "@/store/recentChatsSlice";
 import { formatTimestamp } from "@/utils/format";
 import styles from "./Chats.module.less";
+
+import type { ChatData } from "@/types/http";
 
 import {
   Menu,

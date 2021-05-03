@@ -10,11 +10,9 @@ import "katex/dist/katex.min.css";
 const renderers = {
   code: ({ language, value }: { language: string; value: string }) => {
     return (
-      <SyntaxHighlighter
-        style={atomDark}
-        language={language}
-        children={value}
-      />
+      <SyntaxHighlighter style={atomDark} language={language}>
+        {value || ""}
+      </SyntaxHighlighter>
     );
   },
   inlineMath: ({ value }: { value: any }) => <Tex math={value} />,

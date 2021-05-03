@@ -5,7 +5,7 @@ import { List, Avatar } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFriendList, selectFriendList } from "@/store/friendsSlice";
 
-import { FriendData } from "@/types/http";
+import type { FriendData } from "@/types/http";
 
 export function FriendItem(props: { data: FriendData }) {
   const { data } = props;

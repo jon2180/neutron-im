@@ -1,5 +1,5 @@
 import request from "@/utils/request";
-import { HttpResponseData, MessageData } from "@/types/http";
+import type { HttpResponseData, MessageData } from "@/types/http";
 
 export function getRecentList(): Promise<HttpResponseData> {
   return request.get("/chats/");

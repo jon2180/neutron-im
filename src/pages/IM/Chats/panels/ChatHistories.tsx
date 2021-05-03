@@ -7,17 +7,18 @@ import {
   fetchChatHistory,
   selectChatHistoryById,
 } from "@/store/chatsHistoriesSlice";
-import { MessageData } from "@/types/http";
 
 import { formatTimestamp } from "@/utils/format";
 
-import styles from "./ChatHistories.module.less";
 import { selectUserInfo } from "@/store/userInfoSlice";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { useAppDispatch } from "@/store/store";
 import { selectRecentChatById } from "@/store/recentChatsSlice";
 import { ReloadOutlined } from "@ant-design/icons";
 import { useIntl } from "react-intl";
+
+import styles from "./ChatHistories.module.less";
+import type { MessageData } from "@/types/http";
 
 /**
  * 把 消息数据 转成 jsx

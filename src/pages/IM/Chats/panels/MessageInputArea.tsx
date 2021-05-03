@@ -10,11 +10,9 @@ import {
 } from "@ant-design/icons";
 import { pushMessage } from "@/store/chatsHistoriesSlice";
 import { useAppDispatch } from "@/store/store";
-import { MessageData } from "@/types/http";
 
 import styles from "./MessageInputArea.module.less";
-import EmojiPicker, { EmojiSelectHandler } from "./EmojiPicker";
-import { UploadChangeParam, UploadFile } from "antd/lib/upload/interface";
+import EmojiPicker from "./EmojiPicker";
 import { Cookie } from "@/utils/cookie";
 import {
   pushLastMessage,
@@ -24,6 +22,10 @@ import { useSelector } from "react-redux";
 import { selectUserInfo } from "@/store/userInfoSlice";
 import websocketStore from "@/websocket/websocket";
 import AppConstants from "@/config/url.const";
+
+import type { EmojiSelectHandler } from "./EmojiPicker";
+import type { MessageData } from "@/types/http";
+import type { UploadChangeParam, UploadFile } from "antd/lib/upload/interface";
 
 // TODO 录音
 const recordSound: React.MouseEventHandler<HTMLElement> = (e) => {

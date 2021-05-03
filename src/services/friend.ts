@@ -1,5 +1,5 @@
 import request from "@/utils/request";
-import { HttpResponseData } from "@/types/http";
+import type { HttpResponseData } from "@/types/http";
 
 export function getFriends(): Promise<HttpResponseData> {
   return request.get(`/friends/`);

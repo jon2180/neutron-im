@@ -1,5 +1,5 @@
 import request from "@/utils/request";
-import { HttpResponseData /* IFriendListItem */ } from "@/types/http";
+import type { HttpResponseData /* IFriendListItem */ } from "@/types/http";
 
 /**
  * 登录接口

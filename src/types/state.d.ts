@@ -25,4 +25,17 @@ export interface UserInfoState {
   error: any;
 }
 
+export type UserInfo = {
+  avatar: string;
+  birthday: string;
+  email: string;
+  id: string;
+  nickname: string;
+  reg_time: string;
+  signature: string;
+  status: number;
+  tel: string;
+  uid: string;
+};
+
 export type RootState = IRootState;

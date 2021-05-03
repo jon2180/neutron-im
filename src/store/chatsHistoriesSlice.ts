@@ -1,9 +1,13 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { MessageData } from "@/types/http";
-import { RootState } from "@/types/state";
-import { queryChatHistory, QueryType } from "@/services/chat";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { queryChatHistory } from "@/services/chat";
 import { message } from "antd";
 import lodash from "lodash";
+
+import type { PayloadAction } from "@reduxjs/toolkit";
+import type { MessageData } from "@/types/http";
+import type { RootState } from "@/types/state";
+import type { QueryType } from "@/services/chat";
+
 export const fetchChatHistory = createAsyncThunk<
   { data: MessageData[]; params: QueryType } | undefined,
   QueryType,

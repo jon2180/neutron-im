@@ -1,6 +1,6 @@
 import store from "@/store/store";
 import { setHasLogin, setUserInfo } from "@/store/userInfoSlice";
-import { UserInfoSubstate } from "@/types/state";
+import type { UserInfoSubstate } from "@/types/state";
 import { Cookie } from "./cookie";
 
 export enum LocalStorageKey {

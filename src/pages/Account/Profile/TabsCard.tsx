@@ -41,10 +41,7 @@ const tabListNoTitle = [
 const contentListNoTitle: { [propName: string]: JSX.Element } = {
   article: (
     <>
-      <div
-        className="site-layout-background"
-        style={{ padding: 24, textAlign: "center" }}
-      >
+      <div className="site-layout-background">
         ...
         <br />
         Really

@@ -11,13 +11,16 @@ import styles from "./Login.module.less";
 import { withRouter } from "react-router-dom";
 import { useAppDispatch } from "@/store/store";
 import { hpre } from "@/utils/wrapper";
-import LoginForm, { LoginParams } from "./LoginForm";
-import RegisterForm, { RegisterParams } from "./RegisterForm";
-import { UserInfoSubstate } from "@/types/state";
+import LoginForm from "./LoginForm";
+import RegisterForm from "./RegisterForm";
 import AppConstans from "@/config/url.const";
 import { exportUserInfo } from "@/utils/localStorage";
 import Helmet from "@/components/Helmet";
 import { FormattedMessage, useIntl } from "react-intl";
+
+import type { RegisterParams } from "./RegisterForm";
+import type { LoginParams } from "./LoginForm";
+import type { UserInfoSubstate } from "@/types/state";
 
 export default withRouter(function Login(props) {
   const dispatch = useAppDispatch();

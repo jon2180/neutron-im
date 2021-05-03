@@ -1,9 +1,11 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { MessageData, ChatData } from "@/types/http";
-import { RootState } from "@/types/state";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getRecentList } from "@/services/chat";
 import { message } from "antd";
 import { exportRecentChat } from "@/utils/localStorage";
+
+import type { PayloadAction } from "@reduxjs/toolkit";
+import type { MessageData, ChatData } from "@/types/http";
+import type { RootState } from "@/types/state";
 
 export const fetchRecentChats = createAsyncThunk<ChatData[], undefined, {}>(
   "recentList/fetchChats",

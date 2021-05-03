@@ -1,14 +1,5 @@
-// import Home from "./Home";
 import ReactIntroduction from "@/components/ReactIntroduction/ReactIntroduction";
-// import Login from "./Account/Login/Login";
-// import Activities from "./Activities/Activities";
-// import Search from "./Search/Search";
-// import Management from "./Mangement/Management";
-// import CodeSnips from "./CodeSnips/CodeSnips";
-// import { Empty, Switch } from "antd";
 import IMFrame from "@/pages/IM/IMFrame";
-// import { Editor } from "./Editor/Editor";
-// import AccountProfile from "./Account/Profile/AccountProfile";
 import DefaultFrame from "@/components/layout/AppFrame";
 import BlankLayout from "@/components/layout/BlankLayout";
 import Home from "@/pages/Home";
@@ -18,19 +9,12 @@ import Activity from "@/pages/Activities/Activity";
 import type { RouterConfig } from "./components/RouterWrapper";
 import CodeSnips from "./pages/CodeSnips/CodeSnips";
 import Management from "./pages/Mangement/Management";
-import AccountProfile from "./pages/Account/Profile/AccountProfile";
+import AccountProfile from "./pages/Account/Profile";
 import ProfileSetting from "./pages/Account/Settings/ProfileSetting";
 import Editor from "./pages/Editor/Editor";
 import Error404 from "./pages/Error/Error404";
 import Search from "./pages/Search/Search";
 import Logout from "./pages/Account/Logout";
-// import Activity from "./Activities/Activity";
-// import ProfileSetting from "./Account/Settings/ProfileSetting";
-
-// type RouterConfig = RouteProps & {
-//   authority?: string[] | string;
-//   children?: RouterConfig[];
-// };
 
 const routes: RouterConfig[] = [
   {

@@ -1,8 +1,9 @@
 import React from "react";
 import { useAppDispatch } from "@/store/store";
 import { setHasLogin, setUserInfo } from "@/store/userInfoSlice";
-import { UserInfoSubstate } from "@/types/state";
 import { Redirect } from "react-router-dom";
+
+import type { UserInfoSubstate } from "@/types/state";
 
 function clearAllCookie() {
   const keys = document.cookie.match(/[^ =;]+(?==)/g);

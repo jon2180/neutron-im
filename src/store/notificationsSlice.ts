@@ -1,6 +1,6 @@
-import { RootState } from "@/types/state";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 // import { message } from "antd";
+import type { RootState } from "@/types/state";
 
 export const fetchNotifications = createAsyncThunk(
   "notifications/fetchNotifications",

@@ -1,18 +1,10 @@
 import React from "react";
-import CombinedPage from "@/pages/IM/CombinedPage";
+import WideContentWrapper from "@/components/WideContentWrapper/WideContentWrapper";
 
-export default function CodeSnips({
-  detailPath,
-  detailExact,
-}: {
-  detailPath: string;
-  detailExact: boolean;
-}) {
+export default function CodeSnips() {
   return (
-    <CombinedPage
-      content={<div>helloworld, this is codesnips</div>}
-      detailPath={detailPath}
-      detailExact={detailExact}
-    />
+    <WideContentWrapper>
+      <div>helloworld, this is codesnips</div>
+    </WideContentWrapper>
   );
 }

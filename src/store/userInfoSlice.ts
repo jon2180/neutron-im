@@ -1,8 +1,9 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { getUserInfo } from "@/services/user";
-import { RootState, UserInfoState, UserInfoSubstate } from "@/types/state";
 import { exportUserInfo } from "@/utils/localStorage";
 import { message } from "antd";
+
+import type { RootState, UserInfoState, UserInfoSubstate } from "@/types/state";
 
 export const fetchUserInfo = createAsyncThunk<
   UserInfoSubstate | undefined,

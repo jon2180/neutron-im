@@ -1,12 +1,14 @@
 import { notification } from "antd";
 import store from "@/store/store";
 import { pushLastMessage } from "@/store/recentChatsSlice";
-import { MessageData } from "@/types/http";
-import { UserInfoSubstate } from "@/types/state";
+
 import { Cookie } from "@/utils/cookie";
 import { importUserInfo } from "@/utils/localStorage";
 import { pushMessage } from "@/store/chatsHistoriesSlice";
 import AppConstants from "@/config/url.const";
+
+import type { MessageData } from "@/types/http";
+import type { UserInfoSubstate } from "@/types/state";
 
 export interface WebSocketMessage {
   sender: string;

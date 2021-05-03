@@ -1,9 +1,10 @@
 import { getFriends } from "@/services/friend";
-import { FriendData } from "@/types/http";
 import { exportFriends } from "@/utils/localStorage";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { message } from "antd";
 import { RootState } from "./store";
+
+import type { FriendData } from "@/types/http";
 
 export const fetchFriendList = createAsyncThunk<FriendData[], undefined, {}>(
   "friends/fetchFriendList",
