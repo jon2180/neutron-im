@@ -80,14 +80,21 @@
 
   .footerContent {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    max-width: 500px;
+    margin: 0 auto;
+
+    .navGroup {
+      width: max-content;
+      margin-right: 16px;
+    }
   }
 
   .nav1,
   .nav2,
   .nav3 {
     list-style: none;
-    width: 200px;
 
     li {
       margin: 4px 0;

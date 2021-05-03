@@ -77,7 +77,7 @@ export function Footer() {
     <Layout.Footer>
       <div className={styles.footer}>
         <div className={styles.footerContent}>
-          <div>
+          <div className={styles.navGroup}>
             <div className={styles.linksTitle}>{quickCenter.name}</div>
             <ul className={styles.nav1}>
               {quickCenter.list.map((val, ind) => {
@@ -92,7 +92,7 @@ export function Footer() {
             </ul>
           </div>
 
-          <div>
+          <div className={styles.navGroup}>
             <div className={styles.linksTitle}>{friendLinks.name}</div>
             <ul className={styles.nav2}>
               {friendLinks.list.map((val, ind) => {
@@ -106,7 +106,7 @@ export function Footer() {
               })}
             </ul>
           </div>
-          <div>
+          <div className={styles.navGroup}>
             <div className={styles.linksTitle}>{aboutUs.name}</div>
             <ul className={styles.nav3}>
               {aboutUs.list.map((val, ind) => {
