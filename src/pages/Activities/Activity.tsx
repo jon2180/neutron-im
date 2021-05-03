@@ -1,9 +1,10 @@
 import React from "react";
 import { Button, Card, Comment, Input, List, Tooltip } from "antd";
 import Avatar from "antd/lib/avatar/avatar";
-import styles from "./Activities.module.less";
+import styles from "./Activity.module.less";
 import moment from "moment";
 import MdRenderer from "@/components/MdRenderer";
+import WideContentWrapper from "@/components/WideContentWrapper/WideContentWrapper";
 
 const markdownStr = `
 # C语言进程与线程
@@ -150,9 +151,9 @@ function CommentSection() {
 
 export default function Activity() {
   return (
-    <div className={styles.content}>
+    <WideContentWrapper>
       <ContentSection />
       <CommentSection />
-    </div>
+    </WideContentWrapper>
   );
 }
