@@ -10,7 +10,7 @@ import type { RouterConfig } from "./components/RouterWrapper";
 import CodeSnips from "./pages/CodeSnips/CodeSnips";
 import Management from "./pages/Mangement/Management";
 import AccountProfile from "./pages/Account/Profile";
-import ProfileSetting from "./pages/Account/Settings/ProfileSetting";
+import ProfileSetting from "./pages/Account/Settings";
 import Editor from "./pages/Editor/Editor";
 import Error404 from "./pages/Error/Error404";
 import Search from "./pages/Search/Search";

@@ -16,7 +16,8 @@ const zh_CN: OptionalIntlConfig = {
     "app.register": "注册",
     "app.register.submit": "注册",
     "app.register.registered": "注册成功",
-    // 'app.login.greeting': 'Sign in to Neutron-IM'
+    "accounts.settings.basicSettings": "基础设置",
+    "accounts.settings.accountSettings": "账号设置",
   },
 };
 
