@@ -1,10 +1,17 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Dropdown, Layout, Menu, Avatar } from "antd";
+import { Dropdown, Layout, Menu, Avatar, Space, Tabs } from "antd";
 import { selectUserInfo } from "@/store/userInfoSlice";
 import styles from "./Layout.module.less";
 import logo from "@/assets/neutron-im-logo-2.png";
 import { NavLink, withRouter } from "react-router-dom";
+import {
+  QuestionCircleOutlined,
+  SearchOutlined,
+  TranslationOutlined,
+} from "@ant-design/icons";
+import { exportLocaleSetting } from "@/locales";
+import type { LocaleNameType } from "@/locales";
 
 const AppNav = withRouter(function PureAppNav(props) {
   return (
@@ -24,13 +31,16 @@ const AppNav = withRouter(function PureAppNav(props) {
         <Menu.Item key={"/codesnips"}>
           <NavLink to="/codesnips">代码剪切板</NavLink>
         </Menu.Item>
-        <Menu.Item key={"/search"}>
-          <NavLink to="/search">搜索</NavLink>
-        </Menu.Item>
       </Menu>
     </div>
   );
 });
+
+function changeLocale(key: string) {
+  if (exportLocaleSetting(key as LocaleNameType)) {
+    document.location.reload();
+  }
+}
 
 /**
  * AvatarNav 是Header右方的Avatar相关导航
@@ -40,7 +50,33 @@ function AvatarNav() {
   const userInfo = useSelector(selectUserInfo);
 
   return (
-    <div className={styles.rightCol}>
+    <Space size={8} align="end" className={styles.rightCol}>
+      <div className={styles.searchLink}>
+        <NavLink to="/search">
+          <SearchOutlined style={{ color: "#666666", fontSize: "16px" }} />
+        </NavLink>
+      </div>
+
+      <div className={styles.docLink}>
+        <NavLink to="/react">
+          <QuestionCircleOutlined
+            style={{ color: "#666666", fontSize: "16px" }}
+          />
+        </NavLink>
+      </div>
+
+      <Dropdown
+        overlay={
+          <Tabs>
+            <Tabs.TabPane tab="a">123</Tabs.TabPane>
+            <Tabs.TabPane tab="b">456</Tabs.TabPane>
+            <Tabs.TabPane tab="c">789</Tabs.TabPane>
+          </Tabs>
+        }
+      >
+        <div className={styles.notificationsLink}></div>
+      </Dropdown>
+
       <Dropdown
         overlay={
           <Menu className={styles.nav}>
@@ -50,6 +86,10 @@ function AvatarNav() {
             <Menu.Item>
               <NavLink to={`/accounts/${userInfo.id}`}>个人中心</NavLink>
             </Menu.Item>
+            <Menu.Divider />
+            <Menu.Item danger>
+              <NavLink to={`/logout`}>退出登录</NavLink>
+            </Menu.Item>
           </Menu>
         }
       >
@@ -58,7 +98,28 @@ function AvatarNav() {
           <span className={styles.username}>{userInfo.nickname}</span>
         </div>
       </Dropdown>
-    </div>
+
+      <Dropdown
+        overlay={
+          <Menu
+            className={styles.nav}
+            onClick={(e) => {
+              changeLocale(e.key as string);
+            }}
+          >
+            <Menu.Item key="zh_CN">中文</Menu.Item>
+            <Menu.Item key="en_US">English</Menu.Item>
+          </Menu>
+        }
+      >
+        <div className={styles.localeLink}>
+          <TranslationOutlined
+            style={{ fontSize: "16px" }}
+            className={styles.localeSelector}
+          />
+        </div>
+      </Dropdown>
+    </Space>
   );
 }
 

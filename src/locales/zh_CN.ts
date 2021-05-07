@@ -1,7 +1,7 @@
 import type { OptionalIntlConfig } from "react-intl/src/components/provider";
 
 const zh_CN: OptionalIntlConfig = {
-  locale: "zh-cn",
+  locale: "zh-CN",
   messages: {
     userinfo: "用户信息",
     loadmore: "加载更多",

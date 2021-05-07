@@ -11,19 +11,33 @@ import { initializeUserInfo } from "./utils/localStorage";
 import { ConfigProvider } from "antd";
 import zh_CN from "antd/lib/locale/zh_CN";
 import { IntlProvider } from "react-intl";
-import { zh_CN as myZhCN } from "@/locales";
+import locals, { importLocaleSetting } from "@/locales";
 
 initializeUserInfo();
 
-ReactDOM.render(
-  <React.StrictMode>
+function Index() {
+  let localeName = importLocaleSetting();
+
+  if (!localeName) {
+    localeName = "zh_CN";
+  }
+
+  console.log(locals[localeName]);
+
+  return (
     <Provider store={store}>
       <ConfigProvider locale={zh_CN}>
-        <IntlProvider {...myZhCN}>
+        <IntlProvider {...locals[localeName]}>
           <App />
         </IntlProvider>
       </ConfigProvider>
     </Provider>
+  );
+}
+
+ReactDOM.render(
+  <React.StrictMode>
+    <Index />
   </React.StrictMode>,
   document.getElementById("root")
 );
