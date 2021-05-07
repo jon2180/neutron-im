@@ -1,6 +1,6 @@
 import ReactIntroduction from "@/components/ReactIntroduction/ReactIntroduction";
 import IMFrame from "@/pages/IM/IMFrame";
-import DefaultFrame from "@/components/layout/AppFrame";
+import BasicLayout from "@/components/layout/BasicLayout";
 import BlankLayout from "@/components/layout/BlankLayout";
 import Home from "@/pages/Home";
 import Login from "@/pages/Account/Login/Login";
@@ -65,7 +65,7 @@ const routes: RouterConfig[] = [
       },
       {
         name: "topLayout",
-        component: DefaultFrame,
+        component: BasicLayout,
         authority: ["admin"],
         children: [
           {

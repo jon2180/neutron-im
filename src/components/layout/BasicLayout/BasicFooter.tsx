@@ -72,7 +72,7 @@ const aboutUs = {
   ],
 };
 
-export function Footer() {
+export default function BasicFooter() {
   return (
     <Layout.Footer>
       <div className={styles.footer}>

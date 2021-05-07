@@ -1,33 +1,33 @@
 import React from "react";
 import { Layout } from "antd";
-import { Footer } from "./DefaultFooter";
-import Header from "./DefaultHeader";
+import BasicFooter from "./BasicFooter";
+import BaiscHeader from "./BasicHeader";
 import Helmet from "@/components/Helmet";
 
-export function DefaultFrame({
+const layoutStyle: React.CSSProperties = {
+  minHeight: "100vh",
+};
+
+export default function BasicLayout({
   children,
   title,
 }: {
   children: JSX.Element;
   title?: string;
 }) {
-  const layoutStyle: React.CSSProperties = {
-    minHeight: "100vh",
-  };
-
   return (
     <>
       {title ? (
         <Helmet>
-          <title>{title}</title>
+          <title>{title || "Nuetron IM"}</title>
         </Helmet>
       ) : (
         <span></span>
       )}
       <Layout style={layoutStyle}>
-        <Header></Header>
+        <BaiscHeader></BaiscHeader>
         <Layout.Content>{children}</Layout.Content>
-        <Footer></Footer>
+        <BasicFooter></BasicFooter>
       </Layout>
     </>
   );

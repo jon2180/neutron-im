@@ -123,7 +123,7 @@ function AvatarNav() {
   );
 }
 
-export default withRouter(function Header(props) {
+export default withRouter(function BasicHeader(props) {
   return (
     <Layout.Header className={styles.header}>
       <AppNav />
