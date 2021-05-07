@@ -8,7 +8,7 @@ import { isEmail, isPassword } from "@/utils/validate";
 import { setUserInfo, setHasLogin } from "@/store/userInfoSlice";
 
 import styles from "./Login.module.less";
-import { withRouter } from "react-router-dom";
+import { Redirect, withRouter } from "react-router-dom";
 import { useAppDispatch } from "@/store/store";
 import { hpre } from "@/utils/wrapper";
 import LoginForm from "./LoginForm";
@@ -21,11 +21,13 @@ import { FormattedMessage, useIntl } from "react-intl";
 import type { RegisterParams } from "./RegisterForm";
 import type { LoginParams } from "./LoginForm";
 import type { UserInfoSubstate } from "@/types/state";
+import Cookie from "@/utils/cookie";
 
 export default withRouter(function Login(props) {
   const dispatch = useAppDispatch();
   const [redirect] = useState(url.parse(props.location.search, true).query);
   const intl = useIntl();
+
   // 处理提交
   const onSubmit = useCallback(
     async ({ email, password, captcha }: LoginParams) => {
@@ -155,7 +157,11 @@ export default withRouter(function Login(props) {
     },
     [intl]
   );
-
+  const authInfo = Cookie.getCookie("Authorization");
+  if (authInfo) {
+    message.info({ content: "您已登录，即将为您跳转到首页" }, 200);
+    return <Redirect to="/" />;
+  }
   return (
     <div
       style={{
