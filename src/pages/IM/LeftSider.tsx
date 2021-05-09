@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { selectAllChats } from "@/store/recentChatsSlice";
+import React, { useEffect } from "react";
 import {
   TeamOutlined,
   UserOutlined,
@@ -126,19 +125,19 @@ function LeftSideTopArea() {
 }
 
 function LeftSideBottomArea() {
-  const [unreadCount, setUnreadCount] = useState(0);
-  const recentChats = useSelector(selectAllChats);
-
-  // 更新未读数量
-  useEffect(() => {
-    if (Array.isArray(recentChats)) {
-      let unread = 0;
-      for (let i = 0; i < recentChats.length; ++i) {
-        unread += recentChats[i].unread_count;
-      }
-      setUnreadCount(unread);
-    }
-  }, [recentChats]);
+  // TODO 添加未读指示徽标
+  // const [unreadCount, setUnreadCount] = useState(0);
+  // const recentChats = useSelector(selectAllChats);
+  // // 更新未读数量
+  // useEffect(() => {
+  //   if (Array.isArray(recentChats)) {
+  //     let unread = 0;
+  //     for (let i = 0; i < recentChats.length; ++i) {
+  //       unread += recentChats[i].unread_count;
+  //     }
+  //     setUnreadCount(unread);
+  //   }
+  // }, [recentChats]);
 
   // 自动选择 menu 选中项
   const { pathname } = document.location;

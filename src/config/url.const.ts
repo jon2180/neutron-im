@@ -1,6 +1,8 @@
 import { generateCaptcha } from "@/utils/generator";
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "//localhost:3001";
+// TODO for seperate static file server
+// const STATIC_FILE_SERVER = process.env.REACT_APP_STATIC_FILE_SERVER || "//localhost:3002"
 
 const AppConstants = {
   get API_BASE_URL() {

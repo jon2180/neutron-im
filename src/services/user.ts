@@ -1,5 +1,5 @@
 import request from "@/utils/request";
-import type { HttpResponseData /* IFriendListItem */ } from "@/types/http";
+import type { HttpResponseData } from "@/types/http";
 
 /**
  * 登录接口
@@ -10,7 +10,7 @@ export function postAccountLogin(params: {
   password: string;
   captcha: string;
 }): Promise<HttpResponseData> {
-  return request.post("/login", { data: params });
+  return request.post("/login", { data: params, credentials: "include" });
 }
 
 /**
@@ -39,7 +39,7 @@ export function postAccount(params: {
   password: string;
   captcha: string;
 }): Promise<HttpResponseData> {
-  return request.post("/register", { data: params });
+  return request.post("/register", { data: params, credentials: "include" });
 }
 
 export function getUserInfo(): Promise<HttpResponseData> {

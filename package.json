@@ -1,6 +1,6 @@
 {
-  "name": "my-app",
-  "version": "0.1.0",
+  "name": "neutron-im-web",
+  "version": "0.2.0",
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
