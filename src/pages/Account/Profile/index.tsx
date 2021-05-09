@@ -6,25 +6,33 @@ import WideContentWrapper from "@/components/WideContentWrapper/WideContentWrapp
 import BasicAccountInfo from "./BasicAccountInfo";
 import type { UserInfo } from "@/types/state";
 import { Col, Row } from "antd";
+import { withRouter } from "react-router";
+import { useIntl } from "react-intl";
 
-export default function AccountProfile() {
+export default withRouter(function AccountProfile({ match }) {
+  const intl = useIntl();
   const [friendInfo] = useState({} as UserInfo);
+
+  const title = `${intl.formatMessage({
+    defaultMessage: "User Information",
+    id: "userinfo",
+  })} ${friendInfo.nickname ? `- ${friendInfo.nickname}` : ""}`;
 
   return (
     <>
       <Helmet>
-        <title>{`用户信息-${friendInfo.nickname}`}</title>
+        <title>{title}</title>
       </Helmet>
       <WideContentWrapper>
         <Row gutter={[16, 16]}>
           <Col span={24} md={10} lg={7}>
-            <BasicAccountInfo />
+            <BasicAccountInfo id={match.params.id || ""} />
           </Col>
           <Col span={24} md={14} lg={17}>
-            <TabsCard />
+            <TabsCard id={match.params.id || ""} />
           </Col>
         </Row>
       </WideContentWrapper>
     </>
   );
-}
+});

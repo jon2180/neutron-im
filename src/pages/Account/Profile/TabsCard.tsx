@@ -26,15 +26,15 @@ const IconText = ({ icon, text }: { icon: any; text: any }) => (
 const tabListNoTitle = [
   {
     key: "article",
-    tab: "article",
+    tab: "Article",
   },
   {
     key: "app",
-    tab: "app",
+    tab: "App",
   },
   {
     key: "project",
-    tab: "project",
+    tab: "Project",
   },
 ];
 
@@ -197,7 +197,7 @@ const contentListNoTitle: { [propName: string]: JSX.Element } = {
   project: <p>project content</p>,
 };
 
-export default function TabsCard() {
+export default function TabsCard({ id }: { id: string }) {
   const [state, setState] = useState({
     key: "tab1",
     noTitleKey: "article",

@@ -1,24 +1,44 @@
-import { useState, useEffect } from 'react';
+import { debounce } from "lodash";
+import { useState, useEffect } from "react";
 
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window;
   return {
     width,
-    height
+    height,
   };
 }
 
-export default function useWindowDimensions() {
-  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+interface WindowDimensionsHookParams {
+  debounceTime?: number;
+}
+
+const defaultWindowsDimensionsHookParams: WindowDimensionsHookParams = {
+  debounceTime: 300,
+};
+
+export default function useWindowDimensions(
+  props?: WindowDimensionsHookParams
+) {
+  const mixedProps = {
+    ...defaultWindowsDimensionsHookParams,
+    ...props,
+  };
+
+  const { debounceTime } = mixedProps;
+
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions()
+  );
+
+  const resizer = debounce(function handleResize() {
+    setWindowDimensions(getWindowDimensions());
+  }, debounceTime);
 
   useEffect(() => {
-    function handleResize() {
-      setWindowDimensions(getWindowDimensions());
-    }
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+    window.addEventListener("resize", resizer);
+    return () => window.removeEventListener("resize", resizer);
+  }, [resizer]);
 
   return windowDimensions;
 }

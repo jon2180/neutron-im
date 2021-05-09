@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { Card, Skeleton, Button, message } from "antd";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {
   GithubOutlined,
@@ -16,11 +16,7 @@ import { selectUserInfo } from "@/store/userInfoSlice";
 import type { UserInfo } from "@/types/state";
 import styles from "./BasicAccountInfo.module.less";
 
-export default function BasicAccountInfo() {
-  const params = useParams<{
-    id: string;
-  }>();
-
+export default function BasicAccountInfo({ id }: { id: string }) {
   const userInfo = useSelector(selectUserInfo);
   const [friendInfo, setFriendInfo] = useState({} as UserInfo);
 
@@ -28,7 +24,7 @@ export default function BasicAccountInfo() {
 
   useMemo(() => {
     user
-      .getAccountInfo({ uid: params.id })
+      .getAccountInfo({ uid: id })
       .then((res) => {
         console.log(res);
 
@@ -48,7 +44,7 @@ export default function BasicAccountInfo() {
         message.error({ content: `获取用户信息失败` });
         console.log(err);
       });
-  }, [params]);
+  }, [id]);
 
   return (
     <Skeleton active loading={false}>
@@ -91,15 +87,11 @@ export default function BasicAccountInfo() {
             <Button type="default" shape="circle" icon={<QqOutlined />} />
           </div>
           <div>
-            {isMyself ? (
-              <span />
-            ) : (
-              <a href="#2">已是好友 / 删除好友 或不显示</a>
-            )}
+            {isMyself ? <span /> : <a href="#2">删除好友</a>}
             {isMyself ? (
               <Link to={`/accounts/settings/profile`}>编辑资料</Link>
             ) : (
-              <Link to={`/im/chats/${params.id}`}>聊天</Link>
+              <Link to={`/im/chats/${id}`}>聊天</Link>
             )}
           </div>
         </div>

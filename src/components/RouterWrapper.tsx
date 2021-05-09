@@ -55,7 +55,7 @@ const defaultOptions = {
  * @param options 选项
  * @returns 路由 path 数组或 path
  */
-function traverseChildrenPath(
+export function traverseChildrenPath(
   routes: RouterConfig[],
   options?: {
     depth: number;

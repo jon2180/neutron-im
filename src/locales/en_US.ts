@@ -3,6 +3,12 @@ import type { OptionalIntlConfig } from "react-intl/src/components/provider";
 const en_US: OptionalIntlConfig = {
   locale: "en-US",
   messages: {
+    "menu.activities": "Activities",
+    "menu.codesnips": "Code Snipates",
+    "menu.im": "Instant Messaging",
+    "menu.accountCenter": "Account Center",
+    "menu.profileSettings": "Account Settings",
+    "menu.logout": "Quit",
     userinfo: "User Information",
     loadmore: "Loading more",
     "alt.captcha": "Captcha",

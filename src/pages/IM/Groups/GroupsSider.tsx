@@ -9,7 +9,7 @@ import { group } from "@/services";
 // import { useAppDispatch } from "@/store/store";
 // import { fetchFriendList } from "@/store/friendsSlice";
 
-export function GroupsSider() {
+export default function GroupsSider() {
   // const dispatch = useAppDispatch();
 
   useEffect(() => {

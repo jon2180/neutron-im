@@ -1,50 +1,59 @@
-#components-layout-demo-responsive .logo {
-  // height: 32px;
-  // margin: 16px;
-  background: rgba(255, 255, 255, 0.2);
+.wideContent {
+  margin: 0;
+  background-color: #282c34;
 }
 
-.site-layout-sub-header-background {
-  background: #fff;
+@media screen and (min-width: 1200px) {
+  .imWrapper {
+    border-left: #f5f5f5 solid 1px;
+    border-right: #f5f5f5 solid 1px;
+  }
 }
 
-.site-layout-background {
-  background: #fff;
-}
+@header-height: 112px;
 
 .imWrapper {
-  min-width: 375px;
+  min-width: 256px;
 
   .leftCol {
     height: 100vh;
-    // overflow: hidden;
-  }
-
-  .rightCol {
-    height: 100vh;
-    background-color: #f5f5f5;
-    // overflow-x: hidden;
-    // overflow-y: auto;
-  }
-
-  .headerContainer {
-    display: flex;
-    justify-content: space-between;
     background-color: #fff;
-    padding: 8px;
-    width: 100%;
 
-    .logo {
+    .leftSider {
+      padding-top: @header-height;
+      height: 100%;
+    }
+
+    .headerContainer {
       display: flex;
-      // justify-content: center;
-      box-sizing: border-box;
+      justify-content: space-between;
+      background-color: #fff;
+      margin-top: -@header-height;
+      padding: 8px;
+      width: 100%;
 
-      .nickname {
-        margin-left: 8px;
-        line-height: 48px;
+      .logo {
+        display: flex;
+        box-sizing: border-box;
+
+        .nickname {
+          margin-left: 8px;
+          line-height: 48px;
+        }
       }
     }
+
+    .listBox {
+      height: 100%;
+      background-color: #fcfcfc;
+      overflow: hidden auto;
+    }
   }
+}
+
+.rightCol {
+  height: 100vh;
+  background-color: #f5f5f5;
 }
 
 .searchBox {

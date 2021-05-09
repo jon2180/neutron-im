@@ -44,7 +44,7 @@ export function FriendItem(props: { data: FriendData }) {
   );
 }
 
-export function FriendsSider() {
+export default function FriendsSider() {
   const dispatch = useDispatch();
   const friendList = useSelector(selectFriendList);
 

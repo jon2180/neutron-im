@@ -34,7 +34,7 @@ const request = extend({
   prefix: AppConstants.API_BASE_URL,
   timeout: 10000,
   mode: "cors",
-  credentials: "include", // 默认请求是否带上cookie
+  credentials: "omit", // 默认请求是否带上cookie
   // 默认错误处理
   headers: {
     Authorization: Cookie.getCookie("Authorization"),

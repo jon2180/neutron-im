@@ -12,6 +12,7 @@ import {
 } from "@ant-design/icons";
 import { exportLocaleSetting } from "@/locales";
 import type { LocaleNameType } from "@/locales";
+import { FormattedMessage } from "react-intl";
 
 const AppNav = withRouter(function PureAppNav(props) {
   return (
@@ -26,10 +27,20 @@ const AppNav = withRouter(function PureAppNav(props) {
         defaultSelectedKeys={[props.match.path]}
       >
         <Menu.Item key={"/activities"}>
-          <NavLink to="/activities">动态</NavLink>
+          <NavLink to="/activities">
+            <FormattedMessage
+              id="menu.activities"
+              defaultMessage="Activities"
+            />
+          </NavLink>
         </Menu.Item>
         <Menu.Item key={"/codesnips"}>
-          <NavLink to="/codesnips">代码剪切板</NavLink>
+          <NavLink to="/codesnips">
+            <FormattedMessage
+              id="menu.codesnips"
+              defaultMessage="Code Snipates"
+            />
+          </NavLink>
         </Menu.Item>
       </Menu>
     </div>
@@ -81,14 +92,34 @@ function AvatarNav() {
         overlay={
           <Menu className={styles.nav}>
             <Menu.Item>
-              <NavLink to="/im">IM</NavLink>
+              <NavLink to="/im">
+                <FormattedMessage
+                  id="menu.im"
+                  defaultMessage="Instant Messaging"
+                />
+              </NavLink>
             </Menu.Item>
             <Menu.Item>
-              <NavLink to={`/accounts/${userInfo.id}`}>个人中心</NavLink>
+              <NavLink to={`/accounts/${userInfo.id}`}>
+                <FormattedMessage
+                  id="menu.accountCenter"
+                  defaultMessage="Account Center"
+                />
+              </NavLink>
+            </Menu.Item>
+            <Menu.Item>
+              <NavLink to={`/accounts/settings/profile`}>
+                <FormattedMessage
+                  id="menu.profileSettings"
+                  defaultMessage="Account Settings"
+                />
+              </NavLink>
             </Menu.Item>
             <Menu.Divider />
             <Menu.Item danger>
-              <NavLink to={`/logout`}>退出登录</NavLink>
+              <NavLink to={`/logout`}>
+                <FormattedMessage id="menu.logout" defaultMessage="Quit" />
+              </NavLink>
             </Menu.Item>
           </Menu>
         }

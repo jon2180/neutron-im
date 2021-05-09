@@ -3,6 +3,12 @@ import type { OptionalIntlConfig } from "react-intl/src/components/provider";
 const zh_CN: OptionalIntlConfig = {
   locale: "zh-CN",
   messages: {
+    "menu.activities": "动态",
+    "menu.codesnips": "代码速览板",
+    "menu.im": "即时通讯",
+    "menu.accountCenter": "个人中心",
+    "menu.profileSettings": "个人设置",
+    "menu.logout": "退出登录",
     userinfo: "用户信息",
     loadmore: "加载更多",
     "alt.captcha": "验证码",
