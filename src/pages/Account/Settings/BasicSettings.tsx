@@ -2,8 +2,6 @@ import React, { useRef, useState } from "react";
 import {
   message,
   Avatar,
-  Radio,
-  Upload,
   Form,
   Input,
   Button,
@@ -13,23 +11,14 @@ import {
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
-import { Cookie } from "@/utils/cookie";
 import { selectUserInfo } from "@/store/userInfoSlice";
-import AppConstants from "@/config/url.const";
 
 import type { UploadChangeParam } from "antd/lib/upload";
 import type { UploadFile } from "antd/lib/upload/interface";
 import type { FormInstance } from "antd";
 
 import styles from "./BasicSettings.module.less";
-
-const defaultUploadAvatarProps = {
-  name: "file",
-  action: AppConstants.AVATAR_UPLOAD_URL,
-  headers: {
-    Authorization: Cookie.getCookie("Authorization"),
-  },
-};
+import AvatarUpload from "./AvatarUpload";
 
 export default function BasicSettings() {
   const userInfo = useSelector(selectUserInfo);
@@ -38,6 +27,7 @@ export default function BasicSettings() {
   const [nickname, setNickname] = useState(userInfo.nickname);
   const [gender, setGender] = useState("secret");
   const [signature, setSignature] = useState(userInfo.signature || "");
+  // const [birthday, setBirthday] = useState<moment.Moment>();
   const formRef = useRef<FormInstance<any>>(null);
 
   const onFinish = (values: any) => {
@@ -48,19 +38,33 @@ export default function BasicSettings() {
     formRef.current!.resetFields();
   };
 
-  const uploadAvatarProps = {
-    ...defaultUploadAvatarProps,
-    onChange(info: UploadChangeParam<UploadFile<any>>): void {
-      if (info.file.status !== "uploading") {
-        console.log(info.file, info.fileList);
-      }
-      if (info.file.status === "done") {
-        message.success(`${info.file.name} file uploaded successfully`);
-        setAvatar(info);
-      } else if (info.file.status === "error") {
-        message.error(`${info.file.name} file upload failed.`);
-      }
-    },
+  const onChange = (info: UploadChangeParam<UploadFile<any>>): void => {
+    const loadingKey = "LOADING_KEY";
+    switch (info.file.status) {
+      case "uploading":
+        console.log(info);
+        message.loading({ key: loadingKey, content: "Picture Uploading..." });
+        break;
+      case "done":
+      case "success":
+        message.destroy(loadingKey);
+        const { response } = info.file;
+        if (response) {
+          if (response.status === 20000 && response.data.url) {
+            setAvatar(response.data.url);
+            message.success("Picture Upload Successfully");
+          } else {
+            message.error("Picture Upload Failed");
+          }
+        }
+        break;
+      case "error":
+      case "removed":
+      default:
+        message.destroy(loadingKey);
+        console.log(info);
+        message.error("Picture Upload Failed");
+    }
   };
 
   return (
@@ -118,15 +122,12 @@ export default function BasicSettings() {
         </Form.Item>
 
         <Form.Item label="Birthday">
-          <DatePicker />
-        </Form.Item>
-
-        <Form.Item label="Form Size" name="size">
-          <Radio.Group>
-            <Radio.Button value="small">Small</Radio.Button>
-            <Radio.Button value="default">Default</Radio.Button>
-            <Radio.Button value="large">Large</Radio.Button>
-          </Radio.Group>
+          <DatePicker
+            onChange={(e) => {
+              // setBirthday(Date.now())
+              console.log(e);
+            }}
+          />
         </Form.Item>
 
         <Form.Item>
@@ -141,11 +142,11 @@ export default function BasicSettings() {
 
       <div className={styles.avatar}>
         <Avatar shape="circle" size={144} src={avatar} />
-        <Upload {...uploadAvatarProps}>
+        <AvatarUpload onChange={onChange}>
           <Button icon={<UploadOutlined />} className={styles.uploadBtn}>
             Change Avatar
           </Button>
-        </Upload>
+        </AvatarUpload>
       </div>
     </div>
   );

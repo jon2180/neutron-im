@@ -27,7 +27,7 @@ const AppConstants = {
    * 头像上传地址
    */
   get AVATAR_UPLOAD_URL() {
-    return `${API_BASE_URL}/upload/chat-img`;
+    return `${API_BASE_URL}/accounts/avatar`;
   },
 
   /**

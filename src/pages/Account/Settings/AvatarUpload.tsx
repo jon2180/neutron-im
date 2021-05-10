@@ -1,52 +1,38 @@
-import React, { useState } from "react";
+import React from "react";
 import { Upload } from "antd";
 import ImgCrop from "antd-img-crop";
-import { UploadFile } from "antd/lib/upload/interface";
+import AppConstants from "@/config/url.const";
+import { Cookie } from "@/utils/cookie";
 
-export default function Demo() {
-  // const [fileList, setFileList] = useState([
-  //   {
-  //     uid: "-1",
-  //     name: "image.png",
-  //     status: "done",
-  //     url:
-  //       "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-  //   },
-  // ] as UploadFile<any>[] | undefined);
+import type { UploadChangeParam } from "antd/lib/upload";
+import type { UploadFile } from "antd/lib/upload/interface";
 
-  // const onChange = ({ fileList: newFileList }) => {
-  //   setFileList(newFileList);
-  // };
+import "./AvatarUpload.less";
 
-  // const onPreview = async (file) => {
-  //   let src = file.url;
-  //   if (!src) {
-  //     src = await new Promise((resolve) => {
-  //       const reader = new FileReader();
-  //       reader.readAsDataURL(file.originFileObj);
-  //       reader.onload = () => resolve(reader.result);
-  //     });
-  //   }
-  //   const image = new Image();
-  //   image.src = src;
-  //   const imgWindow = window.open(src);
-  //   if (imgWindow)
-  //   imgWindow.document.write(image.outerHTML);
-  // };
+const defaultUploadAvatarProps = {
+  name: "file",
+  maxCount: 1,
+  showUploadList: false,
+  action: AppConstants.AVATAR_UPLOAD_URL,
+  headers: {
+    Authorization: Cookie.getCookie("Authorization"),
+  }
+};
+
+export interface AvatarUploadProps {
+  children: JSX.Element | JSX.Element[];
+  onChange: (info: UploadChangeParam<UploadFile<any>>) => void;
+}
+
+export default function AvatarUpload(props: AvatarUploadProps) {
+  const uploadAvatarProps = {
+    ...defaultUploadAvatarProps,
+    ...props,
+  };
 
   return (
     <ImgCrop rotate>
-      {/* <Upload
-        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-        listType="picture-card"
-        fileList={fileList}
-        onChange={({ fileList: newFileList }) => {
-          setFileList(newFileList);
-        }}
-        onPreview={onPreview}
-      >
-        {fileList.length < 5 && "+ Upload"}
-      </Upload> */}
+      <Upload {...uploadAvatarProps}>{props.children}</Upload>
     </ImgCrop>
   );
 }

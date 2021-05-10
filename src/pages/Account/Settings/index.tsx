@@ -10,6 +10,7 @@ import type { MenuMode } from "antd/lib/menu";
 
 import styles from "./ProfileSetting.module.less";
 import "./index.less";
+import AccountBinding from "./AccountBinding";
 
 function getMenuItem() {
   return (
@@ -38,7 +39,7 @@ function getRightTitle(key: SelectedKeysType) {
     case "accountBindings":
       return (
         <FormattedMessage
-          id="accounts.settings.basicSettings"
+          id="accounts.settings.accountSettings"
           defaultMessage="Account Settings"
         />
       );
@@ -52,7 +53,7 @@ function renderChildren(key: SelectedKeysType) {
     case "basicSettings":
       return <BasicSettings />;
     case "accountBindings":
-      return <BasicSettings />;
+      return <AccountBinding />;
     default:
       return <div></div>;
   }
