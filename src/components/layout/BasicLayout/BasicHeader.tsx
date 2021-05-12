@@ -92,6 +92,11 @@ function AvatarNav() {
         overlay={
           <Menu className={styles.nav}>
             <Menu.Item>
+              <NavLink to={`/editor`}>
+                <FormattedMessage id="menu.editor" defaultMessage="Editor" />
+              </NavLink>
+            </Menu.Item>
+            <Menu.Item>
               <NavLink to="/im">
                 <FormattedMessage
                   id="menu.im"
