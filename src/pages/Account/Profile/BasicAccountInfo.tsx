@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { Card, Skeleton, Button, message } from "antd";
+import { Card, Skeleton, Button, message, Space } from "antd";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {
@@ -19,7 +19,7 @@ import styles from "./BasicAccountInfo.module.less";
 export default function BasicAccountInfo({ id }: { id: string }) {
   const userInfo = useSelector(selectUserInfo);
   const [friendInfo, setFriendInfo] = useState({} as UserInfo);
-
+  const [loading, setLoading] = useState(true);
   const isMyself = userInfo.id === friendInfo.id;
 
   useMemo(() => {
@@ -28,6 +28,7 @@ export default function BasicAccountInfo({ id }: { id: string }) {
       .then((res) => {
         console.log(res);
 
+        setLoading(false);
         if (!res || res.status !== 20000) {
           message.error({ content: `获取此用户信息失败, ${res.message}` });
           return;
@@ -43,12 +44,13 @@ export default function BasicAccountInfo({ id }: { id: string }) {
       .catch((err) => {
         message.error({ content: `获取用户信息失败` });
         console.log(err);
+        setLoading(false);
       });
   }, [id]);
 
   return (
-    <Skeleton active loading={false}>
-      <Card className={styles.profileCard}>
+    <Card className={styles.profileCard}>
+      <Skeleton active loading={loading}>
         <div className={styles.metaInfoBox}>
           <img
             alt="avatar"
@@ -78,7 +80,9 @@ export default function BasicAccountInfo({ id }: { id: string }) {
           <div>{"未知位置"}</div>
           <div>{"未知职业"}</div>
         </div>
+
         <hr className={styles.hr} />
+
         <div className={styles.metaInfoOption}>
           <div className={styles.metaInfoOption_social}>
             <Button type="default" shape="circle" icon={<GithubOutlined />} />
@@ -87,15 +91,17 @@ export default function BasicAccountInfo({ id }: { id: string }) {
             <Button type="default" shape="circle" icon={<QqOutlined />} />
           </div>
           <div>
-            {isMyself ? <span /> : <a href="#2">删除好友</a>}
-            {isMyself ? (
-              <Link to={`/accounts/settings/profile`}>编辑资料</Link>
-            ) : (
-              <Link to={`/im/chats/${id}`}>聊天</Link>
-            )}
+            <Space size={8}>
+              {isMyself ? <span /> : <a href="#2">删除好友</a>}
+              {isMyself ? (
+                <Link to={`/accounts/settings/profile`}>编辑资料</Link>
+              ) : (
+                <Link to={`/im/chats/${id}`}>聊天</Link>
+              )}
+            </Space>
           </div>
         </div>
-      </Card>
-    </Skeleton>
+      </Skeleton>
+    </Card>
   );
 }

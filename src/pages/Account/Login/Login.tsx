@@ -15,7 +15,7 @@ import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 import AppConstans from "@/config/url.const";
 import { exportUserInfo } from "@/utils/localStorage";
-import Helmet from "@/components/Helmet";
+import { Helmet } from "react-helmet-async";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import type { RegisterParams } from "./RegisterForm";

@@ -23,7 +23,7 @@ const IconText = ({ icon, text }: { icon: any; text: any }) => (
   </Space>
 );
 
-const tabListNoTitle = [
+const tabList = [
   {
     key: "article",
     tab: "Article",
@@ -38,7 +38,13 @@ const tabListNoTitle = [
   },
 ];
 
-const contentListNoTitle: { [propName: string]: JSX.Element } = {
+type TabKeyType = "article" | "app" | "project";
+
+const contentList: {
+  article: JSX.Element;
+  app: JSX.Element;
+  project: JSX.Element;
+} = {
   article: (
     <>
       <div className="site-layout-background">
@@ -197,27 +203,34 @@ const contentListNoTitle: { [propName: string]: JSX.Element } = {
   project: <p>project content</p>,
 };
 
-export default function TabsCard({ id }: { id: string }) {
-  const [state, setState] = useState({
-    key: "tab1",
-    noTitleKey: "article",
-  } as { [x: string]: string });
+export default function TabsCard({
+  id,
+  activeTabKey,
+}: {
+  id: string;
+  activeTabKey: string;
+}) {
+  const [tabKey, setTabKey] = useState<TabKeyType>(
+    (activeTabKey && tabList.find((value) => value.key === activeTabKey)
+      ? activeTabKey
+      : tabList[0].key) as TabKeyType
+  );
 
-  const onTabChange = (key: string, type: string) => {
-    console.log(key, type);
-    setState({ [type]: key });
+  const onTabChange = (key: TabKeyType) => {
+    setTabKey(key);
   };
   return (
     <>
       <Card
-        tabList={tabListNoTitle}
-        activeTabKey={state.noTitleKey}
+        tabList={tabList}
+        activeTabKey={tabKey}
         tabBarExtraContent={<a href="#1">More</a>}
         onTabChange={(key) => {
-          onTabChange(key, "noTitleKey");
+          console.log(key);
+          onTabChange(key as TabKeyType);
         }}
       >
-        {contentListNoTitle[state.noTitleKey]}
+        {contentList[tabKey]}
       </Card>
     </>
   );

@@ -2,7 +2,7 @@ import React from "react";
 import { Layout } from "antd";
 import BasicFooter from "./BasicFooter";
 import BaiscHeader from "./BasicHeader";
-import Helmet from "@/components/Helmet";
+import { Helmet } from "react-helmet-async";
 
 const layoutStyle: React.CSSProperties = {
   minHeight: "100vh",

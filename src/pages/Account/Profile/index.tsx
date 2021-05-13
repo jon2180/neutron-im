@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import Helmet from "@/components/Helmet";
+import { Helmet } from "react-helmet-async";
 import TabsCard from "./TabsCard";
 import WideContentWrapper from "@/components/WideContentWrapper/WideContentWrapper";
 import BasicAccountInfo from "./BasicAccountInfo";
@@ -8,10 +8,13 @@ import type { UserInfo } from "@/types/state";
 import { Col, Row } from "antd";
 import { withRouter } from "react-router";
 import { useIntl } from "react-intl";
+import { useGetParams } from "@/utils/hooks";
 
 export default withRouter(function AccountProfile({ match }) {
   const intl = useIntl();
   const [friendInfo] = useState({} as UserInfo);
+
+  const params = useGetParams({ tab: "article" });
 
   const title = `${intl.formatMessage({
     defaultMessage: "User Information",
@@ -29,7 +32,7 @@ export default withRouter(function AccountProfile({ match }) {
             <BasicAccountInfo id={match.params.id || ""} />
           </Col>
           <Col span={24} md={14} lg={17}>
-            <TabsCard id={match.params.id || ""} />
+            <TabsCard id={match.params.id || ""} activeTabKey={params.tab} />
           </Col>
         </Row>
       </WideContentWrapper>

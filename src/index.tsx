@@ -8,6 +8,7 @@ import App from "@/pages/App";
 import "./themes/index.less";
 import reportWebVitals from "./reportWebVitals";
 import { initializeUserInfo } from "./utils/localStorage";
+import { HelmetProvider } from "react-helmet-async";
 import { ConfigProvider } from "antd";
 import zh_CN from "antd/lib/locale/zh_CN";
 import { IntlProvider } from "react-intl";
@@ -27,9 +28,11 @@ function Index() {
   return (
     <Provider store={store}>
       <ConfigProvider locale={zh_CN}>
-        <IntlProvider {...locals[localeName]}>
-          <App />
-        </IntlProvider>
+        <HelmetProvider>
+          <IntlProvider {...locals[localeName]}>
+            <App />
+          </IntlProvider>
+        </HelmetProvider>
       </ConfigProvider>
     </Provider>
   );
