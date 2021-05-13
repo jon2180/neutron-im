@@ -2,7 +2,7 @@ import React from "react";
 
 import useWindowDimensions from "@/utils/hooks";
 
-import { Switch } from "react-router-dom";
+import { Redirect, Switch } from "react-router-dom";
 import { TeamOutlined, UserOutlined, MessageOutlined } from "@ant-design/icons";
 import { Row, Col } from "antd";
 import PrivateRoute from "@/components/PrivateRoute";
@@ -83,15 +83,15 @@ function OneColLayout() {
 const autoFitProps = {
   left: {
     xs: 24,
-    sm: 12,
-    md: 9,
+    sm: 11,
+    md: 11,
     lg: 6,
     xl: 6,
   },
   right: {
     xs: 24,
-    sm: 12,
-    md: 15,
+    sm: 13,
+    md: 13,
     lg: 18,
     xl: 18,
   },
@@ -117,11 +117,24 @@ export const XS_WIDTH = 576;
 /** antd 中 xl 尺寸的大小 */
 export const XL_WIDTH = 1200;
 
-export default function IMFrame() {
+function IMFrame() {
   // 监听屏幕宽度
   const { width } = useWindowDimensions({ debounceTime: 300 });
   if (width <= XS_WIDTH) {
     return <OneColLayout />;
   }
   return <TwoColLayout />;
+}
+
+export default function IM() {
+  return (
+    <Switch>
+      <PrivateRoute path="/im" exact>
+        <Redirect to="/im/chats" push />
+      </PrivateRoute>
+      <PrivateRoute>
+        <IMFrame />
+      </PrivateRoute>
+    </Switch>
+  );
 }

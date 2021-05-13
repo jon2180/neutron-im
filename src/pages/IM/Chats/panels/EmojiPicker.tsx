@@ -1,5 +1,6 @@
 import React from "react";
-import { Picker, EmojiData } from "emoji-mart";
+import { Picker } from "emoji-mart";
+import type { EmojiData } from "emoji-mart";
 import "./EmojiPicker.less";
 
 export type EmojiSelectHandler = (
@@ -8,7 +9,7 @@ export type EmojiSelectHandler = (
   }
 ) => void;
 
-export default React.memo(function EmojiPicker({
+export default function EmojiPicker({
   addEmoji,
 }: {
   addEmoji: EmojiSelectHandler;
@@ -22,4 +23,4 @@ export default React.memo(function EmojiPicker({
       native={false}
     />
   );
-});
+}

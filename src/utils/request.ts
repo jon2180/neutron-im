@@ -6,6 +6,7 @@ import { extend } from "umi-request";
 import { message, notification } from "antd";
 import { Cookie } from "./cookie";
 import AppConstants from "@/config/url.const";
+import type { HttpResponseData } from "@/types/http";
 
 export const codeMessage: {
   [id: number]: string;
@@ -27,6 +28,9 @@ export const codeMessage: {
   504: "网关超时。",
 };
 
+const UNAUTHORITED_NOTICE_KEY = "UNAUTHORITED_NOTICE_KEY";
+const UNCONNECTTED_NOTICE_KEY = "UNCONNECTTED_NOTICE_KEY";
+const REDIRECT_WAIT_TIME_IN_MS = 300;
 /**
  * 配置request请求时的默认参数
  */
@@ -39,32 +43,63 @@ const request = extend({
   headers: {
     Authorization: Cookie.getCookie("Authorization"),
   },
-  errorHandler(error): Response {
+  errorHandler(error): HttpResponseData {
     const { response } = error;
-    if (response && response.status) {
-      const errorText = codeMessage[response.status] || response.statusText;
-      const { status, url } = response;
 
-      notification.error({
-        message: `请求错误 ${status}: ${url}`,
-        description: errorText,
+    // 网络错误
+    if (!response) {
+      message.error({
+        key: UNCONNECTTED_NOTICE_KEY,
+        content: "连接服务器失败，可能是您的网络发生异常，或后台服务器未开启",
       });
-
-      if (response.status === 401 && window.location.pathname !== "/login") {
-        message.error("登录验证失败，请登录");
-        setTimeout(() => {
-          notification.destroy();
-          message.destroy();
-          window.location.replace("/login");
-        }, 200);
-      }
-    } else if (!response) {
-      notification.error({
-        description: "您的网络发生异常，无法连接服务器",
-        message: "网络异常",
-      });
+      return {
+        status: 600 * 100,
+        data: {},
+        timestamp: Date.now(),
+        message: "连接服务器失败，可能是您的网络发生异常，或后台服务器未开启",
+      } as HttpResponseData;
     }
-    return response;
+
+    // 未知原因
+    if (!response.status) {
+      return {
+        status: 500,
+        data: {},
+        timestamp: Date.now(),
+        message: "访问接口失败, 原因未知",
+      } as HttpResponseData;
+    }
+
+    // 未授权页面
+    if (response.status === 401 && window.location.pathname !== "/login") {
+      // FIXME 测试一下设置了 key 之后 antd 会不会自动消除重复
+      // message.destroy(NOTICE_KEY);
+      message.error({
+        content: "登录验证失败，请登录",
+        key: UNAUTHORITED_NOTICE_KEY,
+      });
+      setTimeout(() => {
+        notification.destroy();
+        message.destroy();
+        window.location.replace("/login");
+      }, REDIRECT_WAIT_TIME_IN_MS);
+    }
+
+    const errorText = codeMessage[response.status] || response.statusText;
+    const { status, url } = response;
+
+    message.error({
+      content: `${status} ${errorText}`,
+    });
+
+    return {
+      status: status * 100,
+      data: {
+        url,
+      },
+      timestamp: Date.now(),
+      message: errorText,
+    } as HttpResponseData;
   },
 });
 

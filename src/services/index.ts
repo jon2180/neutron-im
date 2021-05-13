@@ -42,7 +42,7 @@ export interface BingWallpaperResponse {
   };
 }
 
-export const fetchBingWallpaper = (): Promise<BingWallpaperResponse> => {
+export const getBingWallpaper = (): Promise<BingWallpaperResponse> => {
   return request.get("https://cn.bing.com/HPImageArchive.aspx", {
     credentials: "omit",
     mode: "cors",

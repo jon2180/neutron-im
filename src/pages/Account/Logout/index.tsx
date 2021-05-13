@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useAppDispatch } from "@/store/store";
 import { setHasLogin, setUserInfo } from "@/store/userInfoSlice";
 import { Redirect } from "react-router-dom";
 
 import type { UserInfoSubstate } from "@/types/state";
+import { user } from "@/services";
 
 function clearAllCookie() {
   const keys = document.cookie.match(/[^ =;]+(?==)/g);
@@ -21,5 +22,15 @@ export default function Logout() {
   // localStorage.removeItem("userInfo");
   localStorage.clear();
   clearAllCookie();
-  return <Redirect to="/" />;
+  useEffect(() => {
+    user
+      .postLogout()
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+  return <Redirect to="/" push />;
 }

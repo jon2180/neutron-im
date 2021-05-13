@@ -1,10 +1,20 @@
 const enUsMessages = {
   "menu.activities": "Activities",
   "menu.codesnips": "Code Snipates",
+  "menu.editor": "Editor",
   "menu.im": "Instant Messaging",
   "menu.accountCenter": "Account Center",
   "menu.profileSettings": "Account Settings",
   "menu.logout": "Quit",
+  "menu.changeLocale": "Switch Language",
+
+  // im
+  "im.menu.recent": "Recent",
+  "im.menu.friends": "Friends",
+  "im.menu.groups": "Groups",
+
+  search: "Search",
+  more: "More",
   userinfo: "User Information",
   loadmore: "Loading more",
   "alt.captcha": "Captcha",

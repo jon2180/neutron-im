@@ -16,6 +16,22 @@ import locals, { importLocaleSetting } from "@/locales";
 
 initializeUserInfo();
 
+window.onerror = (message, source, lineno, colno, error) => {
+  console.log(message);
+  return true;
+};
+
+window.addEventListener(
+  "error",
+  (e) => {
+    console.log(e, "hello");
+    // e.preventDefault();
+    e.stopPropagation();
+    return true;
+  },
+  false
+);
+
 function Index() {
   let localeName = importLocaleSetting();
 

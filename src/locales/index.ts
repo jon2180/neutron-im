@@ -41,4 +41,10 @@ export function exportLocaleSetting(key: LocaleNameType) {
   return key;
 }
 
+export function changeLocale(key: string) {
+  if (exportLocaleSetting(key as LocaleNameType)) {
+    document.location.reload();
+  }
+}
+
 export default intlConfig;

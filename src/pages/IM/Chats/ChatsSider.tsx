@@ -54,6 +54,7 @@ export function RecentChatItem(props: { data: ChatData }) {
             {data.unread_count === 0 ? (
               <div></div>
             ) : (
+              // FIXME 需要确定未读数量
               <div className={styles.unread}>{data.unread_count}</div>
             )}
           </div>

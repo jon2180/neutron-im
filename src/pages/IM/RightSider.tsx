@@ -2,7 +2,6 @@ import React from "react";
 import { Switch } from "react-router-dom";
 import PrivateRoute from "@/components/PrivateRoute";
 import ChatPanel from "./Chats/ChatPanel";
-import ReactIntroduction from "@/components/ReactIntroduction/ReactIntroduction";
 import FriendProfile from "./Friends/FriendProfile";
 
 export default function RightSider() {
@@ -17,9 +16,6 @@ export default function RightSider() {
         </PrivateRoute>
         <PrivateRoute path="/im/groups/:id" exact>
           <FriendProfile />
-        </PrivateRoute>
-        <PrivateRoute path={["/im", "/im/*"]}>
-          <ReactIntroduction />
         </PrivateRoute>
       </Switch>
     </>

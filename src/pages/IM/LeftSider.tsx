@@ -22,26 +22,11 @@ import ChatsSider from "./Chats/ChatsSider";
 
 import FriendsSider from "./Friends/FriendsSider";
 import GroupsSider from "./Groups/GroupsSider";
-
-const navLinks = [
-  {
-    icon: <MessageOutlined />,
-    to: "/im/chats",
-    text: "最近",
-  },
-  {
-    icon: <UserOutlined />,
-    to: "/im/friends",
-    text: "好友",
-  },
-  {
-    icon: <TeamOutlined />,
-    to: "/im/groups",
-    text: "群组",
-  },
-];
+import { changeLocale } from "@/locales";
+import { FormattedMessage, useIntl } from "react-intl";
 
 function LeftSideTopArea() {
+  const intl = useIntl();
   const dispatch = useAppDispatch();
   const userInfo = useSelector(selectUserInfo);
 
@@ -51,18 +36,26 @@ function LeftSideTopArea() {
 
   useEffect(() => {
     const func = async () => {
-      try {
-        const resultAction = await dispatch(fetchUserInfo());
-        const userInfo = unwrapResult(resultAction);
-        if (userInfo)
-          message.info({ content: `获取用户信息成功 ${userInfo.nickname}` });
-        else message.warn({ content: `获取用户信息失败` });
-      } catch (err) {
-        message.error({ content: `获取用户信息失败` });
+      const resultAction = await dispatch(fetchUserInfo());
+      const userInfo = unwrapResult(resultAction);
+
+      // 存在，说明请求成功
+      if (userInfo) {
+        message.info({ content: `获取用户信息成功 ${userInfo.nickname}` });
+        return;
+      }
+      // 不存在，且是 undefined
+      if (typeof userInfo === "undefined") {
+        message.warn({ content: `获取用户信息失败` });
+        return;
       }
     };
     func();
   }, [dispatch]);
+
+  const onChangeLocale = (e: { key: React.Key }) => {
+    if (e.key && typeof e.key === "string" && e.key !== "") changeLocale(e.key);
+  };
 
   return (
     <div className={styles.headerContainer}>
@@ -78,7 +71,13 @@ function LeftSideTopArea() {
         }}
       >
         <Space>
-          <Button type="text" title="搜索">
+          <Button
+            type="text"
+            title={intl.formatMessage({
+              id: "search",
+              defaultMessage: "Search",
+            })}
+          >
             <Link target="_blank" to="/search">
               <SearchOutlined style={{ color: "#000000" }} />
             </Link>
@@ -88,14 +87,29 @@ function LeftSideTopArea() {
             placement="bottomLeft"
             overlay={
               <Menu>
-                <Menu.Item>切换语言</Menu.Item>
+                <Menu.SubMenu
+                  title={intl.formatMessage({
+                    id: "menu.changeLocale",
+                    defaultMessage: "Switch Language",
+                  })}
+                >
+                  <Menu.Item key="zh_CN" onClick={onChangeLocale}>
+                    中文
+                  </Menu.Item>
+                  <Menu.Item key="en_US" onClick={onChangeLocale}>
+                    English
+                  </Menu.Item>
+                </Menu.SubMenu>
                 <Menu.Item>
                   <a
                     target="_blank"
                     rel="noopener noreferrer"
                     href="/activities"
                   >
-                    动态
+                    <FormattedMessage
+                      id="menu.activities"
+                      defaultMessage="Activities"
+                    />
                   </a>
                 </Menu.Item>
                 <Menu.Item>
@@ -104,19 +118,36 @@ function LeftSideTopArea() {
                     rel="noopener noreferrer"
                     href="/codesnips"
                   >
-                    代码板
+                    <FormattedMessage
+                      id="menu.codesnips"
+                      defaultMessage="Code Snipates"
+                    />
                   </a>
                 </Menu.Item>
                 <Menu.Item>
                   <a target="_blank" rel="noopener noreferrer" href="/accounts">
-                    我的
+                    <FormattedMessage
+                      id="menu.accountCenter"
+                      defaultMessage="Account Center"
+                    />
                   </a>
                 </Menu.Item>
-                <Menu.Item danger>注销登录</Menu.Item>
+                <Menu.Item danger>
+                  <NavLink to="/logout">
+                    <FormattedMessage id="menu.logout" defaultMessage="Quit" />
+                  </NavLink>
+                </Menu.Item>
               </Menu>
             }
           >
-            <Button type="text" title="更多" icon={<PlusOutlined />}></Button>
+            <Button
+              type="text"
+              title={intl.formatMessage({
+                id: "more",
+                defaultMessage: "More",
+              })}
+              icon={<PlusOutlined />}
+            ></Button>
           </Dropdown>
         </Space>
       </div>
@@ -125,6 +156,35 @@ function LeftSideTopArea() {
 }
 
 function LeftSideBottomArea() {
+  const intl = useIntl();
+
+  const navLinks = [
+    {
+      icon: <MessageOutlined />,
+      to: "/im/chats",
+      text: intl.formatMessage({
+        id: "im.menu.recent",
+        defaultMessage: "Recent",
+      }),
+    },
+    {
+      icon: <UserOutlined />,
+      to: "/im/friends",
+      text: intl.formatMessage({
+        id: "im.menu.friends",
+        defaultMessage: "Friends",
+      }),
+    },
+    {
+      icon: <TeamOutlined />,
+      to: "/im/groups",
+      text: intl.formatMessage({
+        id: "im.menu.groups",
+        defaultMessage: "Groups",
+      }),
+    },
+  ];
+
   // TODO 添加未读指示徽标
   // const [unreadCount, setUnreadCount] = useState(0);
   // const recentChats = useSelector(selectAllChats);

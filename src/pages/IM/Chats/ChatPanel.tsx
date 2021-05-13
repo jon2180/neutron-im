@@ -8,13 +8,16 @@ import styles from "./Chats.module.less";
 import { selectRecentChatById, setUnread } from "@/store/recentChatsSlice";
 import ChatHistories from "./panels/ChatHistories";
 import MessageInputArea from "./panels/MessageInputArea";
+import { FormattedMessage } from "react-intl";
+
+interface ChatPanelRouterParamsType {
+  id: string;
+  type: "group" | "single";
+}
 
 export default withRouter(function ChatPanel(props) {
   const dispatch = useAppDispatch();
-  const params = useParams<{
-    id: string;
-    type: "group" | "single";
-  }>();
+  const params = useParams<ChatPanelRouterParamsType>();
 
   let recentChat = useSelector(selectRecentChatById(params.id));
 
@@ -38,7 +41,7 @@ export default withRouter(function ChatPanel(props) {
         }}
         extra={
           <Button type="text" title="...">
-            更多
+            <FormattedMessage id="more" defaultMessage="More" />
           </Button>
         }
       />

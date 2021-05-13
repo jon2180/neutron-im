@@ -9,7 +9,7 @@ export interface HttpResponseData {
   /** 描述文本，具体描述请求的情况 */
   readonly data: unknown;
   /** 实际数据 */
-  readonly timestamp: string;
+  readonly timestamp: number;
 }
 
 export interface HttpErrResponse {

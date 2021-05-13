@@ -19,6 +19,14 @@ import { useIntl } from "react-intl";
 
 import styles from "./ChatHistories.module.less";
 import type { MessageData } from "@/types/http";
+import {
+  ChatAudioItem,
+  ChatCodesnipsItem,
+  ChatFavoriteItem,
+  ChatImageItem,
+  ChatTextItem,
+  ChatVideoItem,
+} from "./ChatItems";
 
 /**
  * 把 消息数据 转成 jsx
@@ -48,19 +56,18 @@ function MessageContent({
   switch (val) {
     case "text":
       return (
-        <div
-          className={[
-            styles.messageText,
-            data.sender_id === myid ? styles.messageSentByMe : "",
-          ].join(" ")}
-        >
-          {data.content}
-        </div>
+        <ChatTextItem self={data.sender_id === myid} content={data.content} />
       );
     case "image":
-      return (
-        <img className={styles.messageImg} src={data.content} alt="图片" />
-      );
+      return <ChatImageItem src={data.content} />;
+    case "audio":
+      return <ChatAudioItem src={data.content} />;
+    case "video":
+      return <ChatVideoItem src={data.content} />;
+    case "codesnips":
+      return <ChatCodesnipsItem />;
+    case "favorite":
+      return <ChatFavoriteItem />;
     default:
       return <span />;
   }
@@ -76,10 +83,11 @@ export default function ChatHistories() {
   const userInfo = useSelector(selectUserInfo);
   const { height } = useWindowDimensions();
   const dispatch = useAppDispatch();
-  const params = useParams<{
-    id: string;
-    type: "group" | "single";
-  }>();
+  const params =
+    useParams<{
+      id: string;
+      type: "group" | "single";
+    }>();
 
   /// 从 store 中获取数据
   let chatHistory = useSelector(selectChatHistoryById(params.id));

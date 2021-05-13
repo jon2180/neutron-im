@@ -1,26 +1,23 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { getUserInfo } from "@/services/user";
-import { exportUserInfo } from "@/utils/localStorage";
-import { message } from "antd";
 
 import type { RootState, UserInfoState, UserInfoSubstate } from "@/types/state";
 
-export const fetchUserInfo = createAsyncThunk<
-  UserInfoSubstate | undefined,
-  void
->(
+/**
+ * 获取 userInfo
+ */
+export const fetchUserInfo = createAsyncThunk<UserInfoSubstate | null, void>(
   "userInfo/fetchUserInfo",
   async (_, { getState, requestId, rejectWithValue }) => {
     const { currentRequestId, loading } = (getState() as RootState).userInfo;
     if (loading !== "pending" || requestId !== currentRequestId) {
-      return;
+      return null;
     }
     const res = await getUserInfo();
-    if (res.status === 20000) {
-      exportUserInfo(res.data as UserInfoSubstate);
+    if (res.status >= 20000 && res.status < 30000) {
+      console.log(res);
       return res.data as UserInfoSubstate;
     } else {
-      message.error(res.message);
       return rejectWithValue(res);
     }
   }
