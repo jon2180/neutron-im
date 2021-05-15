@@ -17,12 +17,10 @@ export default function BasicLayout({
 }) {
   return (
     <>
-      {title ? (
+      {title && (
         <Helmet>
           <title>{title || "Nuetron IM"}</title>
         </Helmet>
-      ) : (
-        <span></span>
       )}
       <Layout style={layoutStyle}>
         <BaiscHeader></BaiscHeader>

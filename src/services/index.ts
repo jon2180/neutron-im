@@ -1,8 +1,9 @@
 import request from "@/utils/request";
 
-export * as chat from "./chat";
-export * as friend from "./friend";
-export * as user from "./user";
+export * as chatService from "./chat";
+export * as friendService from "./friend";
+export * as userService from "./user";
+export * as momentService from "./moment";
 
 export const group = {
   postGroups() {

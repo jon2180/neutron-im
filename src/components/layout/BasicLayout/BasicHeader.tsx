@@ -53,6 +53,45 @@ function changeLocale(key: string) {
   }
 }
 
+export function AccountMenu() {
+  return (
+    <Menu className={styles.nav}>
+      <Menu.Item>
+        <NavLink to={`/editor`}>
+          <FormattedMessage id="menu.editor" defaultMessage="Editor" />
+        </NavLink>
+      </Menu.Item>
+      <Menu.Item>
+        <NavLink to="/im">
+          <FormattedMessage id="menu.im" defaultMessage="Instant Messaging" />
+        </NavLink>
+      </Menu.Item>
+      <Menu.Item>
+        <NavLink to={`/accounts/`}>
+          <FormattedMessage
+            id="menu.accountCenter"
+            defaultMessage="Account Center"
+          />
+        </NavLink>
+      </Menu.Item>
+      <Menu.Item>
+        <NavLink to={`/accounts/settings/profile`}>
+          <FormattedMessage
+            id="menu.profileSettings"
+            defaultMessage="Account Settings"
+          />
+        </NavLink>
+      </Menu.Item>
+      <Menu.Divider />
+      <Menu.Item danger>
+        <NavLink to={`/logout`}>
+          <FormattedMessage id="menu.logout" defaultMessage="Quit" />
+        </NavLink>
+      </Menu.Item>
+    </Menu>
+  );
+}
+
 /**
  * AvatarNav 是Header右方的Avatar相关导航
  * @returns AvatarNav 是Header右方的Avatar相关导航
@@ -88,47 +127,7 @@ function AvatarNav() {
         <div className={styles.notificationsLink}></div>
       </Dropdown>
 
-      <Dropdown
-        overlay={
-          <Menu className={styles.nav}>
-            <Menu.Item>
-              <NavLink to={`/editor`}>
-                <FormattedMessage id="menu.editor" defaultMessage="Editor" />
-              </NavLink>
-            </Menu.Item>
-            <Menu.Item>
-              <NavLink to="/im">
-                <FormattedMessage
-                  id="menu.im"
-                  defaultMessage="Instant Messaging"
-                />
-              </NavLink>
-            </Menu.Item>
-            <Menu.Item>
-              <NavLink to={`/accounts/${userInfo.id}`}>
-                <FormattedMessage
-                  id="menu.accountCenter"
-                  defaultMessage="Account Center"
-                />
-              </NavLink>
-            </Menu.Item>
-            <Menu.Item>
-              <NavLink to={`/accounts/settings/profile`}>
-                <FormattedMessage
-                  id="menu.profileSettings"
-                  defaultMessage="Account Settings"
-                />
-              </NavLink>
-            </Menu.Item>
-            <Menu.Divider />
-            <Menu.Item danger>
-              <NavLink to={`/logout`}>
-                <FormattedMessage id="menu.logout" defaultMessage="Quit" />
-              </NavLink>
-            </Menu.Item>
-          </Menu>
-        }
-      >
+      <Dropdown overlay={<AccountMenu />}>
         <div className={styles.accountLink}>
           <Avatar src={userInfo.avatar}></Avatar>
           <span className={styles.username}>{userInfo.nickname}</span>

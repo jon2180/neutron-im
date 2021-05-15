@@ -26,10 +26,10 @@ export interface RegisterParams {
  * 用户信息更新参数
  */
 export interface UserInfoUpdateParams {
-  id: string;
-  username?: string;
-  avatar?: string;
+  nickname?: string;
   signature?: string;
+  gender?: string;
+  birthday?: string;
 }
 
 export interface UserinfoQueryParams {
@@ -80,11 +80,11 @@ export function getAccountInfo(
  * @param params 更新用户信息
  */
 export function putUserInfo(params: UserInfoUpdateParams) {
-  return request.put(`/accounts/${params.id}`, {
+  return request.put(`/accounts/`, {
     data: params,
   });
 }
 
-export function deleteUser(params: { id: string }) {
-  return request.delete(`/accounts/${params.id}`);
+export function deleteUser() {
+  return request.delete(`/accounts/`);
 }

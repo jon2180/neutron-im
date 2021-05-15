@@ -145,9 +145,9 @@ export class MyWebSocket {
     } else if (mev.data === MyWebSocket.QUIT) {
       console.log("退出消息");
     } else {
-      // console.log(mev);
-      // console.log(mev.data);
       try {
+        // console.log(mev);
+        // console.log(mev.data);
         // const data = JSON.parse(mev.data);
         this.messageHandler.handle(JSON.parse(mev.data) as WebSocketMessage);
       } catch (err) {

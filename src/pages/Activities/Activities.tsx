@@ -1,60 +1,16 @@
-import React from "react";
-import { Card, /* Menu,  */ Tooltip, List, Space, Button } from "antd";
+import React, { useCallback, useEffect, useState } from "react";
+import { Card, List, Space, Button, Skeleton, message } from "antd";
 import styles from "./Activities.module.less";
-import moment from "moment";
 import { Link } from "react-router-dom";
 import { AiOutlineComment, AiOutlineShareAlt } from "react-icons/ai";
 import { GoThumbsup, GoThumbsdown } from "react-icons/go";
 import WideContentWrapper from "@/components/WideContentWrapper/WideContentWrapper";
+import { momentService } from "@/services";
+import { createSemaphore } from "@/utils/wrapper";
 
-interface IActivity {
-  actions: JSX.Element[];
-  author: string;
-  avatar: string;
-  content: JSX.Element;
-  datetime: JSX.Element;
-}
-
-const data: IActivity[] = [
-  {
-    actions: [<span key="comment-list-reply-to-0">Reply to</span>],
-    author: "Han Solo",
-    avatar: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
-    content: (
-      <p>
-        We supply a series of design principles, practical patterns and high
-        quality design resources (Sketch and Axure), to help people create their
-        product prototypes beautifully and efficiently.
-      </p>
-    ),
-    datetime: (
-      <Tooltip
-        title={moment().subtract(1, "days").format("YYYY-MM-DD HH:mm:ss")}
-      >
-        <span>{moment().subtract(1, "days").fromNow()}</span>
-      </Tooltip>
-    ),
-  },
-  {
-    actions: [<span key="comment-list-reply-to-0">Reply to</span>],
-    author: "Han Solo",
-    avatar: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
-    content: (
-      <p>
-        We supply a series of design principles, practical patterns and high
-        quality design resources (Sketch and Axure), to help people create their
-        product prototypes beautifully and efficiently.
-      </p>
-    ),
-    datetime: (
-      <Tooltip
-        title={moment().subtract(2, "days").format("YYYY-MM-DD HH:mm:ss")}
-      >
-        <span>{moment().subtract(2, "days").fromNow()}</span>
-      </Tooltip>
-    ),
-  },
-];
+import type { IActivity } from "@/types/state";
+import { formatTimestamp } from "@/utils/format";
+import MdRenderer from "@/components/MdRenderer";
 
 export const IconText = ({ icon, text }: { icon: any; text: any }) => (
   <Space>
@@ -66,7 +22,6 @@ export const IconText = ({ icon, text }: { icon: any; text: any }) => (
 const handleThumbsUp: React.MouseEventHandler<HTMLElement> = (e) => {
   e.stopPropagation();
   e.preventDefault();
-
   console.log(e);
 };
 
@@ -94,29 +49,31 @@ function renderItem(item: IActivity, index: number) {
     <List.Item className={styles.activityLi}>
       <div className={styles.metaRow}>
         <div className={styles.meta}>
-          <Link to={"/accounts"} className={styles.nickname}>
-            {item.author}
+          <Link to={`/accounts/${item.author_id}`} className={styles.nickname}>
+            {item.author_id}
           </Link>
           <span title="2021" className={styles.time}>
-            {item.datetime}
+            {formatTimestamp(item.create_time)}
           </span>
         </div>
-        <div>
-          <a href={`/tags/tag`} className={styles.activityTag}>
+        <div>        
+          {/* <a href={`/tags/tag`} className={styles.activityTag}>
             tag1
           </a>
           <a href={`/tags/tag`} className={styles.activityTag}>
             tag2
-          </a>
+          </a> */}
         </div>
       </div>
-      <Link to={`/activities/123456`} className={styles.mainLink}>
+      <Link to={`/activities/${item.id}`} className={styles.mainLink}>
         <div className={styles.contentRow}>
           <div>
-            <h2
-              className={styles.activityTitle}
-            >{`We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently`}</h2>
-            <div>{item.content}</div>
+            <h2 className={styles.activityTitle}>{item.title}</h2>
+            <div className={styles.content}>
+              <MdRenderer>
+                {item.content.split("\n").splice(0, 3).join("\n")}
+              </MdRenderer>
+            </div>
             <div>
               <Button.Group className={styles.btnGroup}>
                 <Button
@@ -151,23 +108,57 @@ function renderItem(item: IActivity, index: number) {
             </div>
           </div>
 
-          <img
+          {/* <img
             className={styles.activityCover}
             src="https://wx1.sinaimg.cn/mw2000/67a52ad2gy1gq4ebkwdtfj20zo0gutf6.jpg"
             alt="pic"
-          />
+          /> */}
         </div>
       </Link>
     </List.Item>
   );
 }
 
+const WARN_NOTICE_KEY = "WARN_NOTICE_KEY";
+const loadingStatus = createSemaphore();
+
 export default function Activities() {
+  const [activities, setActivities] = useState<IActivity[]>([]);
+  const [loaded, setLoaded] = useState(false);
+
+  const fetchActivities = useCallback(async function fetchActivities() {
+    if (loadingStatus.loading === "pending") return;
+
+    setLoaded(false);
+    loadingStatus.loading = "pending";
+    const resp = await momentService.getActivities({ keyword: "" });
+    loadingStatus.loading = "idle";
+    setLoaded(true);
+
+    console.log(resp);
+    if (resp.status !== 20000 || !resp.data) {
+      message.warn({
+        key: WARN_NOTICE_KEY,
+        content: "获取列表失败",
+      });
+      return;
+    }
+
+    setActivities(resp.data as IActivity[]);
+    // FIXME
+  }, []);
+
+  useEffect(() => {
+    fetchActivities();
+  }, [fetchActivities]);
+
   return (
     <div className={styles.content}>
       <WideContentWrapper>
         <Card title="Activities">
-          <List dataSource={data} renderItem={renderItem}></List>
+          <Skeleton loading={!loaded}>
+            <List dataSource={activities} renderItem={renderItem}></List>
+          </Skeleton>
         </Card>
       </WideContentWrapper>
     </div>

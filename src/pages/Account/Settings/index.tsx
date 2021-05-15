@@ -12,22 +12,9 @@ import styles from "./ProfileSetting.module.less";
 import "./index.less";
 import AccountBinding from "./AccountBinding";
 
-function getMenuItem() {
-  return (
-    <>
-      <Menu.Item key="basicSettings" icon={<MailOutlined />}>
-        Basic Settings
-      </Menu.Item>
-      <Menu.Item key="accountBindings" icon={<CalendarOutlined />}>
-        Account Binding
-      </Menu.Item>
-    </>
-  );
-}
-
 type SelectedKeysType = "basicSettings" | "accountBindings";
 
-function getRightTitle(key: SelectedKeysType) {
+function getTitle(key: SelectedKeysType) {
   switch (key) {
     case "basicSettings":
       return (
@@ -48,6 +35,19 @@ function getRightTitle(key: SelectedKeysType) {
   }
 }
 
+function getMenuItem() {
+  return (
+    <>
+      <Menu.Item key="basicSettings" icon={<MailOutlined />}>
+        {getTitle("basicSettings")}
+      </Menu.Item>
+      <Menu.Item key="accountBindings" icon={<CalendarOutlined />}>
+        {getTitle("accountBindings")}
+      </Menu.Item>
+    </>
+  );
+}
+
 function renderChildren(key: SelectedKeysType) {
   switch (key) {
     case "basicSettings":
@@ -60,9 +60,8 @@ function renderChildren(key: SelectedKeysType) {
 }
 
 export default function ProfileSetting() {
-  const [selectedKey, setSelectedKey] = useState<SelectedKeysType>(
-    "basicSettings"
-  );
+  const [selectedKey, setSelectedKey] =
+    useState<SelectedKeysType>("basicSettings");
   const main = useRef<HTMLDivElement>(null);
   const [mode, setMode] = useState<MenuMode>("inline");
 
@@ -115,7 +114,7 @@ export default function ProfileSetting() {
             </Menu>
           </div>
           <div className={styles.right}>
-            <div className={styles.title}>{getRightTitle(selectedKey)}</div>
+            <div className={styles.title}>{getTitle(selectedKey)}</div>
             {renderChildren(selectedKey)}
           </div>
         </div>

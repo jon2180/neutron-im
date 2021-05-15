@@ -16,15 +16,53 @@ export async function hp<T, E extends Error>(
   }
 }
 
-export async function hpre<T>(promise: Promise<T>): Promise<[null, T] | [ResponseError<{
-  error: string;
-  message: string;
-  detail: any;
-}>, null]> {
+export async function hpre<T>(promise: Promise<T>): Promise<
+  | [null, T]
+  | [
+      ResponseError<{
+        error: string;
+        message: string;
+        detail: any;
+      }>,
+      null
+    ]
+> {
   try {
     const res = await promise;
     return [null, res];
   } catch (err) {
     return [err as ResponseError, null];
   }
+}
+
+interface LoadingStatus {
+  loading: "idle" | "pending";
+  error?: any;
+}
+
+/**
+ * 信号量工厂
+ * @returns 信号量工厂
+ */
+export function createSemaphore(): LoadingStatus {
+  const loadingStatus: LoadingStatus = {
+    loading: "idle",
+    error: "",
+  };
+
+  return {
+    get loading() {
+      return loadingStatus.loading;
+    },
+    set loading(loading: LoadingStatus["loading"]) {
+      loadingStatus.loading =
+        loading !== "idle" && loading !== "pending" ? "idle" : loading;
+    },
+    get error() {
+      return loadingStatus.error;
+    },
+    set error(error: any) {
+      loadingStatus.error = error;
+    },
+  };
 }

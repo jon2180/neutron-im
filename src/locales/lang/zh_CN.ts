@@ -8,6 +8,30 @@ const zh_CN = {
   "menu.logout": "退出登录",
   "menu.changeLocale": "切换语言",
 
+  // editor
+  /// editor prompted message
+  "editor.message.no_title_or_content": "请输入标题和内容",
+  "editor.message.invalid_license": "无效的 License",
+  "editor.message.empty_original_article_url": "无效的原文链接",
+  "editor.message.upload_failed": "上传失败",
+  "editor.message.upload_successfully": "上传成功",
+  "editor.message.confirm_go_to": "确定要离开吗，确定后你的内容会丢失",
+
+  /// editor: about form label
+  "editor.form.input_title": "请输入标题",
+  "editor.form.copyright": "版权",
+  "editor.form.tags": "标签",
+  "editor.form.type": "类型",
+  "editor.form.publish": "发布",
+
+  /// editor: form
+  "editor.label.is_original": "原创",
+  "editor.label.license": "授权",
+  "editor.label.original_url": "原文链接",
+
+  /// editor: actions
+  "editor.actions.add_tags": "添加标签",
+
   // im
   "im.menu.recent": "最近",
   "im.menu.friends": "好友",

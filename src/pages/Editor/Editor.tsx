@@ -1,90 +1,430 @@
-import React, { useState } from "react";
-import { Avatar, Button, Col, Input, Popover, Row } from "antd";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import {
+  Avatar,
+  Button,
+  Col,
+  Input,
+  Popover,
+  Row,
+  Form,
+  FormInstance,
+  Switch,
+  Radio,
+  Spin,
+  message,
+  Tag,
+  Dropdown,
+} from "antd";
 import MdRenderer from "@/components/MdRenderer";
 import styles from "./Editor.module.less";
-import { Helmet } from "react-helmet-async";
 import { useSelector } from "react-redux";
 import { selectUserInfo } from "@/store/userInfoSlice";
-import useWindowDimensions from "@/utils/hooks";
+import { momentService } from "@/services";
+import { createSemaphore } from "@/utils/wrapper";
+import { Prompt } from "react-router-dom";
+import { FormattedMessage, useIntl } from "react-intl";
+import { AccountMenu } from "@/components/layout/BasicLayout/BasicHeader";
+import { readJSON, writeJSON } from "@/utils/localStorage";
+import { throttle } from "lodash";
+
+const uploadStatus = createSemaphore();
+
+export interface UploadParams {
+  title: string;
+  is_original: boolean;
+  original_url: string;
+  license: string;
+  content_type: string;
+  tags: string;
+  content: string;
+}
+
+const defaultUploadProps: UploadParams = {
+  title: "",
+  is_original: false,
+  original_url: "",
+  license: "",
+  content_type: "activity",
+  tags: "",
+  content: "",
+};
+
+const loadStatus = createSemaphore();
 
 export default function Editor() {
-  const [str, setStr] = useState("");
   const userInfo = useSelector(selectUserInfo);
-  const [title, setTitle] = useState("");
+  const intl = useIntl();
+  /** 最后提交的数据中，并不以此值为准，此值用作显示状态切换 */
+  const [isOriginal, setIsOriginal] = useState(false);
+  const [content, setContent] = useState("");
+  const [tags, setTags] = useState([] as string[]);
+  const [tagInput, setTagInput] = useState("");
+  const [uploading, setUploading] = useState(false);
+  const formRef = useRef<FormInstance<any>>(null);
 
-  const { height } = useWindowDimensions();
+  const switchIsOriginal = () => {
+    const nextIsOriginal = formRef.current?.getFieldValue("is_original");
+    setIsOriginal(
+      nextIsOriginal && typeof nextIsOriginal === "boolean"
+        ? nextIsOriginal
+        : false
+    );
+  };
+
+  const loadDraft = useRef(() => {
+    if (loadStatus.loading === "pending") return;
+    loadStatus.loading = "pending";
+
+    const result = readJSON<UploadParams>("editor.draft");
+    console.log(result);
+    if (result) {
+      const { content, tags, ...rest } = {
+        ...defaultUploadProps,
+        ...result,
+      };
+      formRef.current?.setFieldsValue(rest);
+      setContent(content);
+      setTags(
+        tags.split("::").filter((v) => {
+          return v && v !== "";
+        })
+      );
+    }
+    console.log("loaded draft");
+  });
+
+  const saveDraft = useRef(
+    throttle(() => {
+      writeJSON("editor.draft", {
+        ...formRef.current?.getFieldsValue(),
+        content: content,
+        tags: tags.join("::"),
+      });
+      console.log("saved draft");
+    }, 3000)
+  );
+
+  useEffect(() => {
+    setTimeout(() => {
+      loadDraft.current();
+    });
+  }, []);
+
+  const upload: React.MouseEventHandler<HTMLElement> = useCallback(
+    async function upload() {
+      if (uploadStatus.loading === "pending") return;
+
+      const formValues = formRef.current?.getFieldsValue();
+      const values = {
+        ...defaultUploadProps,
+        ...formValues,
+        tags: tags.join("::"),
+        content: content,
+      } as UploadParams;
+
+      if (
+        !values.title ||
+        values.title.trim() === "" ||
+        !values.content ||
+        values.content.trim() === ""
+      ) {
+        message.warn(
+          intl.formatMessage({
+            id: "editor.message.no_title_or_content",
+            defaultMessage: "Please Input The Title and Content",
+          })
+        );
+        return;
+      }
+
+      if (
+        values.is_original &&
+        (!values.license || values.license.trim() === "")
+      ) {
+        message.warn(
+          intl.formatMessage({
+            id: "editor.message.invalid_license",
+            defaultMessage: "Invalid License",
+          })
+        );
+        return;
+      }
+
+      if (
+        !values.is_original &&
+        (!values.original_url || values.original_url.trim() === "")
+      ) {
+        message.warn(
+          intl.formatMessage({
+            id: "editor.message.empty_original_article_url",
+            defaultMessage: "Invalid Original Article Url",
+          })
+        );
+        return;
+      }
+
+      setUploading(true);
+      uploadStatus.loading = "pending";
+      const resp = await momentService.postActivity(values);
+      uploadStatus.loading = "idle";
+      setUploading(false);
+
+      if (resp.status !== 20000) {
+        message.warn(
+          intl.formatMessage({
+            id: "editor.message.upload_failed",
+            defaultMessage: "Upload Failed",
+          }),
+          0.3
+        );
+        return;
+      }
+
+      localStorage.removeItem("editor.draft");
+      message.info(
+        intl.formatMessage({
+          id: "editor.message.upload_successfully",
+          defaultMessage: "Upload Successfully",
+        }),
+        0.3
+      );
+      document.location.pathname = "/activities";
+    },
+    [content, tags, intl]
+  );
+
+  const removeTag = (e: number) => {
+    if (e >= 0 && e < tags.length) {
+      tags.splice(e, 1);
+      setTags(tags);
+    }
+  };
+
+  const whenPrevent = (): boolean => {
+    return (
+      formRef.current?.getFieldValue("title") !== "" &&
+      !!content &&
+      content !== ""
+    );
+  };
 
   return (
-    <div>
-      <Helmet>
-        <title>{title || "编辑器"}</title>
-      </Helmet>
-      <div className={styles.metaInfo}>
-        <Input
-          value={title}
-          onChange={(e) => {
-            setTitle(e.target.value);
-          }}
-          type="text"
-          placeholder="请输入文章标题"
-          className={styles.titleInput}
-        />
+    <div className={styles.container}>
+      <Prompt
+        when={whenPrevent()}
+        message={(location) =>
+          intl.formatMessage({
+            id: "editor.message.confirm_go_to",
+            defaultMessage:
+              "Are you sure you want to leave? If you do, your content will discard",
+          })
+        }
+      />
 
-        <div className={styles.rightNav}>
-          <Button.Group className={styles.btnGroup}>
-            <Popover
-              content={
-                <div>
-                  添加分类
+      <Spin spinning={uploading}>
+        <div className={styles.metaInfo}>
+          <Form
+            ref={formRef}
+            layout="inline"
+            onFieldsChange={saveDraft.current}
+            className={styles.metaRow}
+            initialValues={defaultUploadProps}
+          >
+            <Form.Item name="title" required>
+              <Input
+                type="text"
+                placeholder={intl.formatMessage({
+                  id: "editor.form.input_title",
+                  defaultMessage: "Please Input Title",
+                })}
+                className={styles.titleInput}
+              />
+            </Form.Item>
+
+            <Button.Group className={styles.btnGroup}>
+              <Popover
+                content={
                   <div>
-                    版权<div>原文链接</div>
+                    <Form.Item
+                      label={intl.formatMessage({
+                        id: "editor.label.is_original",
+                        defaultMessage: "Original",
+                      })}
+                      name="is_original"
+                    >
+                      <Switch
+                        checked={isOriginal}
+                        onChange={switchIsOriginal}
+                      />
+                    </Form.Item>
+
+                    <Form.Item
+                      label={intl.formatMessage({
+                        id: "editor.label.license",
+                        defaultMessage: "License",
+                      })}
+                      name="license"
+                      hidden={!isOriginal}
+                    >
+                      <Input />
+                    </Form.Item>
+
+                    <Form.Item
+                      label={intl.formatMessage({
+                        id: "editor.label.original_url",
+                        defaultMessage: "Original Url",
+                      })}
+                      name="original_url"
+                      hidden={isOriginal}
+                    >
+                      <Input />
+                    </Form.Item>
                   </div>
-                </div>
-              }
-            >
-              <Button type="text">版权</Button>
-            </Popover>
+                }
+              >
+                <Button type="text">
+                  <FormattedMessage
+                    id="editor.form.copyright"
+                    defaultMessage="Copyright"
+                  />
+                </Button>
+              </Popover>
 
-            <Popover content={<div>添加标签</div>}>
-              <Button type="text">标签</Button>
-              {/* <div>分类</div> */}
-            </Popover>
+              <Popover
+                content={
+                  <div>
+                    <Form.Item
+                      label={intl.formatMessage({
+                        id: "editor.actions.add_tags",
+                        defaultMessage: "Add Tags",
+                      })}
+                      name="tags"
+                    >
+                      <Input
+                        value={tagInput}
+                        onChange={(e) => {
+                          setTagInput(e.target.value);
+                        }}
+                        onPressEnter={() => {
+                          if (tagInput) {
+                            setTags([...tags, tagInput]);
+                            setTagInput("");
+                            saveDraft.current();
+                          }
+                        }}
+                      />
+                    </Form.Item>
+                    <div>
+                      {tags.map((value, index) => {
+                        return (
+                          <Tag
+                            closable
+                            onClose={() => {
+                              removeTag(index);
+                              saveDraft.current();
+                            }}
+                            key={value}
+                          >
+                            {value}
+                          </Tag>
+                        );
+                      })}
+                    </div>
+                  </div>
+                }
+              >
+                <Button type="text">
+                  <FormattedMessage
+                    id="editor.form.tags"
+                    defaultMessage="Tags"
+                  />
+                </Button>
+              </Popover>
 
-            <Popover content={<div>添加分类</div>}>
-              <Button type="text">分类</Button>
-            </Popover>
+              <Popover
+                content={
+                  <div>
+                    <Form.Item
+                      label={intl.formatMessage({
+                        id: "editor.form.type",
+                        defaultMessage: "Type",
+                      })}
+                      name="content_type"
+                    >
+                      <Radio.Group>
+                        <Radio.Button value="activity">
+                          <FormattedMessage
+                            id="menu.activities"
+                            defaultMessage="Activities"
+                          />
+                        </Radio.Button>
+                        <Radio.Button value="codesnips">
+                          <FormattedMessage
+                            id="menu.codesnips"
+                            defaultMessage="Code Snipates"
+                          />
+                        </Radio.Button>
+                      </Radio.Group>
+                    </Form.Item>
+                  </div>
+                }
+              >
+                <Button type="text">
+                  <FormattedMessage
+                    id="editor.form.type"
+                    defaultMessage="Type"
+                  />
+                </Button>
+              </Popover>
 
-            <Button type="primary">发布</Button>
-          </Button.Group>
+              <Form.Item>
+                <Button type="primary" htmlType="submit" onClick={upload}>
+                  <FormattedMessage
+                    id="editor.form.publish"
+                    defaultMessage="Publish"
+                  />
+                </Button>
+              </Form.Item>
+            </Button.Group>
+          </Form>
 
-          <Avatar src={userInfo.avatar} size={48} className={styles.avatar} />
+          <Dropdown overlay={<AccountMenu />}>
+            <Avatar src={userInfo.avatar} size={48} className={styles.avatar} />
+          </Dropdown>
         </div>
-      </div>
 
-      <Row>
-        <Col span={12} className={styles.editorContainer}>
-          <Input.TextArea
-            value={str}
-            onChange={(ev) => {
-              setStr(ev.target.value);
-              // console.log(ev.target.value);
-            }}
-            style={{
-              height: `${height - 70}px`,
-            }}
-            className={styles.inputArea}
-          ></Input.TextArea>
-        </Col>
-        <Col
-          span={12}
-          className={styles.previewContainer}
-          style={{
-            height: `${height - 70}px`,
-          }}
-        >
-          <MdRenderer>{str}</MdRenderer>
-        </Col>
-      </Row>
+        <Row className={styles.mainBox}>
+          <Col
+            xs={24}
+            sm={24}
+            md={12}
+            lg={12}
+            className={styles.editorContainer}
+          >
+            <Input.TextArea
+              value={content}
+              onChange={(ev) => {
+                saveDraft.current();
+                setContent(ev.target.value);
+              }}
+              className={styles.inputArea}
+            ></Input.TextArea>
+          </Col>
+          <Col
+            xs={0}
+            sm={0}
+            md={12}
+            lg={12}
+            className={styles.previewContainer}
+          >
+            {document.body.clientWidth > 768 ? (
+              <MdRenderer>{content}</MdRenderer>
+            ) : (
+              <span></span>
+            )}
+          </Col>
+        </Row>
+      </Spin>
     </div>
   );
 }

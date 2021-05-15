@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
-import { Form, Input, Button, Col, Row } from "antd";
+import { Form, Input, Button, Col, Row, FormInstance } from "antd";
 import {
   CheckOutlined,
   IdcardOutlined,
@@ -23,16 +23,13 @@ export interface RegisterParams {
 export default function RegisterForm(props: {
   onSubmit: (data: RegisterParams) => void;
 }) {
-  const [email, setEmail] = useState("");
-  const [nickname, setNickname] = useState("");
-  const [password, setPassword] = useState("");
-  const [captcha, setCaptcha] = useState("");
-
   const [submitting, setSubmitting] = useState(false);
+  const formRef = useRef<FormInstance<any>>(null);
 
   const submitForm = () => {
     setSubmitting(true);
-    props.onSubmit({ email, password, nickname, captcha });
+    if (formRef && formRef.current)
+      props.onSubmit(formRef.current.getFieldsValue());
     setSubmitting(false);
   };
 
@@ -41,64 +38,33 @@ export default function RegisterForm(props: {
       name="Register"
       initialValues={{ remember: true }}
       className={styles.loginForm}
+      ref={formRef}
     >
       <Form.Item
         name="email"
         rules={[{ required: true, message: "Please input your email!" }]}
       >
-        <Input
-          prefix={<UserOutlined />}
-          value={email}
-          placeholder="E-Mail"
-          name="email"
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-        />
+        <Input prefix={<UserOutlined />} placeholder="E-Mail" />
       </Form.Item>
 
       <Form.Item
         name="nickname"
         rules={[{ required: true, message: "Please input your nickname!" }]}
       >
-        <Input
-          prefix={<IdcardOutlined />}
-          value={nickname}
-          name="password"
-          placeholder="Nickname"
-          onChange={(e) => {
-            setNickname(e.target.value);
-          }}
-        />
+        <Input prefix={<IdcardOutlined />} placeholder="Nickname" />
       </Form.Item>
 
       <Form.Item
         name="password"
         rules={[{ required: true, message: "Please input your password!" }]}
       >
-        <Input.Password
-          prefix={<LockOutlined />}
-          value={password}
-          name="password"
-          placeholder="Your password"
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-        />
+        <Input.Password prefix={<LockOutlined />} placeholder="Your password" />
       </Form.Item>
 
-      <Form.Item name="captcha" valuePropName="captcha">
+      <Form.Item name="captcha">
         <Row gutter={4} align="middle">
           <Col span={16}>
-            <Input
-              prefix={<CheckOutlined />}
-              value={captcha}
-              name="captcha"
-              placeholder="Captcha"
-              onChange={(e) => {
-                setCaptcha(e.target.value);
-              }}
-            />
+            <Input prefix={<CheckOutlined />} placeholder="Captcha" />
           </Col>
           <Col span={8}>
             <Captcha />

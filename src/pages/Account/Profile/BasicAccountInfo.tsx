@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from "react";
-import { Card, Skeleton, Button, message, Space } from "antd";
+import React, { useCallback, useEffect, useState } from "react";
+import { Card, Skeleton, Button, message, Space, Divider } from "antd";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import {
@@ -9,12 +9,15 @@ import {
   ZhihuOutlined,
 } from "@ant-design/icons";
 
-import { user } from "@/services";
+import { userService } from "@/services";
 
 import { selectUserInfo } from "@/store/userInfoSlice";
 
 import type { UserInfo } from "@/types/state";
 import styles from "./BasicAccountInfo.module.less";
+import { createSemaphore } from "@/utils/wrapper";
+
+const loadingStatus = createSemaphore();
 
 export default function BasicAccountInfo({ id }: { id: string }) {
   const userInfo = useSelector(selectUserInfo);
@@ -22,35 +25,40 @@ export default function BasicAccountInfo({ id }: { id: string }) {
   const [loading, setLoading] = useState(true);
   const isMyself = userInfo.id === friendInfo.id;
 
-  useMemo(() => {
-    user
-      .getAccountInfo({ uid: id })
-      .then((res) => {
-        console.log(res);
-
+  const fetchAccountInfo = useCallback(
+    async function fetchAccountInfo() {
+      if (loadingStatus.loading === "idle") {
+        setLoading(true);
+        loadingStatus.loading = "pending";
+        const resp = await userService.getAccountInfo({ uid: id });
+        loadingStatus.loading = "idle";
         setLoading(false);
-        if (!res || res.status !== 20000) {
-          message.error({ content: `获取此用户信息失败, ${res.message}` });
+        if (
+          resp.status !== 20000 ||
+          !resp.data ||
+          typeof resp.data !== "object"
+        ) {
+          message.error({ content: `获取此用户信息失败, ${resp.message}` });
           return;
         }
+        setFriendInfo(resp.data as UserInfo);
+      }
+    },
+    [id]
+  );
 
-        if (!res.data) {
-          message.error({ content: "服务器内部错误" });
-          return;
-        }
-
-        setFriendInfo(res.data as UserInfo);
-      })
-      .catch((err) => {
-        message.error({ content: `获取用户信息失败` });
-        console.log(err);
-        setLoading(false);
-      });
-  }, [id]);
+  useEffect(() => {
+    fetchAccountInfo();
+  }, [fetchAccountInfo]);
 
   return (
     <Card className={styles.profileCard}>
-      <Skeleton active loading={loading}>
+      <Skeleton
+        avatar={{ shape: "circle", size: 104 }}
+        active
+        paragraph={{ rows: 3, width: "100%" }}
+        loading={loading}
+      >
         <div className={styles.metaInfoBox}>
           <img
             alt="avatar"
@@ -61,27 +69,23 @@ export default function BasicAccountInfo({ id }: { id: string }) {
             }
           />
           <div className={styles.metaInfoMain_nickname}>
-            {friendInfo.nickname || "未知人物"}
+            {friendInfo.nickname || ""}
           </div>
           <div className={styles.metaInfoMain_more}>
-            {friendInfo.signature || "未知签名"}{" "}
+            {friendInfo.signature || ""}
           </div>
         </div>
 
-        <div className={styles.metaInfoMain}>
-          {/* <div className={styles.metaInfoMainContainer}></div> */}
+        <Space size="middle" className={styles.metaInfoMain}>
           <div className={styles.metaInfoMain_email}>
-            {friendInfo.email || "未知邮箱"}
+            {friendInfo.email || ""}
           </div>
-          <div>
-            {friendInfo.birthday || "未知年龄"}
-            {"未知性别"}
-          </div>
-          <div>{"未知位置"}</div>
-          <div>{"未知职业"}</div>
-        </div>
+          <div>{friendInfo.birthday || ""}</div>
+          {/* <div>{"未知位置"}</div>
+          <div>{"未知职业"}</div> */}
+        </Space>
 
-        <hr className={styles.hr} />
+        <Divider />
 
         <div className={styles.metaInfoOption}>
           <div className={styles.metaInfoOption_social}>

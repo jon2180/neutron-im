@@ -28,6 +28,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.3",
     "react-syntax-highlighter": "^15.4.3",
+    "react-virtualized": "^9.22.3",
+    "react-virtualized-image-measurer": "^0.4.0",
     "redux": "^4.1.0",
     "remark-gfm": "^1.0.0",
     "remark-math": "^4.0.0",
@@ -36,10 +38,10 @@
     "web-vitals": "^1.1.0"
   },
   "scripts": {
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
-    "build:dev": "dotenv -e .env.development react-app-rewired build",
-    "test": "react-app-rewired test",
+    "start": "react-app-rewired start --max_old_space_size=8192",
+    "build": "react-app-rewired build --max_old_space_size=8192",
+    "build:dev": "dotenv -e .env.development react-app-rewired build --max_old_space_size=8192",
+    "test": "react-app-rewired --max_old_space_size=8192 test",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
@@ -57,6 +59,7 @@
     "@types/react-redux": "^7.1.16",
     "@types/react-router-dom": "^5.1.7",
     "@types/react-syntax-highlighter": "^13.5.0",
+    "@types/react-virtualized": "^9.21.11",
     "babel-plugin-dynamic-import-node": "^2.3.3",
     "babel-plugin-import": "^1.13.3",
     "customize-cra": "^1.0.0",

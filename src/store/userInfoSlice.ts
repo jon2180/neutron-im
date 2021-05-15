@@ -38,6 +38,7 @@ const userInfoSlice = createSlice({
       email: "",
       reg_time: null,
       signature: null,
+      gender: 0,
       status: 0,
       tel: null,
       enabled: true,

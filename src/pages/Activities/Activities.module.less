@@ -76,8 +76,20 @@
         text-overflow: ellipsis;
       }
 
+      .content {
+        overflow: hidden;
+        // margin: 0 auto;
+        // width: 300px;
+        color: red;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        overflow: hidden;
+      }
+
       .activityCover {
-        width: 200px;
+        max-width: 200px;
+        min-width: 20%;
         object-fit: cover;
       }
 
@@ -88,4 +100,12 @@
       }
     }
   }
+}
+
+@media screen and (max-width: 576px) {
+  // .contentRow {
+  //   // flex-direction: row;
+  //   flex-direction: column;
+  //   justify-content: flex-start;
+  // }
 }

@@ -29,7 +29,7 @@ export const codeMessage: {
 };
 
 const UNAUTHORITED_NOTICE_KEY = "UNAUTHORITED_NOTICE_KEY";
-const UNCONNECTTED_NOTICE_KEY = "UNCONNECTTED_NOTICE_KEY";
+// const UNCONNECTTED_NOTICE_KEY = "UNCONNECTTED_NOTICE_KEY";
 const REDIRECT_WAIT_TIME_IN_MS = 300;
 /**
  * 配置request请求时的默认参数
@@ -38,20 +38,20 @@ const request = extend({
   prefix: AppConstants.API_BASE_URL,
   timeout: 10000,
   mode: "cors",
-  credentials: "omit", // 默认请求是否带上cookie
+  credentials: "include", // 默认请求是否带上cookie
   // 默认错误处理
   headers: {
     Authorization: Cookie.getCookie("Authorization"),
   },
   errorHandler(error): HttpResponseData {
     const { response } = error;
-
+    console.error(error);
     // 网络错误
     if (!response) {
-      message.error({
-        key: UNCONNECTTED_NOTICE_KEY,
-        content: "连接服务器失败，可能是您的网络发生异常，或后台服务器未开启",
-      });
+      // message.error({
+      //   key: UNCONNECTTED_NOTICE_KEY,
+      //   content: "连接服务器失败，可能是您的网络发生异常，或后台服务器未开启",
+      // });
       return {
         status: 600 * 100,
         data: {},
@@ -72,8 +72,9 @@ const request = extend({
 
     // 未授权页面
     if (response.status === 401 && window.location.pathname !== "/login") {
-      // FIXME 测试一下设置了 key 之后 antd 会不会自动消除重复
+      // FIXME 测试设置了 key 之后 antd 会不会自动消除重复
       // message.destroy(NOTICE_KEY);
+      message.destroy();
       message.error({
         content: "登录验证失败，请登录",
         key: UNAUTHORITED_NOTICE_KEY,

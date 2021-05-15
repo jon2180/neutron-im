@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { Form, Input, Button, Space } from "antd";
 import { useSelector } from "react-redux";
 import { selectUserInfo } from "@/store/userInfoSlice";
@@ -8,11 +8,6 @@ import styles from "./BasicSettings.module.less";
 
 export default function AccountBindings() {
   const userInfo = useSelector(selectUserInfo);
-  const [email] = useState(userInfo.email);
-  const [github, setGithub] = useState("");
-  const [zhihu, setZhihu] = useState("");
-  const [weibo, setWeibo] = useState(userInfo.signature || "");
-  const [qq, setQQ] = useState("");
   const formRef = useRef<FormInstance<any>>(null);
 
   const onFinish = (values: any) => {
@@ -28,59 +23,46 @@ export default function AccountBindings() {
       <Form
         labelCol={{ span: 4 }}
         wrapperCol={{ span: 14 }}
+        initialValues={{
+          email: userInfo.email,
+        }}
         size="middle"
         layout="vertical"
         className={styles.form}
         onReset={onReset}
-        onFinish={onFinish}
         ref={formRef}
       >
-        <Form.Item label={<>Email</>}>
-          <Input value={email} disabled />
+        <Form.Item label={<>Email</>} name="email">
+          <Input disabled />
         </Form.Item>
 
-        <Form.Item label="Github">
-          <Input
-            value={github}
-            onChange={(e) => {
-              setGithub(e.target.value);
-            }}
-          />
+        <Form.Item label="Github" name="github">
+          <Input />
         </Form.Item>
 
-        <Form.Item label="Weibo">
-          <Input
-            value={weibo}
-            onChange={(e) => {
-              setWeibo(e.target.value);
-            }}
-          />
+        <Form.Item label="Weibo" name="weibo">
+          <Input />
         </Form.Item>
 
-        <Form.Item label="Zhihu">
-          <Input
-            value={zhihu}
-            onChange={(e) => {
-              setZhihu(e.target.value);
-            }}
-          />
+        <Form.Item label="Zhihu" name="zhihu">
+          <Input />
         </Form.Item>
 
-        <Form.Item label="QQ">
-          <Input
-            value={qq}
-            onChange={(e) => {
-              setQQ(e.target.value);
-            }}
-          />
+        <Form.Item label="QQ" name="qq">
+          <Input />
         </Form.Item>
 
         <Form.Item>
           <Space size={16}>
-            <Button type="primary" htmlType="submit">
+            <Button
+              type="primary"
+              htmlType="submit"
+              disabled
+              onClick={onFinish}
+            >
               Update Information
             </Button>
-            <Button htmlType="button">Cancel</Button>
+            <Button htmlType="reset">Cancel</Button>
           </Space>
         </Form.Item>
       </Form>

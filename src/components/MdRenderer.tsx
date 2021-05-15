@@ -26,12 +26,22 @@ const components: Partial<NormalComponents & SpecialComponents> = {
   },
 };
 
-export default function MdRenderer({ children }: { children: string }) {
-  return (
-    <Typography>
-      <ReactMarkdown remarkPlugins={[gfm, math]} components={components}>
-        {children}
-      </ReactMarkdown>
-    </Typography>
+export default function MdRenderer({
+  children,
+  withoutStyle,
+}: {
+  children: string;
+  withoutStyle?: boolean;
+}) {
+  const md = (
+    <ReactMarkdown remarkPlugins={[gfm, math]} components={components}>
+      {children}
+    </ReactMarkdown>
   );
+
+  if (withoutStyle) {
+    return md;
+  }
+
+  return <Typography>{md}</Typography>;
 }

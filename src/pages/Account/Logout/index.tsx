@@ -4,7 +4,7 @@ import { setHasLogin, setUserInfo } from "@/store/userInfoSlice";
 import { Redirect } from "react-router-dom";
 
 import type { UserInfoSubstate } from "@/types/state";
-import { user } from "@/services";
+import { userService } from "@/services";
 
 function clearAllCookie() {
   const keys = document.cookie.match(/[^ =;]+(?==)/g);
@@ -23,7 +23,7 @@ export default function Logout() {
   localStorage.clear();
   clearAllCookie();
   useEffect(() => {
-    user
+    userService
       .postLogout()
       .then((res) => {
         console.log(res);

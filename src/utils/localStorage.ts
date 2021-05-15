@@ -14,7 +14,7 @@ export enum LocalStorageKey {
  * @param key 键
  * @returns 对象
  */
-export function readJSON(key: string) {
+export function readJSON<T extends Record<string, any>>(key: string): T | null {
   const str = localStorage.getItem(key);
   if (!str) return null;
   try {

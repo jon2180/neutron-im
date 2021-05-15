@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 
 import store from "@/store/store";
 import { Provider } from "react-redux";
-
+import * as serviceWorker from "./serviceWorker";
 import App from "@/pages/App";
 import "./themes/index.less";
 import reportWebVitals from "./reportWebVitals";
@@ -11,8 +11,14 @@ import { initializeUserInfo } from "./utils/localStorage";
 import { HelmetProvider } from "react-helmet-async";
 import { ConfigProvider } from "antd";
 import zh_CN from "antd/lib/locale/zh_CN";
+import en_US from "antd/lib/locale/en_US";
 import { IntlProvider } from "react-intl";
 import locals, { importLocaleSetting } from "@/locales";
+
+const antdLocaleConfiguration = {
+  zh_CN: zh_CN,
+  en_US: en_US,
+};
 
 initializeUserInfo();
 
@@ -43,7 +49,7 @@ function Index() {
 
   return (
     <Provider store={store}>
-      <ConfigProvider locale={zh_CN}>
+      <ConfigProvider locale={antdLocaleConfiguration[localeName]}>
         <HelmetProvider>
           <IntlProvider {...locals[localeName]}>
             <App />
@@ -64,9 +70,9 @@ ReactDOM.render(
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
-// serviceWorker.unregister();
+if (process.env.NODE_ENV === "production") serviceWorker.register();
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals(console.log);
+if (process.env.NODE_ENV === "test") reportWebVitals(console.log);
