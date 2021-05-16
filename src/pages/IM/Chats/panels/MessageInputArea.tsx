@@ -50,10 +50,11 @@ export default function MessageInputArea() {
   const [inputValue, setInputValue] = useState("");
   const [urls, setUrls] = useState<string[]>([]);
   const dispatch = useAppDispatch();
-  const params = useParams<{
-    id: string;
-    type: "group" | "single";
-  }>();
+  const params =
+    useParams<{
+      id: string;
+      type: "group" | "single";
+    }>();
 
   const chatData = useSelector(selectRecentChatById(params.id));
   const userInfo = useSelector(selectUserInfo);
@@ -168,8 +169,14 @@ export default function MessageInputArea() {
         onChange={(event) => {
           setInputValue(event.target.value);
         }}
+        placeholder="Press <control + enter> to send"
         className={styles.inputTextArea}
         rows={4}
+        onPressEnter={(e) => {
+          if (e.ctrlKey) {
+            sendMessage();
+          }
+        }}
       />
     </div>
   );
