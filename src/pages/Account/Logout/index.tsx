@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useAppDispatch } from "@/store/store";
+import { useAppDispatch } from "@/store";
 import { setHasLogin, setUserInfo } from "@/store/userInfoSlice";
 import { Redirect } from "react-router-dom";
 

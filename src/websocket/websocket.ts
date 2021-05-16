@@ -1,5 +1,5 @@
 import { notification } from "antd";
-import store from "@/store/store";
+import store from "@/store";
 import { pushLastMessage } from "@/store/recentChatsSlice";
 
 import { Cookie } from "@/utils/cookie";

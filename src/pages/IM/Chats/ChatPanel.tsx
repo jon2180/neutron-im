@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { PageHeader, Button } from "antd";
 import { useSelector } from "react-redux";
 import { useParams, withRouter } from "react-router-dom";
-import { useAppDispatch } from "@/store/store";
+import { useAppDispatch } from "@/store";
 
 import styles from "./Chats.module.less";
 import { selectRecentChatById, setUnread } from "@/store/recentChatsSlice";

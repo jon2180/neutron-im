@@ -2,7 +2,7 @@ import { getFriends } from "@/services/friend";
 import { exportFriends } from "@/utils/localStorage";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { message } from "antd";
-import { RootState } from "./store";
+import { RootState } from ".";
 
 import type { FriendData } from "@/types/http";
 

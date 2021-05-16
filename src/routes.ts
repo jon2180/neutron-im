@@ -1,19 +1,19 @@
-import ReactIntroduction from "@/components/ReactIntroduction/ReactIntroduction";
-import IMFrame from "@/pages/IM/IMFrame";
+import ReactIntroduction from "@/components/ReactIntroduction";
+import IMFrame from "@/pages/IM";
 import BasicLayout from "@/components/layout/BasicLayout";
 import BlankLayout from "@/components/layout/BlankLayout";
 import Home from "@/pages/Home";
-import Login from "@/pages/Account/Login/Login";
-import Activities from "@/pages/Activities/Activities";
+import Login from "@/pages/Account/Login";
+import Activities from "@/pages/Activities";
 import Activity from "@/pages/Activities/Activity";
 import type { RouterConfig } from "./components/RouterWrapper";
-import CodeSnips from "./pages/CodeSnips/CodeSnips";
-import Management from "./pages/Mangement/Management";
+import CodeSnips from "./pages/CodeSnips";
+import Management from "./pages/Mangement";
 import AccountProfile from "./pages/Account/Profile";
 import ProfileSetting from "./pages/Account/Settings";
-import Editor from "./pages/Editor/Editor";
+import Editor from "./pages/Editor";
 import Error404 from "./pages/Error/Error404";
-import Search from "./pages/Search/Search";
+import Search from "./pages/Search";
 import Logout from "./pages/Account/Logout";
 
 const routes: RouterConfig[] = [

@@ -9,7 +9,7 @@ import {
   EnterOutlined,
 } from "@ant-design/icons";
 import { pushMessage } from "@/store/chatsHistoriesSlice";
-import { useAppDispatch } from "@/store/store";
+import { useAppDispatch } from "@/store";
 
 import styles from "./MessageInputArea.module.less";
 import EmojiPicker from "./EmojiPicker";

@@ -7,7 +7,7 @@ import { TeamOutlined, UserOutlined, MessageOutlined } from "@ant-design/icons";
 import { Row, Col } from "antd";
 import PrivateRoute from "@/components/PrivateRoute";
 import ChatPanel from "./Chats/ChatPanel";
-import ReactIntroduction from "@/components/ReactIntroduction/ReactIntroduction";
+import ReactIntroduction from "@/components/ReactIntroduction";
 import FriendProfile from "./Friends/FriendProfile";
 import WideContentWrapper from "@/components/WideContentWrapper";
 import LeftSider from "./LeftSider";

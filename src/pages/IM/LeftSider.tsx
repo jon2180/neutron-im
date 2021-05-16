@@ -13,7 +13,7 @@ import { Link, NavLink, Switch } from "react-router-dom";
 
 import { connect } from "@/websocket/websocket";
 import styles from "./IMFrame.module.less";
-import { useAppDispatch } from "@/store/store";
+import { useAppDispatch } from "@/store";
 import { fetchUserInfo, selectUserInfo } from "@/store/userInfoSlice";
 import { unwrapResult } from "@reduxjs/toolkit";
 

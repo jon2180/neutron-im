@@ -12,7 +12,7 @@ import { formatTimestamp } from "@/utils/format";
 
 import { selectUserInfo } from "@/store/userInfoSlice";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { useAppDispatch } from "@/store/store";
+import { useAppDispatch } from "@/store";
 import { selectRecentChatById } from "@/store/recentChatsSlice";
 import { ReloadOutlined } from "@ant-design/icons";
 import { useIntl } from "react-intl";

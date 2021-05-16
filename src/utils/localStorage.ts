@@ -1,4 +1,4 @@
-import store from "@/store/store";
+import store from "@/store";
 import { setHasLogin, setUserInfo } from "@/store/userInfoSlice";
 import type { UserInfoSubstate } from "@/types/state";
 import { Cookie } from "./cookie";

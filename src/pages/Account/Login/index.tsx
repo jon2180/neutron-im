@@ -7,7 +7,7 @@ import { setUserInfo, setHasLogin } from "@/store/userInfoSlice";
 
 import styles from "./Login.module.less";
 import { withRouter } from "react-router-dom";
-import { useAppDispatch } from "@/store/store";
+import { useAppDispatch } from "@/store";
 import { createSemaphore } from "@/utils/wrapper";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";

@@ -1,4 +1,4 @@
-import { RootState as IRootState } from "@/store/store";
+import { RootState as IRootState } from "@/store";
 
 /**
  * 用户信息

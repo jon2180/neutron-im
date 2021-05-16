@@ -20,7 +20,7 @@ import type { FormInstance } from "antd";
 import styles from "./BasicSettings.module.less";
 import AvatarUpload from "./AvatarUpload";
 import { userService } from "@/services";
-import { useAppDispatch } from "@/store/store";
+import { useAppDispatch } from "@/store";
 import moment from "moment";
 
 export function BasicSettingsForm() {
