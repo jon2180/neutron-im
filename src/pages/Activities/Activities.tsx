@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Card, List, Space, Button, Skeleton, message } from "antd";
+import { Card, List, Space, Skeleton, message } from "antd";
 import styles from "./Activities.module.less";
 import { Link } from "react-router-dom";
-import { AiOutlineComment, AiOutlineShareAlt } from "react-icons/ai";
-import { GoThumbsup, GoThumbsdown } from "react-icons/go";
+// import { AiOutlineComment, AiOutlineShareAlt } from "react-icons/ai";
+// import { GoThumbsup, GoThumbsdown } from "react-icons/go";
 import WideContentWrapper from "@/components/WideContentWrapper/WideContentWrapper";
 import { momentService } from "@/services";
 import { createSemaphore } from "@/utils/wrapper";
@@ -19,30 +19,30 @@ export const IconText = ({ icon, text }: { icon: any; text: any }) => (
   </Space>
 );
 
-const handleThumbsUp: React.MouseEventHandler<HTMLElement> = (e) => {
-  e.stopPropagation();
-  e.preventDefault();
-  console.log(e);
-};
+// const handleThumbsUp: React.MouseEventHandler<HTMLElement> = (e) => {
+//   e.stopPropagation();
+//   e.preventDefault();
+//   console.log(e);
+// };
 
-const handleThumbsDown: React.MouseEventHandler<HTMLElement> = (e) => {
-  e.stopPropagation();
-  e.preventDefault();
+// const handleThumbsDown: React.MouseEventHandler<HTMLElement> = (e) => {
+//   e.stopPropagation();
+//   e.preventDefault();
 
-  console.log(e);
-};
+//   console.log(e);
+// };
 
-const handleShare: React.MouseEventHandler<HTMLElement> = (e) => {
-  e.stopPropagation();
-  e.preventDefault();
+// const handleShare: React.MouseEventHandler<HTMLElement> = (e) => {
+//   e.stopPropagation();
+//   e.preventDefault();
 
-  console.log(e);
-};
-const handleComments: React.MouseEventHandler<HTMLElement> = (e) => {
-  e.stopPropagation();
-  e.preventDefault();
-  console.log(e);
-};
+//   console.log(e);
+// };
+// const handleComments: React.MouseEventHandler<HTMLElement> = (e) => {
+//   e.stopPropagation();
+//   e.preventDefault();
+//   console.log(e);
+// };
 
 function renderItem(item: IActivity, index: number) {
   return (
@@ -56,7 +56,7 @@ function renderItem(item: IActivity, index: number) {
             {formatTimestamp(item.create_time)}
           </span>
         </div>
-        <div>        
+        <div>
           {/* <a href={`/tags/tag`} className={styles.activityTag}>
             tag1
           </a>
@@ -70,11 +70,11 @@ function renderItem(item: IActivity, index: number) {
           <div>
             <h2 className={styles.activityTitle}>{item.title}</h2>
             <div className={styles.content}>
-              <MdRenderer>
+              <MdRenderer withoutStyle>
                 {item.content.split("\n").splice(0, 3).join("\n")}
               </MdRenderer>
             </div>
-            <div>
+            {/* <div>
               <Button.Group className={styles.btnGroup}>
                 <Button
                   type="text"
@@ -105,7 +105,7 @@ function renderItem(item: IActivity, index: number) {
                   48
                 </Button>
               </Button.Group>
-            </div>
+            </div> */}
           </div>
 
           {/* <img

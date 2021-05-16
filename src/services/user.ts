@@ -67,11 +67,13 @@ export function getUserInfo(): Promise<HttpResponseData> {
 /**
  * 获取用户信息
  */
-export function getAccountInfo(
-  params: UserinfoQueryParams
-): Promise<HttpResponseData> {
+export function getAccountInfo({
+  uid,
+  ...params
+}: UserinfoQueryParams): Promise<HttpResponseData> {
   // TODO
-  if (params.uid) return request.get(`/accounts/${params.uid}`);
+  if (uid)
+    return request.get(`/accounts/${encodeURIComponent(uid)}`, { params });
   return request.get(`/accounts/`);
 }
 

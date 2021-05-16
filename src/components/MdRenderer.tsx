@@ -8,7 +8,7 @@ import type {
   NormalComponents,
   SpecialComponents,
 } from "react-markdown/src/ast-to-react";
-
+import styles from "./MdRenderer.module.less";
 const components: Partial<NormalComponents & SpecialComponents> = {
   code({ node, inline, className, children, ...props }) {
     const match = /language-(\w+)/.exec(className || "");
@@ -40,7 +40,7 @@ export default function MdRenderer({
   );
 
   if (withoutStyle) {
-    return md;
+    return <div className={styles.reset}>{md}</div>;
   }
 
   return <Typography>{md}</Typography>;

@@ -32,12 +32,14 @@ export function getCodesnips(
 export interface ActivityGetParams {
   id: string;
 }
-export function getActivity(
-  params: ActivityGetParams
-): Promise<HttpResponseData> {
-  return request.get(`/moments/${encodeURIComponent(params.id)}`, {
+export function getActivity({
+  id,
+  ...params
+}: ActivityGetParams): Promise<HttpResponseData> {
+  return request.get(`/moments/${encodeURIComponent(id)}`, {
     params: {
       type: "activity",
+      ...params,
     },
   });
 }
@@ -52,10 +54,11 @@ export interface ActivityCommentsParams {
  * @param params
  * @returns
  */
-export function getActivityComments(
-  params: ActivityCommentsParams
-): Promise<HttpResponseData> {
-  return request.get(`/moments/${encodeURIComponent(params.id)}/comments`, {
+export function getActivityComments({
+  id,
+  ...params
+}: ActivityCommentsParams): Promise<HttpResponseData> {
+  return request.get(`/moments/${encodeURIComponent(id)}/comments`, {
     params: params,
   });
 }
