@@ -26,6 +26,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { AccountMenu } from "@/components/layout/BasicLayout/BasicHeader";
 import { readJSON, writeJSON } from "@/utils/localStorage";
 import { throttle } from "lodash";
+import { TextAreaRef } from "antd/lib/input/TextArea";
 
 const uploadStatus = createSemaphore();
 
@@ -51,6 +52,10 @@ const defaultUploadProps: UploadParams = {
 
 const loadStatus = createSemaphore();
 
+const saveDraft = throttle((fn) => {
+  if (fn && typeof fn === "function") fn();
+}, 3000);
+
 export default function Editor() {
   const userInfo = useSelector(selectUserInfo);
   const intl = useIntl();
@@ -61,6 +66,8 @@ export default function Editor() {
   const [tagInput, setTagInput] = useState("");
   const [uploading, setUploading] = useState(false);
   const formRef = useRef<FormInstance<any>>(null);
+  const previewRef = useRef<HTMLDivElement>(null);
+  const editorRef = useRef<TextAreaRef>(null);
 
   const switchIsOriginal = () => {
     const nextIsOriginal = formRef.current?.getFieldValue("is_original");
@@ -93,16 +100,16 @@ export default function Editor() {
     console.log("loaded draft");
   });
 
-  const saveDraft = useRef(
-    throttle(() => {
-      writeJSON("editor.draft", {
-        ...formRef.current?.getFieldsValue(),
-        content: content,
-        tags: tags.join("::"),
-      });
-      console.log("saved draft");
-    }, 3000)
-  );
+  const save = () => {
+    const data = {
+      ...defaultUploadProps,
+      ...formRef.current?.getFieldsValue(),
+      content: content,
+      tags: tags.join("::"),
+    };
+    writeJSON("editor.draft", data);
+    console.log("saved draft");
+  };
 
   useEffect(() => {
     setTimeout(() => {
@@ -226,7 +233,7 @@ export default function Editor() {
           <Form
             ref={formRef}
             layout="inline"
-            onFieldsChange={saveDraft.current}
+            onFieldsChange={saveDraft}
             className={styles.metaRow}
             initialValues={defaultUploadProps}
           >
@@ -309,7 +316,7 @@ export default function Editor() {
                           if (tagInput) {
                             setTags([...tags, tagInput]);
                             setTagInput("");
-                            saveDraft.current();
+                            saveDraft(save);
                           }
                         }}
                       />
@@ -321,7 +328,7 @@ export default function Editor() {
                             closable
                             onClose={() => {
                               removeTag(index);
-                              saveDraft.current();
+                              saveDraft(save);
                             }}
                             key={value}
                           >
@@ -403,8 +410,9 @@ export default function Editor() {
           >
             <Input.TextArea
               value={content}
+              ref={editorRef}
               onChange={(ev) => {
-                saveDraft.current();
+                saveDraft(save);
                 setContent(ev.target.value);
               }}
               className={styles.inputArea}
@@ -416,6 +424,7 @@ export default function Editor() {
             md={12}
             lg={12}
             className={styles.previewContainer}
+            ref={previewRef}
           >
             {document.body.clientWidth > 768 ? (
               <MdRenderer>{content}</MdRenderer>
