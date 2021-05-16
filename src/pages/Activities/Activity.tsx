@@ -3,7 +3,7 @@ import { Button, Card, Comment, Input, List, message, Skeleton } from "antd";
 import Avatar from "antd/lib/avatar/avatar";
 import styles from "./Activity.module.less";
 import MdRenderer from "@/components/MdRenderer";
-import WideContentWrapper from "@/components/WideContentWrapper/WideContentWrapper";
+import WideContentWrapper from "@/components/WideContentWrapper";
 import { momentService } from "@/services";
 import { createSemaphore } from "@/utils/wrapper";
 import { useParams } from "react-router";

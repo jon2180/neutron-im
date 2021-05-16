@@ -17,8 +17,11 @@ export default function WideContentWrapper({
   className?: string;
   style?: React.CSSProperties;
 }) {
+  const classNames = [styles.outterBox];
+  if (className) classNames.push(className);
+
   return (
-    <div className={className || styles.outterBox} style={style || {}}>
+    <div className={classNames.join(" ")} style={style || {}}>
       <div className={styles.innerBox}>{Component}</div>
     </div>
   );

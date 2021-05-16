@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import WideContentWrapper from "@/components/WideContentWrapper/WideContentWrapper";
+import WideContentWrapper from "@/components/WideContentWrapper";
 import { postAddFriendRequest, searchAccount } from "@/services/friend";
 import { UserInfoSubstate } from "@/types/state";
 import { SearchOutlined, UserAddOutlined } from "@ant-design/icons";

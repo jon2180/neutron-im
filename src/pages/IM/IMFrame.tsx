@@ -9,7 +9,7 @@ import PrivateRoute from "@/components/PrivateRoute";
 import ChatPanel from "./Chats/ChatPanel";
 import ReactIntroduction from "@/components/ReactIntroduction/ReactIntroduction";
 import FriendProfile from "./Friends/FriendProfile";
-import WideContentWrapper from "@/components/WideContentWrapper/WideContentWrapper";
+import WideContentWrapper from "@/components/WideContentWrapper";
 import LeftSider from "./LeftSider";
 import RightSider from "./RightSider";
 import styles from "./IMFrame.module.less";

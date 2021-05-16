@@ -16,6 +16,7 @@ import { selectUserInfo } from "@/store/userInfoSlice";
 import type { UserInfo } from "@/types/state";
 import styles from "./BasicAccountInfo.module.less";
 import { createSemaphore } from "@/utils/wrapper";
+import { FormattedDate } from "react-intl";
 
 const loadingStatus = createSemaphore();
 
@@ -80,7 +81,13 @@ export default function BasicAccountInfo({ id }: { id: string }) {
           <div className={styles.metaInfoMain_email}>
             {friendInfo.email || ""}
           </div>
-          <div>{friendInfo.birthday || ""}</div>
+          <div>
+            {friendInfo.birthday && typeof friendInfo.birthday === "number" ? (
+              <FormattedDate value={friendInfo.birthday} />
+            ) : (
+              ""
+            )}
+          </div>
           {/* <div>{"未知位置"}</div>
           <div>{"未知职业"}</div> */}
         </Space>

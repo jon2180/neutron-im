@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
 import { Helmet } from "react-helmet-async";
-import TabsCard from "./TabsCard";
-import WideContentWrapper from "@/components/WideContentWrapper/WideContentWrapper";
+import ProfileCard from "./ProfileCard";
+import WideContentWrapper from "@/components/WideContentWrapper";
 import BasicAccountInfo from "./BasicAccountInfo";
 import type { UserInfo } from "@/types/state";
 import { Col, Row } from "antd";
@@ -32,7 +32,7 @@ export default withRouter(function AccountProfile({ match }) {
             <BasicAccountInfo id={match.params.id || ""} />
           </Col>
           <Col span={24} md={14} lg={17}>
-            <TabsCard id={match.params.id || ""} activeTabKey={params.tab} />
+            <ProfileCard id={match.params.id || ""} activeTabKey={params.tab} />
           </Col>
         </Row>
       </WideContentWrapper>

@@ -1,16 +1,16 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useCallback, useEffect, useState } from "react";
-import WideContentWrapper from "@/components/WideContentWrapper";
-import { Card, message, Skeleton } from "antd";
+
+import { message, Space, Spin } from "antd";
+// import { MessageOutlined, LikeOutlined, StarOutlined } from "@ant-design/icons";
 import { momentService } from "@/services";
-import type { IActivity } from "@/types/state";
+import { IActivity } from "@/types/state";
 import { createSemaphore } from "@/utils/wrapper";
-import "./CodeSnips.less";
+import CodeSnipListItem from "../CodeSnipListItem";
 
 const WARN_NOTICE_KEY = "WARN_NOTICE_KEY";
 const loadingStatus = createSemaphore();
 
-export default function CodeSnips() {
+export default function CodeSnipList() {
   const [activities, setActivities] = useState<IActivity[]>([]);
   const [loaded, setLoaded] = useState(false);
 
@@ -35,7 +35,7 @@ export default function CodeSnips() {
       return;
     }
 
-    // setActivities(resp.data as IActivity[]);
+    setActivities(resp.data as IActivity[]);
   }, []);
 
   useEffect(() => {
@@ -43,13 +43,14 @@ export default function CodeSnips() {
   }, [fetchActivities]);
 
   return (
-    <WideContentWrapper>
-      <Card>
-        <Skeleton loading={!loaded}>
-          <div>helloworld, this is codesnips</div>
-          <div></div>
-        </Skeleton>
-      </Card>
-    </WideContentWrapper>
+    <>
+      <Spin spinning={!loaded}>
+        <Space>
+          {activities.map((value) => {
+            return <CodeSnipListItem data={value} />;
+          })}
+        </Space>
+      </Spin>
+    </>
   );
 }

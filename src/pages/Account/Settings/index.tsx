@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { CalendarOutlined, MailOutlined } from "@ant-design/icons";
 import { Card, Menu } from "antd";
 
-import WideContentWrapper from "@/components/WideContentWrapper/WideContentWrapper";
+import WideContentWrapper from "@/components/WideContentWrapper";
 import BasicSettings from "./BasicSettings";
 import { FormattedMessage } from "react-intl";
 
