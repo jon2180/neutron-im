@@ -9,6 +9,7 @@ import { selectRecentChatById, setUnread } from "@/store/recentChatsSlice";
 import ChatHistories from "./panels/ChatHistories";
 import MessageInputArea from "./panels/MessageInputArea";
 import { FormattedMessage } from "react-intl";
+import { msgCheckingService } from "@/services";
 
 interface ChatPanelRouterParamsType {
   id: string;
@@ -28,6 +29,14 @@ export default withRouter(function ChatPanel(props) {
         unread: 0,
       })
     );
+    msgCheckingService
+      .update({ targetId: params.id })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   });
 
   return (

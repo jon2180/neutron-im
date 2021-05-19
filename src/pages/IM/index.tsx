@@ -85,15 +85,15 @@ const autoFitProps = {
     xs: 24,
     sm: 11,
     md: 11,
-    lg: 6,
-    xl: 6,
+    lg: 8,
+    xl: 8,
   },
   right: {
     xs: 24,
     sm: 13,
     md: 13,
-    lg: 18,
-    xl: 18,
+    lg: 16,
+    xl: 16,
   },
 };
 

@@ -38,6 +38,8 @@ const zh_CN = {
   "im.menu.groups": "群组",
 
   //
+  start_record: "开始录制",
+  stop_record: "停止录制",
   search: "搜索",
   more: "更多",
   userinfo: "用户信息",

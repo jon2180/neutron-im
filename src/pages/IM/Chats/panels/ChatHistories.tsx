@@ -27,16 +27,19 @@ import {
   ChatTextItem,
   ChatVideoItem,
 } from "./ChatItems";
+import { ChatMessageType } from "@/websocket/conf";
 
 /**
  * 把 消息数据 转成 jsx
  * @param data 消息主体
  */
-const contentTypeMap: Record<any, string> = {
-  0: "text",
-  1: "image",
-  2: "voice",
-  3: "video",
+const contentTypeMap: Record<any, ChatMessageType> = {
+  0: ChatMessageType.TEXT,
+  1: ChatMessageType.IMAGE,
+  2: ChatMessageType.AUDIO,
+  3: ChatMessageType.VIDEO,
+  4: ChatMessageType.CODESNIPS,
+  5: ChatMessageType.FAVORITE,
 };
 
 function MessageContent({
@@ -54,19 +57,19 @@ function MessageContent({
   }
 
   switch (val) {
-    case "text":
+    case ChatMessageType.TEXT:
       return (
         <ChatTextItem self={data.sender_id === myid} content={data.content} />
       );
-    case "image":
+    case ChatMessageType.IMAGE:
       return <ChatImageItem src={data.content} />;
-    case "audio":
+    case ChatMessageType.AUDIO:
       return <ChatAudioItem src={data.content} />;
-    case "video":
+    case ChatMessageType.VIDEO:
       return <ChatVideoItem src={data.content} />;
-    case "codesnips":
+    case ChatMessageType.CODESNIPS:
       return <ChatCodesnipsItem />;
-    case "favorite":
+    case ChatMessageType.FAVORITE:
       return <ChatFavoriteItem />;
     default:
       return <span />;
@@ -74,7 +77,10 @@ function MessageContent({
 }
 
 // const MS_IN_DAY = 1e3 * 3600 * 24;
-
+export interface ChatRouteParams {
+  id: string;
+  type: "group" | "single";
+}
 /**
  * 消息列表框
  */
@@ -83,22 +89,17 @@ export default function ChatHistories() {
   const userInfo = useSelector(selectUserInfo);
   const { height } = useWindowDimensions();
   const dispatch = useAppDispatch();
-  const params =
-    useParams<{
-      id: string;
-      type: "group" | "single";
-    }>();
+  const params = useParams<ChatRouteParams>();
 
   /// 从 store 中获取数据
   let chatHistory = useSelector(selectChatHistoryById(params.id));
   let currentChat = useSelector(selectRecentChatById(params.id));
-  const messagesEnd = useRef<HTMLDivElement>(null);
   const messagesBox = useRef<HTMLDivElement>(null);
 
-  const scrollToBottom = (delay = 0) => {
+  const scrollToBottom = (delay = 300) => {
     setTimeout(() => {
-      if (messagesEnd && messagesEnd.current) {
-        messagesEnd.current.scrollIntoView({ behavior: "auto" });
+      if (messagesBox && messagesBox.current) {
+        messagesBox.current.scrollTop = messagesBox.current.scrollHeight;
       }
     }, delay);
   };
@@ -120,9 +121,7 @@ export default function ChatHistories() {
 
   useEffect(() => {
     if (!chatHistory) {
-      console.log("fetch chat history...");
       handleGetHistory({ id: params.id, type: "single" });
-      // dispatch(fetchChatHistory({ chatId: params.id, type: "single" }));
       scrollToBottom();
     }
   }, [handleGetHistory, chatHistory, params]);
@@ -202,10 +201,6 @@ export default function ChatHistories() {
         split={false}
         renderItem={renderMessage}
       />
-      <div
-        style={{ clear: "both", height: "1px", width: "100%" }}
-        ref={messagesEnd}
-      ></div>
     </div>
   );
 }

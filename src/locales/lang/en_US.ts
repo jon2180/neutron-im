@@ -38,6 +38,8 @@ const enUsMessages = {
   "im.menu.friends": "Friends",
   "im.menu.groups": "Groups",
 
+  start_record: "Start Recording",
+  stop_record: "Stop Recording",
   search: "Search",
   more: "More",
   userinfo: "User Information",

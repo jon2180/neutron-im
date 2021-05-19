@@ -23,7 +23,6 @@
 
     .messageContent {
       max-width: 70%;
-      // border-radius: 8px;
       box-sizing: border-box;
 
       .messageText {
@@ -41,8 +40,10 @@
         color: #333;
         background-color: #9eea6a !important;
       }
+
       .messageImg {
-        width: 100%;
+        width: auto;
+        max-width: max(20%, 200px);
         object-fit: cover;
         border-radius: 8px;
       }

@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 
 import { Link, NavLink, Switch } from "react-router-dom";
 
-import { connect } from "@/websocket/websocket";
+import { connect } from "@/websocket";
 import styles from "./IMFrame.module.less";
 import { useAppDispatch } from "@/store";
 import { fetchUserInfo, selectUserInfo } from "@/store/userInfoSlice";
@@ -221,7 +221,6 @@ function LeftSideBottomArea() {
         style={{
           display: "flex",
           justifyContent: "space-around",
-          // marginTop: '-48px'
         }}
       >
         {navLinks.map((value) => {

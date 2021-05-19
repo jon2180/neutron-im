@@ -1,3 +1,5 @@
+import type { ChatMessageType } from "@/websocket/conf";
+
 /**
  * 标准 HTTP 请求的返回结果
  */
@@ -27,9 +29,6 @@ export interface HttpRequestStatus {
   error: string | null;
 }
 
-/** 消息类型的允许值 */
-export type MessageType = "text" | "image" | "video" | "audio";
-
 /**
  * 消息类型
  */
@@ -41,7 +40,7 @@ export interface MessageData {
   sender_id: string;
   receiver_id: string;
   /** 消息类型 */
-  content_type: "text" | "image" | "video" | "audio";
+  content_type: ChatMessageType;
   /** 消息具体内容 */
   content: string;
   /** 消息提及到的用户，作用类似于 @ 符号 */

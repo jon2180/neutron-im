@@ -4,6 +4,8 @@ export * as chatService from "./chat";
 export * as friendService from "./friend";
 export * as userService from "./user";
 export * as momentService from "./moment";
+export * as msgCheckingService from "./msg-checking";
+export * as messageService from "./message";
 
 export const group = {
   postGroups() {

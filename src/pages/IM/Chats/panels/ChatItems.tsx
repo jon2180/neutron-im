@@ -27,7 +27,11 @@ export function ChatTextItem({
  * @returns
  */
 export function ChatImageItem({ src }: { src: string }) {
-  return <Image className={styles.messageImg} src={src} alt="图片" />;
+  return (
+    <div className={styles.messageImg}>
+      <Image src={src} alt="图片" />
+    </div>
+  );
 }
 
 /**
@@ -36,7 +40,11 @@ export function ChatImageItem({ src }: { src: string }) {
  * @returns
  */
 export function ChatAudioItem({ src }: { src: string }) {
-  return <audio src="src"></audio>;
+  return (
+    <audio src={src} className={styles.audio} controls>
+      Your browser do not support audio tag in HTML5
+    </audio>
+  );
 }
 
 /**
@@ -45,7 +53,11 @@ export function ChatAudioItem({ src }: { src: string }) {
  * @returns
  */
 export function ChatVideoItem({ src }: { src: string }) {
-  return <audio src="src"></audio>;
+  return (
+    <video src={src} className={styles.video} controls>
+      Your browser do not suppport video tag in HTML5
+    </video>
+  );
 }
 
 /**
