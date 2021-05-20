@@ -10,8 +10,7 @@
     position: relative;
     left: 50%;
     top: 50%;
-    width: 400px;
-    height: 420px;
+    width: min(100vw, 400px);
     background-color: #ffffff;
     border-radius: 8px;
     transform: translate(-50%, -50%);
@@ -38,5 +37,15 @@
   }
   .loginFormButton {
     width: 100%;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .fullscreenContainer {
+    .formContainer {
+      border-radius: 8px;
+      padding: 8px;
+      box-sizing: border-box;
+    }
   }
 }

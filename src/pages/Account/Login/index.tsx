@@ -138,8 +138,8 @@ export default withRouter(function Login(props) {
       message.destroy(MESSAGE_KEY);
 
       // 验证登录结果，需要重新实现验证效果
-      if (!res || res.status !== 20000 || !res.data || res.data === {}) {
-        message.error(`表单数据不合法 ${res.message}`);
+      if (!res || res.status !== 20000) {
+        message.error(`注册失败，${res.message}`);
         return;
       }
 
