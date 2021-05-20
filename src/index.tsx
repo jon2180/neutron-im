@@ -14,6 +14,7 @@ import zh_CN from "antd/lib/locale/zh_CN";
 import en_US from "antd/lib/locale/en_US";
 import { IntlProvider } from "react-intl";
 import locals, { importLocaleSetting } from "@/locales";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 const antdLocaleConfiguration = {
   zh_CN: zh_CN,
@@ -48,15 +49,17 @@ function Index() {
   console.log(locals[localeName]);
 
   return (
-    <Provider store={store}>
-      <ConfigProvider locale={antdLocaleConfiguration[localeName]}>
-        <HelmetProvider>
-          <IntlProvider {...locals[localeName]}>
-            <App />
-          </IntlProvider>
-        </HelmetProvider>
-      </ConfigProvider>
-    </Provider>
+    <ErrorBoundary>
+      <Provider store={store}>
+        <ConfigProvider locale={antdLocaleConfiguration[localeName]}>
+          <HelmetProvider>
+            <IntlProvider {...locals[localeName]}>
+              <App />
+            </IntlProvider>
+          </HelmetProvider>
+        </ConfigProvider>
+      </Provider>
+    </ErrorBoundary>
   );
 }
 
