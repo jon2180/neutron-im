@@ -130,7 +130,7 @@ export default function MessageInputArea() {
 
     const msg = buildMessageData({
       content_type: ChatMessageType.IMAGE,
-      content: filename,
+      content: url,
     });
 
     if (!msg) {

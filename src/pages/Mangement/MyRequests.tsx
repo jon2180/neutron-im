@@ -1,14 +1,15 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Avatar, List, message, Popconfirm } from "antd";
 
-import styles from "./FriendRequests.module.less";
+// import styles from "./FriendRequests.module.less";
 import { createSemaphore } from "@/utils/wrapper";
 import { friendService } from "@/services";
 import { UserAddOutlined } from "@ant-design/icons";
-import { userInfo } from "os";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectUserInfo } from "@/store/userInfoSlice";
+
+import styles from "./MyRequests.module.less";
 
 export interface FriendRequest {
   id: string;
@@ -26,16 +27,15 @@ export interface FriendRequest {
 const loadingStatus = createSemaphore();
 const confirmOrReject = createSemaphore();
 
-export default function FriendsRequest() {
+export default function MyRequests() {
   const userInfo = useSelector(selectUserInfo);
-  const [list, setList] = useState<FriendRequest[]>([]);
-  const [handledList, setHandledList] = useState<FriendRequest[]>([]);
+  const [list, setList] = useState<FriendRequest[]>();
 
   const loadList = useCallback(async function loadList() {
     if (loadingStatus.loading === "pending") return;
 
     loadingStatus.loading = "pending";
-    const res = await friendService.getFriendsRequests();
+    const res = await friendService.getMyFriendRequests();
     loadingStatus.loading = "idle";
 
     if (!res || res.status !== 20000) {
@@ -47,13 +47,7 @@ export default function FriendsRequest() {
       message.info("无数据");
       return;
     }
-    // res.data.filter((val) => (val.type === 0 && val.solved_result === 0))
-    setList(
-      res.data.filter((val) => val.type === 0 && val.solved_result === 0)
-    );
-    setHandledList(
-      res.data.filter((val) => !(val.type === 0 && val.solved_result === 0))
-    );
+    setList(res.data);
   }, []);
 
   useEffect(() => {
@@ -105,7 +99,8 @@ export default function FriendsRequest() {
                   {userInfo.id === item.id ? "(myself)" : ""}
                 </div>
               </Link>
-              {userInfo.id !== item.id ? (
+              <span />
+              {/*  {userInfo.id !== item.id ? (
                 <Popconfirm
                   title="Are you sure？"
                   okText="Yes"
@@ -122,64 +117,11 @@ export default function FriendsRequest() {
                 </Popconfirm>
               ) : (
                 <span>myself</span>
-              )}
+              )} */}
             </List.Item>
           );
         }}
       ></List>
-
-      {handledList && handledList.length ? (
-        <List
-          header={<>已处理</>}
-          dataSource={handledList}
-          renderItem={(item, i) => {
-            console.log(item);
-            return (
-              <List.Item key={item.id} className={styles.list}>
-                <Link
-                  to={`/accounts/${item.initiator_id}`}
-                  target="_blank"
-                  title="点击查看用户详情"
-                  className={styles.name}
-                >
-                  <Avatar
-                    src={
-                      "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                    }
-                    size={36}
-                    className={styles.avatar}
-                  />
-                  <div>
-                    {item.id}
-                    {userInfo.id === item.id ? "(myself)" : ""}
-                  </div>
-                </Link>
-                {/* {userInfo.id !== item.id ? (
-                  <Popconfirm
-                    title="Are you sure？"
-                    okText="Yes"
-                    cancelText="No"
-                    placement="leftTop"
-                    onConfirm={() => {
-                      onConfirm(item.id, true);
-                    }}
-                    onCancel={() => {
-                      onConfirm(item.id, false);
-                    }}
-                  >
-                    <UserAddOutlined />
-                  </Popconfirm>
-                ) : (
-                  <span>myself</span>
-                )} */}
-                <span />
-              </List.Item>
-            );
-          }}
-        ></List>
-      ) : (
-        <></>
-      )}
     </div>
   );
 }

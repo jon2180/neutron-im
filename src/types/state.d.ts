@@ -5,13 +5,13 @@ import { RootState as IRootState } from "@/store";
  */
 export interface UserInfoSubstate {
   id: string;
-  avatar: stringF | null;
+  avatar: string | null;
   nickname: string;
   avatar: string;
-  birthday: string | null;
+  birthday: number | null;
   email: string;
   nickname: string;
-  reg_time: string | null;
+  reg_time: number | null;
   signature: string | null;
   gender: string | number;
   status: number;

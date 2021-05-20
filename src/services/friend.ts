@@ -19,6 +19,10 @@ export function searchAccount(data: {
   return request.get("/accounts/search", { params: data });
 }
 
+export function getMyFriendRequests(): Promise<HttpResponseData> {
+  return request.get("/requests/friends/$");
+}
+
 export function getFriendsRequests(): Promise<HttpResponseData> {
   return request.get("/requests/friends/");
 }
@@ -30,13 +34,22 @@ export function postAddFriendRequest({
   id: string;
   reason: string;
 }): Promise<HttpResponseData> {
-  return request.post(`/requests/friends/${id}/req`, { data: { reason } });
+  return request.post(`/requests/friends`, { data: { reason, oppositeId: id } });
 }
 
 export function putAddFriendConfirm({
   id,
+  type,
+  reason,
 }: {
   id: string;
+  type: "accept" | "reject";
+  reason: string;
 }): Promise<HttpResponseData> {
-  return request.put(`/request/friends/${id}/confirm`);
+  return request.put(`/requests/friends/${id}`, {
+    data: {
+      type,
+      reason,
+    },
+  });
 }
