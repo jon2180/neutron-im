@@ -1,4 +1,5 @@
 const zh_CN = {
+  "menu.management": "管理",
   "menu.activities": "动态",
   "menu.codesnips": "代码速览板",
   "menu.im": "即时通讯",

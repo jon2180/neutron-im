@@ -1,4 +1,5 @@
 const enUsMessages = {
+  "menu.management": "Management",
   "menu.activities": "Activities",
   "menu.codesnips": "Code Snipates",
   "menu.editor": "Editor",

@@ -75,6 +75,11 @@ export function AccountMenu() {
         </NavLink>
       </Menu.Item>
       <Menu.Item>
+        <NavLink to={`/management`}>
+          <FormattedMessage id="menu.management" defaultMessage="Management" />
+        </NavLink>
+      </Menu.Item>
+      <Menu.Item>
         <NavLink to={`/accounts/settings/profile`}>
           <FormattedMessage
             id="menu.profileSettings"
