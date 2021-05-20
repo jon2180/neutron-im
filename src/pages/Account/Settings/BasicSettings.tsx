@@ -49,7 +49,7 @@ export function BasicSettingsForm() {
 
   const onReset = () => {
     formRef.current!.resetFields();
-    console.log('reet');
+    console.log("reet");
   };
 
   const formatGenderNum = (gender: number) => {
@@ -75,7 +75,9 @@ export function BasicSettingsForm() {
           userInfo.gender && typeof userInfo.gender === "number"
             ? formatGenderNum(userInfo.gender)
             : "secret",
-        birthday: moment(userInfo.birthday),
+        birthday: userInfo.birthday
+          ? moment(userInfo.birthday as number)
+          : undefined,
       }}
       layout="vertical"
       className={styles.form}

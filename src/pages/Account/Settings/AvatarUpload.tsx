@@ -16,7 +16,7 @@ const defaultUploadAvatarProps = {
   action: AppConstants.AVATAR_UPLOAD_URL,
   headers: {
     Authorization: Cookie.getCookie("Authorization"),
-  }
+  },
 };
 
 export interface AvatarUploadProps {
