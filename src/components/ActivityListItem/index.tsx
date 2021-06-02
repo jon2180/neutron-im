@@ -1,23 +1,20 @@
-import React from "react";
-import { List, Space } from "antd";
-import styles from "./index.module.less";
+import React, { useCallback } from "react";
+import { Button, List } from "antd";
 import { Link } from "react-router-dom";
-// import { AiOutlineComment, AiOutlineShareAlt } from "react-icons/ai";
-// import { GoThumbsup, GoThumbsdown } from "react-icons/go";
-// import WideContentWrapper from "@/components/WideContentWrapper/WideContentWrapper";
-// import { momentService } from "@/services";
-// import { createSemaphore } from "@/utils/wrapper";
+import { AiOutlineComment, AiOutlineShareAlt } from "react-icons/ai";
+import { GoThumbsup, GoThumbsdown } from "react-icons/go";
 
 import type { IActivity } from "@/types/state";
 import { formatTimestamp } from "@/utils/format";
 import MdRenderer from "@/components/MdRenderer";
 
-export const IconText = ({ icon, text }: { icon: any; text: any }) => (
-  <Space>
-    {React.createElement(icon)}
-    {text}
-  </Space>
-);
+import styles from "./index.module.less";
+
+function isFunc(param: any) {
+  return typeof param === "function";
+}
+
+type ActivityHandlerFunc = (data: IActivity, index: number) => void;
 
 /**
  * 构造一个由 List.Item 包裹的 Activity 组件
@@ -25,7 +22,26 @@ export const IconText = ({ icon, text }: { icon: any; text: any }) => (
  * @param index Index 参数
  * @returns 返回一个 List.Item 包裹的组件
  */
-export default function ActivityListItem(item: IActivity, index: number) {
+export default function ActivityLI({
+  item,
+  index,
+  ...restProps
+}: {
+  item: IActivity;
+  index: number;
+  handleThumbsUp?: ActivityHandlerFunc;
+  handleThumbsDown?: ActivityHandlerFunc;
+  handleComments?: ActivityHandlerFunc;
+  handleShare?: ActivityHandlerFunc;
+}) {
+  const eventHandler = useCallback(
+    (func: ActivityHandlerFunc) => {
+      return (() => {
+        func(item, index);
+      }) as React.MouseEventHandler<HTMLElement>;
+    },
+    [item, index]
+  );
   return (
     <List.Item className={styles.activityLi}>
       <div className={styles.metaRow}>
@@ -38,64 +54,80 @@ export default function ActivityListItem(item: IActivity, index: number) {
           </span>
         </div>
         <div>
-          {/* <a href={`/tags/tag`} className={styles.activityTag}>
-            tag1
-          </a>
-          <a href={`/tags/tag`} className={styles.activityTag}>
-            tag2
-          </a> */}
+          {item.tags && Array.isArray(item.tags) ? (
+            item.tags.map(() => {
+              return (
+                <a href={`/tags/tag`} className={styles.activityTag}>
+                  tag1
+                </a>
+              );
+            })
+          ) : (
+            <></>
+          )}
         </div>
       </div>
-      <Link to={`/activities/${item.id}`} className={styles.mainLink}>
-        <div className={styles.contentRow}>
+      <div className={styles.contentRow}>
+        <div>
+          <h2 className={styles.activityTitle}>{item.title}</h2>
+          <div className={styles.content}>
+            <MdRenderer withoutStyle>
+              {item.content.split("\n").splice(0, 3).join("\n")}
+            </MdRenderer>
+          </div>
           <div>
-            <h2 className={styles.activityTitle}>{item.title}</h2>
-            <div className={styles.content}>
-              <MdRenderer withoutStyle>
-                {item.content.split("\n").splice(0, 3).join("\n")}
-              </MdRenderer>
-            </div>
-            {/* <div>
-              <Button.Group className={styles.btnGroup}>
+            <Button.Group className={styles.btnGroup}>
+              {restProps.handleThumbsUp && isFunc(restProps.handleThumbsUp) && (
                 <Button
                   type="text"
                   icon={<GoThumbsup />}
-                  onClick={handleThumbsUp}
+                  onClick={eventHandler(restProps.handleThumbsUp)}
                 >
                   248
                 </Button>
-                <Button
-                  type="text"
-                  icon={<GoThumbsdown />}
-                  onClick={handleThumbsDown}
-                >
-                  48
-                </Button>
+              )}
+              {restProps.handleThumbsDown &&
+                isFunc(restProps.handleThumbsDown) && (
+                  <Button
+                    type="text"
+                    icon={<GoThumbsdown />}
+                    onClick={eventHandler(restProps.handleThumbsDown)}
+                  >
+                    48
+                  </Button>
+                )}
+              {restProps.handleComments && isFunc(restProps.handleComments) && (
                 <Button
                   type="text"
                   icon={<AiOutlineComment />}
-                  onClick={handleComments}
+                  onClick={eventHandler(restProps.handleComments)}
                 >
                   48
                 </Button>
+              )}
+              {restProps.handleShare && isFunc(restProps.handleShare) && (
                 <Button
                   type="text"
                   icon={<AiOutlineShareAlt />}
-                  onClick={handleShare}
+                  onClick={eventHandler(restProps.handleShare)}
                 >
                   48
                 </Button>
-              </Button.Group>
-            </div> */}
+              )}
+            </Button.Group>
           </div>
+        </div>
 
-          {/* <img
+        {item.cover_img ? (
+          <img
             className={styles.activityCover}
             src="https://wx1.sinaimg.cn/mw2000/67a52ad2gy1gq4ebkwdtfj20zo0gutf6.jpg"
             alt="pic"
-          /> */}
-        </div>
-      </Link>
+          />
+        ) : (
+          <div></div>
+        )}
+      </div>
     </List.Item>
   );
 }

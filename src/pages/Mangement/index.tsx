@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Tabs } from "antd";
+import { Card } from "antd";
 
 import FriendRequests from "./FriendRequests";
 

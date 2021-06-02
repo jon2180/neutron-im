@@ -104,7 +104,7 @@ export default function MessageInputArea() {
       content: inputValue,
     });
     if (!msg) {
-      message.error({ content: "该聊天不" });
+      message.error({ content: "该聊天不  " });
       return;
     }
     dispatch(pushMessage(msg));
@@ -139,6 +139,8 @@ export default function MessageInputArea() {
     }
     dispatch(pushMessage(msg));
     dispatch(pushLastMessage(msg));
+
+    // msg.content = filename;
     const body = buildSocketMessageBody({
       type: MessageType.SINGLE,
       params: msg,
@@ -147,6 +149,7 @@ export default function MessageInputArea() {
       message.error({ content: "该聊天不存在" });
       return;
     }
+    console.log(websocketStore);
     const returnCode = websocketStore.send(body);
     console.log("return Code: %d", returnCode);
     setInputValue("");

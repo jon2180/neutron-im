@@ -6,6 +6,7 @@ import friendsReducer from "@/store/friendsSlice";
 import recentChatsReducer from "@/store/recentChatsSlice";
 import { useDispatch } from "react-redux";
 import notificationsSlice from "./notificationsSlice";
+import themeSlice from "./themeSlice";
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     userInfo: userInfoReducer,
     friends: friendsReducer,
     notifications: notificationsSlice,
+    theme: themeSlice,
   },
 });
 

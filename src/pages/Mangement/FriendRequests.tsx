@@ -5,7 +5,6 @@ import styles from "./FriendRequests.module.less";
 import { createSemaphore } from "@/utils/wrapper";
 import { friendService } from "@/services";
 import { UserAddOutlined } from "@ant-design/icons";
-import { userInfo } from "os";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectUserInfo } from "@/store/userInfoSlice";

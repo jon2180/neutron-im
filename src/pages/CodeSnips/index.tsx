@@ -1,11 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useCallback, useEffect, useState } from "react";
 import WideContentWrapper from "@/components/WideContentWrapper";
-import { Card, message, Skeleton } from "antd";
+import { Card, List, message, Skeleton } from "antd";
 import { momentService } from "@/services";
 import type { IActivity } from "@/types/state";
 import { createSemaphore } from "@/utils/wrapper";
-import "./CodeSnips.less";
+import ActivityLI from "@/components/ActivityListItem";
+// import styles from "./CodeSnips.module.less";
 
 const WARN_NOTICE_KEY = "WARN_NOTICE_KEY";
 const loadingStatus = createSemaphore();
@@ -24,7 +24,7 @@ export default function CodeSnips() {
     setLoaded(true);
 
     console.log(resp);
-    if (resp.status !== 20000 || !resp.data) {
+    if (resp.status !== 20000) {
       message.warn(
         {
           key: WARN_NOTICE_KEY,
@@ -35,7 +35,7 @@ export default function CodeSnips() {
       return;
     }
 
-    // setActivities(resp.data as IActivity[]);
+    setActivities((resp.data || []) as IActivity[]);
   }, []);
 
   useEffect(() => {
@@ -46,8 +46,12 @@ export default function CodeSnips() {
     <WideContentWrapper>
       <Card>
         <Skeleton loading={!loaded}>
-          <div>helloworld, this is codesnips</div>
-          <div></div>
+          <List
+            dataSource={activities}
+            renderItem={(item: IActivity, index) => {
+              return <ActivityLI item={item} index={index} />;
+            }}
+          />
         </Skeleton>
       </Card>
     </WideContentWrapper>

@@ -81,7 +81,7 @@ export function getAccountInfo({
  * 更新用户信息
  * @param params 更新用户信息
  */
-export function putUserInfo(params: UserInfoUpdateParams) {
+export function putUserInfo(params: UserInfoUpdateParams): Promise<HttpResponseData> {
   return request.put(`/accounts/`, {
     data: params,
   });

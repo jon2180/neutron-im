@@ -27,7 +27,7 @@ const compareFunc = (first: ChatData, last: ChatData) => {
   return first.time < last.time ? 1 : -1;
 };
 
-const messageTypeMap: Record<string, string> = {
+export const messageTypeMap: Record<string, string> = {
   image: "[图片]",
   audio: "[语音]",
   video: "[视频]",
@@ -57,6 +57,10 @@ export const recentChatsSlice = createSlice({
     setRecentChats(state, action) {
       state.splice(0, state.length, ...action.payload);
       state.sort(compareFunc);
+      return state;
+    },
+    pushChat(state, action: PayloadAction<ChatData>) {
+      state.push(action.payload);
       return state;
     },
 
@@ -129,7 +133,7 @@ export const selectRecentChatById = function (id: string) {
   return (state: RootState) => state.recentChats.find((v) => v.id === id);
 };
 
-export const { setUnread, setRecentChats, pushLastMessage } =
+export const { setUnread, setRecentChats, pushLastMessage, pushChat } =
   recentChatsSlice.actions;
 
 export default recentChatsSlice.reducer;

@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { PageHeader, Button } from "antd";
+import React, { useEffect, useState } from "react";
+import { PageHeader, Button, Drawer } from "antd";
 import { useSelector } from "react-redux";
 import { useParams, withRouter } from "react-router-dom";
 import { useAppDispatch } from "@/store";
@@ -10,6 +10,7 @@ import ChatHistories from "./panels/ChatHistories";
 import MessageInputArea from "./panels/MessageInputArea";
 import { FormattedMessage } from "react-intl";
 import { msgCheckingService } from "@/services";
+// import CodeSnipList from "@/components/CodeSnipList";
 
 interface ChatPanelRouterParamsType {
   id: string;
@@ -19,7 +20,25 @@ interface ChatPanelRouterParamsType {
 export default withRouter(function ChatPanel(props) {
   const dispatch = useAppDispatch();
   const params = useParams<ChatPanelRouterParamsType>();
+  const [state, setState] = useState({ visible: false });
 
+  const showDrawer = () => {
+    setState({
+      visible: true,
+    });
+  };
+
+  const onClose = () => {
+    setState({
+      visible: false,
+    });
+  };
+
+  // const onChange = (e) => {
+  //   setState({
+  //     placement: e.target.value,
+  //   });
+  // };
   let recentChat = useSelector(selectRecentChatById(params.id));
 
   useEffect(() => {
@@ -49,13 +68,23 @@ export default withRouter(function ChatPanel(props) {
           height: "64px",
         }}
         extra={
-          <Button type="text" title="...">
+          <Button type="text" title="..." onClick={showDrawer}>
             <FormattedMessage id="more" defaultMessage="More" />
           </Button>
         }
       />
       <ChatHistories />
       <MessageInputArea />
+      <Drawer
+        title="Code Snips"
+        placement="right"
+        closable={true}
+        onClose={onClose}
+        visible={state.visible}
+        key="drawer-codenips"
+      >
+        {/* <CodeSnipList /> */}
+      </Drawer>
     </div>
   );
 });

@@ -9,12 +9,13 @@ import "./themes/index.less";
 import reportWebVitals from "./reportWebVitals";
 import { initializeUserInfo } from "./utils/localStorage";
 import { HelmetProvider } from "react-helmet-async";
-import { ConfigProvider } from "antd";
+import { ConfigProvider, message } from "antd";
 import zh_CN from "antd/lib/locale/zh_CN";
 import en_US from "antd/lib/locale/en_US";
 import { IntlProvider } from "react-intl";
 import locals, { importLocaleSetting } from "@/locales";
 import ErrorBoundary from "./components/ErrorBoundary";
+import ThemeWrapper, { ThemeList } from "./components/ThemeWrapper";
 
 const antdLocaleConfiguration = {
   zh_CN: zh_CN,
@@ -39,24 +40,49 @@ window.addEventListener(
   false
 );
 
-function Index() {
+message.config({
+  duration: 0.5,
+});
+
+function loadLocale() {
   let localeName = importLocaleSetting();
 
   if (!localeName) {
     localeName = "zh_CN";
   }
+  return localeName;
+}
 
-  console.log(locals[localeName]);
+function loadTheme() {
+  let theme = localStorage.getItem("app.theme");
+  if (!theme) {
+    return ThemeList.DEFAULT;
+  }
+  if (
+    theme === ThemeList.DEFAULT ||
+    theme === ThemeList.LIGHT ||
+    theme === ThemeList.dark
+  ) {
+    return theme;
+  }
+  return ThemeList.DEFAULT;
+}
+
+function Index() {
+  const localeName = loadLocale();
+  const theme = loadTheme();
 
   return (
     <ErrorBoundary>
       <Provider store={store}>
         <ConfigProvider locale={antdLocaleConfiguration[localeName]}>
-          <HelmetProvider>
-            <IntlProvider {...locals[localeName]}>
-              <App />
-            </IntlProvider>
-          </HelmetProvider>
+          <ThemeWrapper theme={theme}>
+            <HelmetProvider>
+              <IntlProvider {...locals[localeName]}>
+                <App />
+              </IntlProvider>
+            </HelmetProvider>
+          </ThemeWrapper>
         </ConfigProvider>
       </Provider>
     </ErrorBoundary>

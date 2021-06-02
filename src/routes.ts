@@ -1,11 +1,11 @@
 import ReactIntroduction from "@/components/ReactIntroduction";
 import IMFrame from "@/pages/IM";
-import BasicLayout from "@/components/layout/BasicLayout";
-import BlankLayout from "@/components/layout/BlankLayout";
+import BasicLayout from "@/layout/BasicLayout";
+import BlankLayout from "@/layout/BlankLayout";
 import Home from "@/pages/Home";
 import Login from "@/pages/Account/Login";
 import Activities from "@/pages/Activities";
-import Activity from "@/pages/Activities/Activity";
+import Activity from "@/pages/Activity";
 import type { RouterConfig } from "./components/RouterWrapper";
 import CodeSnips from "./pages/CodeSnips";
 import Management from "./pages/Mangement";

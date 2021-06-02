@@ -11,17 +11,15 @@ import styles from "./WideContentWrapper.module.less";
 export default function WideContentWrapper({
   children: Component,
   className,
-  style,
 }: {
   children: JSX.Element | JSX.Element[];
   className?: string;
-  style?: React.CSSProperties;
 }) {
   const classNames = [styles.outterBox];
   if (className) classNames.push(className);
 
   return (
-    <div className={classNames.join(" ")} style={style || {}}>
+    <div className={classNames.join(" ")}>
       <div className={styles.innerBox}>{Component}</div>
     </div>
   );

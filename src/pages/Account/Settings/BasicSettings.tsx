@@ -22,22 +22,40 @@ import AvatarUpload from "./AvatarUpload";
 import { userService } from "@/services";
 import { useAppDispatch } from "@/store";
 import moment from "moment";
+import { createSemaphore } from "@/utils/wrapper";
+
+const uploadStatus = createSemaphore();
 
 export function BasicSettingsForm() {
   const userInfo = useSelector(selectUserInfo);
   const dispatch = useAppDispatch();
   const formRef = useRef<FormInstance<any>>(null);
+  const [uploading, setUploading] = useState(false);
 
   const submitForm = useCallback(
     async function submitForm() {
+      if (uploadStatus.loading === "pending") return;
+
       const values = formRef.current?.getFieldsValue();
+      setUploading(true);
+      uploadStatus.loading = "pending";
       const resp = await userService.putUserInfo({
         ...values,
         birthday: values.birthday
           ? new Date(values.birthday).getTime()
           : undefined,
       });
+      uploadStatus.loading = "idle";
+      setUploading(false);
       console.log(resp);
+
+      if (!resp || !resp.status) {
+        message.error(resp.message);
+        return;
+      }
+
+      message.info("修改成功");
+
       dispatch(fetchUserInfo());
     },
     [dispatch]
@@ -115,7 +133,12 @@ export function BasicSettingsForm() {
 
       <Form.Item>
         <Space size="middle">
-          <Button type="primary" htmlType="submit" onClick={submitForm}>
+          <Button
+            type="primary"
+            htmlType="submit"
+            onClick={submitForm}
+            loading={uploading}
+          >
             Update Information
           </Button>
           <Button htmlType="reset">Cancel</Button>

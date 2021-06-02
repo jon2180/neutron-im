@@ -5,7 +5,7 @@ import { message, Space, Spin } from "antd";
 import { momentService } from "@/services";
 import { IActivity } from "@/types/state";
 import { createSemaphore } from "@/utils/wrapper";
-import CodeSnipListItem from "../CodeSnipListItem";
+import CodeSnipListItem from "@/components/CodeSnipListItem";
 
 const WARN_NOTICE_KEY = "WARN_NOTICE_KEY";
 const loadingStatus = createSemaphore();
@@ -24,7 +24,7 @@ export default function CodeSnipList() {
     setLoaded(true);
 
     console.log(resp);
-    if (resp.status !== 20000 || !resp.data) {
+    if (resp.status !== 20000) {
       message.warn(
         {
           key: WARN_NOTICE_KEY,
@@ -35,7 +35,7 @@ export default function CodeSnipList() {
       return;
     }
 
-    setActivities(resp.data as IActivity[]);
+    setActivities((resp.data || []) as IActivity[]);
   }, []);
 
   useEffect(() => {

@@ -52,6 +52,8 @@ export interface IActivity {
   title: string;
   update_time: null | number;
   version: string;
+  cover_img?: string;
+  tags?: string | string[];
 }
 
 export type RootState = IRootState;

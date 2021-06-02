@@ -9,7 +9,6 @@ import {
   Card,
   Input,
   List,
-  message,
   PageHeader,
   Popconfirm,
   Tabs,
@@ -27,20 +26,20 @@ function SearchHeader(props: { updateResult: (params: any) => void }) {
     { key: "accounts", tab: "Accounts" },
     { key: "activities", tab: "Activities" },
   ];
-  const routes = [
-    {
-      path: "/search",
-      breadcrumbName: "First-level Menu",
-    },
-    {
-      path: "first",
-      breadcrumbName: "Second-level Menu",
-    },
-    // {
-    //   path: "second",
-    //   breadcrumbName: "Third-level Menu",
-    // },
-  ];
+  // const routes = [
+  //   {
+  //     path: "/search",
+  //     breadcrumbName: "First-level Menu",
+  //   },
+  //   {
+  //     path: "first",
+  //     breadcrumbName: "Second-level Menu",
+  //   },
+  //   // {
+  //   //   path: "second",
+  //   //   breadcrumbName: "Third-level Menu",
+  //   // },
+  // ];
 
   const onSearch = () => {
     props.updateResult({

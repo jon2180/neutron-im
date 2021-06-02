@@ -2,7 +2,7 @@ import React from "react";
 import { Layout } from "antd";
 import { NavLink } from "react-router-dom";
 
-import styles from "./Layout.module.less";
+import styles from "./index.module.less";
 
 const quickCenter = {
   name: "快捷中心",

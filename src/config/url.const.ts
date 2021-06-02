@@ -1,6 +1,8 @@
 import { generateCaptcha } from "@/utils/generator";
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "//localhost:3001";
+const ASSETS_BASE_URL =
+  process.env.REACT_APP_ASSETS_BASE_URL || "//localhost:3002";
 // TODO for seperate static file server
 // const STATIC_FILE_SERVER = process.env.REACT_APP_STATIC_FILE_SERVER || "//localhost:3002"
 
@@ -13,7 +15,7 @@ const AppConstants = {
    * 登录页面背景壁纸
    */
   get LOGIN_BG_URL() {
-    return `${API_BASE_URL}/login-bg-hnpoppcv.jpeg`;
+    return `${ASSETS_BASE_URL}/static/login-bg-hnpoppcv.jpeg`;
   },
 
   /**

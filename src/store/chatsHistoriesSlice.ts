@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { queryChatHistory } from "@/services/chat";
-import { message } from "antd";
 import lodash from "lodash";
 
 import type { PayloadAction } from "@reduxjs/toolkit";
@@ -12,23 +11,21 @@ export const fetchChatHistory = createAsyncThunk<
   { data: MessageData[]; params: QueryType } | undefined,
   QueryType,
   {}
->("chats/fetchChatHistory", async (data) => {
+>("chats/fetchChatHistory", async (params) => {
   try {
-    const res = await queryChatHistory(data);
-    if (res.status === 20000) {
-      return {
-        data: res.data as MessageData[],
-        params: data,
-      };
-    } else {
-      // return {
-      // }
+    const res = await queryChatHistory(params);
+    if (res.status !== 20000) {
+      return { data: [] as MessageData[], params };
     }
+    return {
+      data: (res.data || []) as MessageData[],
+      params,
+    };
   } catch (err) {
     console.log(err);
     return {
-      data: err,
-      params: data,
+      data: [] as MessageData[],
+      params,
     };
   }
 });
@@ -43,11 +40,6 @@ export const chatsSlice = createSlice({
     currentRequestId: undefined as string | undefined,
     error: null as any,
     data: {} as {
-      // [id: string]:{
-      //   name: string;
-      //   avatar: string;
-      //   messages: MessageData[];
-      // };
       [id: string]: MessageData[];
     },
   },
@@ -76,12 +68,15 @@ export const chatsSlice = createSlice({
         } else {
           state.data[action.payload.params.chatId] = [...action.payload.data];
         }
-      } else {
-        message.error("请提供聊天id");
       }
+      //  else {
+      //   message.error("请提供聊天id");
+      // }
 
       return state;
     });
+    builder.addCase(fetchChatHistory.rejected, (state, action) => {});
+    builder.addCase(fetchChatHistory.pending, (state, action) => {});
   },
 });
 

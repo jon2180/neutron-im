@@ -1,6 +1,41 @@
 import request from "@/utils/request";
 import type { HttpResponseData, MessageData } from "@/types/http";
 
+export function postChat({
+  firstUid,
+  secondUid,
+}: {
+  firstUid: string;
+  secondUid: String;
+}): Promise<HttpResponseData> {
+  return request.post("/chats/", {
+    data: {
+      sender_id: firstUid,
+      receiver_id: secondUid,
+      type: "single",
+    },
+  });
+}
+
+export function getChat({
+  sender_id,
+  receiver_id,
+}: {
+  sender_id: string;
+  receiver_id: string;
+}): Promise<HttpResponseData> {
+  return request.get("/chats/id", {
+    data: {
+      sender_id,
+      receiver_id,
+    },
+  });
+}
+
+export function getChatData({ id }: { id: string }): Promise<HttpResponseData> {
+  return request.get(`/chats/${id}`);
+}
+
 export function getRecentList(): Promise<HttpResponseData> {
   return request.get("/chats/");
 }

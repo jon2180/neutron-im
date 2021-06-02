@@ -1,7 +1,6 @@
 import React from "react";
 
-import ActivityList from "@/components/ActivityList";
-import CodeSnipList from "@/components/CodeSnipList";
+import Activities from "./Activities.component";
 
 export function ExtraTab() {
   return <p>project content</p>;
@@ -24,13 +23,13 @@ export const tabList: TabType[] = [
   {
     key: "activities",
     tab: "Activities",
-    component: <ActivityList />,
+    component: <Activities />,
   },
-  {
-    key: "codesnips",
-    tab: "Code Snips",
-    component: <CodeSnipList />,
-  },
+  // {
+  //   key: "codesnips",
+  //   tab: "Code Snips",
+  //   component: <CodeSnipList />,
+  // },
   {
     key: "extra",
     tab: "Extra",

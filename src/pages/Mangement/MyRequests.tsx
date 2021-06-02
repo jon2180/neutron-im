@@ -4,12 +4,12 @@ import { Avatar, List, message, Popconfirm } from "antd";
 // import styles from "./FriendRequests.module.less";
 import { createSemaphore } from "@/utils/wrapper";
 import { friendService } from "@/services";
-import { UserAddOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectUserInfo } from "@/store/userInfoSlice";
 
 import styles from "./MyRequests.module.less";
+import { UserAddOutlined } from "@ant-design/icons";
 
 export interface FriendRequest {
   id: string;
@@ -100,7 +100,7 @@ export default function MyRequests() {
                 </div>
               </Link>
               <span />
-              {/*  {userInfo.id !== item.id ? (
+              {userInfo.id !== item.id ? (
                 <Popconfirm
                   title="Are you sure？"
                   okText="Yes"
@@ -117,7 +117,7 @@ export default function MyRequests() {
                 </Popconfirm>
               ) : (
                 <span>myself</span>
-              )} */}
+              )}
             </List.Item>
           );
         }}

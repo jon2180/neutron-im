@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Space, Spin } from "antd";
+import { Button, message, Space, Spin } from "antd";
 import { FormattedMessage } from "react-intl";
 
 import RecordRTC from "recordrtc";
@@ -30,17 +30,30 @@ export default function SoundRecord(props: SoundRecordProps) {
     if (recordStatus.loading === "idle") {
       try {
         stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        if (!stream) {
+          message.error("未知原因使录音申请权限失败");
+          setRecording(false);
+          return;
+        }
+      } catch (e) {
+        message.error("您拒绝了录音权限的申请");
+        setRecording(false);
+        return;
+      }
+
+      try {
         recorder = new RecordRTC(stream, { type: "audio" });
         recorder.onStateChanged((state: RecordRTC.State) => {
           console.log(state);
         });
-        recorder.startRecording();
-        setRecording(true);
         recordStatus.loading = "pending";
+        setRecording(true);
+        recorder.startRecording();
       } catch (e) {
-        console.error(e);
+        message.error("未知异常");
       }
-    } else if (recorder) {
+      return;
+    } else if (recordStatus.loading === "pending" && recorder) {
       recorder.stopRecording(() => {
         try {
           if (recorder) {
@@ -67,11 +80,27 @@ export default function SoundRecord(props: SoundRecordProps) {
           }
         } catch (e) {
           console.error(e);
+          message.error("录音保存失败");
         }
         setRecording(false);
+        recordStatus.loading = "idle";
+        return;
       });
     }
   };
+
+  if (
+    !navigator ||
+    !navigator.mediaDevices ||
+    !navigator.mediaDevices.getUserMedia
+  ) {
+    message.error("您的浏览器不支持此 getUserMedia 方法");
+    return (
+      <div>
+        您的浏览器不支持此 getUserMedia 方法, 请更新您的浏览器至最新版本
+      </div>
+    );
+  }
 
   return (
     <Space className={styles.recordBox} size={16}>

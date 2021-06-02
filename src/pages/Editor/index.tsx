@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
-  Avatar,
   Button,
   Col,
   Input,
@@ -14,19 +13,20 @@ import {
   message,
   Tag,
   Dropdown,
+  Avatar,
 } from "antd";
 import MdRenderer from "@/components/MdRenderer";
 import styles from "./Editor.module.less";
-import { useSelector } from "react-redux";
-import { selectUserInfo } from "@/store/userInfoSlice";
 import { momentService } from "@/services";
 import { createSemaphore } from "@/utils/wrapper";
 import { Prompt } from "react-router-dom";
 import { FormattedMessage, useIntl } from "react-intl";
-import { AccountMenu } from "@/components/layout/BasicLayout/BasicHeader";
 import { readJSON, writeJSON } from "@/utils/localStorage";
 import { throttle } from "lodash";
 import { TextAreaRef } from "antd/lib/input/TextArea";
+import avatarNavMenu from "@/layout/BasicLayout/components/AvatarNavMenu";
+import { useSelector } from "react-redux";
+import { selectUserInfo } from "@/store/userInfoSlice";
 
 const uploadStatus = createSemaphore();
 
@@ -57,7 +57,6 @@ const saveDraft = throttle((fn) => {
 }, 3000);
 
 export default function Editor() {
-  const userInfo = useSelector(selectUserInfo);
   const intl = useIntl();
   /** 最后提交的数据中，并不以此值为准，此值用作显示状态切换 */
   const [isOriginal, setIsOriginal] = useState(false);
@@ -68,6 +67,7 @@ export default function Editor() {
   const formRef = useRef<FormInstance<any>>(null);
   const previewRef = useRef<HTMLDivElement>(null);
   const editorRef = useRef<TextAreaRef>(null);
+  const userInfo = useSelector(selectUserInfo);
 
   const switchIsOriginal = () => {
     const nextIsOriginal = formRef.current?.getFieldValue("is_original");
@@ -395,8 +395,13 @@ export default function Editor() {
             </Button.Group>
           </Form>
 
-          <Dropdown overlay={<AccountMenu />}>
-            <Avatar src={userInfo.avatar} size={48} className={styles.avatar} />
+          <Dropdown overlay={avatarNavMenu}>
+            <div className={styles.avatarNav}>
+              <Avatar size="small" src={userInfo.avatar} alt="avatar" />
+              {/* <span className={classNames(styles.name, "anticon", styles.username)}> */}
+              {userInfo.nickname}
+              {/* </span> */}
+            </div>
           </Dropdown>
         </div>
 

@@ -29,6 +29,7 @@ function ContentSection({ routerParams }: ContentSectionParams) {
     title: "",
     update_time: null,
     version: "",
+    tags: [],
   });
   const [loaded, setLoaded] = useState(false);
 

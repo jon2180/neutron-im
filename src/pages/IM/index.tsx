@@ -13,7 +13,7 @@ import WideContentWrapper from "@/components/WideContentWrapper";
 import LeftSider from "./LeftSider";
 import RightSider from "./RightSider";
 import styles from "./IMFrame.module.less";
-import "./index.less";
+// import "./index.less";
 
 const NAV_LINKS = {
   left: [

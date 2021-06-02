@@ -11,6 +11,8 @@ import type { MenuMode } from "antd/lib/menu";
 import styles from "./ProfileSetting.module.less";
 import "./index.less";
 import AccountBinding from "./AccountBinding";
+import { useSelector } from "react-redux";
+import { selectMenuTheme } from "@/store/themeSlice";
 
 type SelectedKeysType = "basicSettings" | "accountBindings";
 
@@ -64,7 +66,7 @@ export default function ProfileSetting() {
     useState<SelectedKeysType>("basicSettings");
   const main = useRef<HTMLDivElement>(null);
   const [mode, setMode] = useState<MenuMode>("inline");
-
+  const menuTheme = useSelector(selectMenuTheme);
   const resize = () => {
     if (!main) {
       return;
@@ -108,7 +110,7 @@ export default function ProfileSetting() {
                 setSelectedKey(key as SelectedKeysType);
               }}
               mode={mode}
-              theme="light"
+              theme={menuTheme}
             >
               {getMenuItem()}
             </Menu>

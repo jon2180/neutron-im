@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Card, Skeleton, Button, message, Space, Divider } from "antd";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { FormattedDate } from "react-intl";
 import {
   GithubOutlined,
   QqOutlined,
@@ -9,22 +10,24 @@ import {
   ZhihuOutlined,
 } from "@ant-design/icons";
 
-import { userService } from "@/services";
+import { chatService, userService } from "@/services";
 
 import { selectUserInfo } from "@/store/userInfoSlice";
-
 import type { UserInfo } from "@/types/state";
-import styles from "./BasicAccountInfo.module.less";
 import { createSemaphore } from "@/utils/wrapper";
-import { FormattedDate } from "react-intl";
+import { selectAllChats } from "@/store/recentChatsSlice";
+
+import styles from "./BasicAccountInfo.module.less";
 
 const loadingStatus = createSemaphore();
 
 export default function BasicAccountInfo({ id }: { id: string }) {
   const userInfo = useSelector(selectUserInfo);
+  const chats = useSelector(selectAllChats);
   const [friendInfo, setFriendInfo] = useState({} as UserInfo);
   const [loading, setLoading] = useState(true);
   const isMyself = userInfo.id === friendInfo.id;
+  // const dispatch = useAppDispatch();
 
   const fetchAccountInfo = useCallback(
     async function fetchAccountInfo() {
@@ -107,7 +110,53 @@ export default function BasicAccountInfo({ id }: { id: string }) {
               {isMyself ? (
                 <Link to={`/accounts/settings/profile`}>编辑资料</Link>
               ) : (
-                <Link to={`/im/chats/${id}`}>聊天</Link>
+                <Button
+                  type="text"
+                  onClick={async (e) => {
+                    // 是否已经存在此chat信息
+                    const chat = chats.find((chat) => {
+                      return (
+                        (chat.sender_id === id &&
+                          chat.receiver_id === userInfo.id) ||
+                        (chat.sender_id === userInfo.id &&
+                          chat.receiver_id === id)
+                      );
+                    });
+
+                    if (chat) {
+                      setTimeout(() => {
+                        document.location.pathname = `/im/chats/${chat.id}`;
+                      }, 300);
+                      return;
+                    }
+
+                    const postChatResp = await chatService.postChat({
+                      firstUid: userInfo.id,
+                      secondUid: id,
+                    });
+
+                    if (postChatResp.status !== 20000 || !postChatResp.data) {
+                      message.error("参数状态错误");
+                      return;
+                    }
+
+                    // const getChatResp = await chatService.getChat({
+                    //   id: (postChatResp.data as { chat_id: string }).chat_id,
+                    // });
+
+                    // if (getChatResp.status !== 20000 || !getChatResp.data) {
+                    //   message.error("获取聊天信息失败");
+                    //   return;
+                    // }
+                    // const chatData = getChatResp.data as ChatData;
+                    // dispatch(pushChat(chatData));
+                    // setTimeout(() => {
+                    //   document.location.pathname = `/im/chats/${chatData.id}`;
+                    // }, 300);
+                  }}
+                >
+                  聊天
+                </Button>
               )}
             </Space>
           </div>

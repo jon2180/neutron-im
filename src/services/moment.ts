@@ -2,6 +2,10 @@ import request from "@/utils/request";
 import type { HttpResponseData } from "@/types/http";
 
 export interface ActivitiesSearchParams {
+  /**
+   * 指定的用户 ID
+   */
+  uid?: string;
   keyword?: string;
   page_no?: number;
   page_size?: number;
