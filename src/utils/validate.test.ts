@@ -1,4 +1,4 @@
-import { isEmail } from '../../utils/validate';
+import { isEmail } from './validate';
 
 // 1、正确数据
 // 2、错误数据-只输入空白、空或者回车

@@ -109,7 +109,7 @@ export default function ProfileSetting() {
               onClick={({ key }) => {
                 setSelectedKey(key as SelectedKeysType);
               }}
-              mode={mode}
+              // mode={mode}
               theme={menuTheme}
             >
               {getMenuItem()}

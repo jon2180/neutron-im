@@ -1,72 +1,72 @@
-import React from "react";
-import { Layout } from "antd";
-import { NavLink } from "react-router-dom";
+import React from 'react';
+import { Layout } from 'antd';
+import { NavLink } from 'react-router-dom';
 
-import styles from "./index.module.less";
+import styles from './index.module.less';
 
 const quickCenter = {
-  name: "快捷中心",
+  name: '快捷中心',
   list: [
     {
-      text: "最近动态",
-      path: "/activities",
+      text: '最近动态',
+      path: '/activities',
       icon: null,
     },
     {
-      text: "代码分享",
-      path: "/codesnips",
+      text: '代码分享',
+      path: '/codesnips',
       icon: null,
     },
     {
-      text: "探索",
-      path: "/search",
+      text: '探索',
+      path: '/search',
       icon: null,
     },
     {
-      text: "聊天",
-      path: "/im",
+      text: '聊天',
+      path: '/im',
       icon: null,
     },
   ],
 };
 
 const friendLinks = {
-  name: "友情链接",
+  name: '友情链接',
   list: [
     {
-      text: "Github",
-      path: "//github.com/",
+      text: 'Github',
+      path: '//github.com/',
       icon: null,
     },
     {
-      text: "Ant Design",
-      path: "//ant.design",
+      text: 'Ant Design',
+      path: '//ant.design',
       icon: null,
     },
     {
-      text: "Typora",
-      path: "//typora.io/",
+      text: 'Typora',
+      path: '//typora.io/',
       icon: null,
     },
     {
-      text: "Wuog 个人博客",
-      path: "//wuog.top",
+      text: 'Wuog 个人博客',
+      path: '//wuog.top',
       icon: null,
     },
   ],
 };
 
 const aboutUs = {
-  name: "关于我们",
+  name: '关于我们',
   list: [
     {
-      text: "Github - jon2180",
-      path: "//github.com/jon2180",
+      text: 'Github - jon2180',
+      path: '//github.com/jon2180',
       icon: null,
     },
     {
-      text: "E-Mail",
-      path: "mailto:763653451@qq.com",
+      text: 'E-Mail',
+      path: 'mailto:763653451@qq.com',
       icon: null,
     },
   ],
@@ -83,7 +83,7 @@ export default function BasicFooter() {
               {quickCenter.list.map((val, ind) => {
                 return (
                   <li key={`link${ind}`}>
-                    <NavLink to={val.path} target="_blank">
+                    <NavLink to={val.path} target='_blank'>
                       {val.text}
                     </NavLink>
                   </li>
@@ -98,7 +98,7 @@ export default function BasicFooter() {
               {friendLinks.list.map((val, ind) => {
                 return (
                   <li key={`link${ind}`}>
-                    <NavLink to={val.path} target="_blank">
+                    <NavLink to={val.path} target='_blank'>
                       {val.text}
                     </NavLink>
                   </li>
@@ -112,7 +112,7 @@ export default function BasicFooter() {
               {aboutUs.list.map((val, ind) => {
                 return (
                   <li key={`link${ind}`}>
-                    <NavLink to={val.path} target="_blank">
+                    <NavLink to={val.path} target='_blank'>
                       {val.text}
                     </NavLink>
                   </li>
@@ -123,7 +123,7 @@ export default function BasicFooter() {
         </div>
 
         <div className={styles.copyright}>
-          &copy;2021 Neutron IM All Right Reserved
+          &copy;{new Date().getFullYear()} Neutron IM All Right Reserved
         </div>
       </div>
     </Layout.Footer>

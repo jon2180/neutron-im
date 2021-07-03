@@ -24,7 +24,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { readJSON, writeJSON } from "@/utils/localStorage";
 import { throttle } from "lodash";
 import { TextAreaRef } from "antd/lib/input/TextArea";
-import avatarNavMenu from "@/layout/BasicLayout/components/AvatarNavMenu";
+import avatarNavMenu from "@/layouts/BasicLayout/components/AvatarNavMenu";
 import { useSelector } from "react-redux";
 import { selectUserInfo } from "@/store/userInfoSlice";
 

@@ -3,13 +3,13 @@ import type { ChatMessageType } from "@/websocket/conf";
 /**
  * 标准 HTTP 请求的返回结果
  */
-export interface HttpResponseData {
+export interface HttpResponseData<T = any> {
   /** 状态代码，以 10000 开始，拓展 http 标准状态码 */
   readonly status: number;
   /** 状态文本 */
   readonly message: string;
   /** 描述文本，具体描述请求的情况 */
-  readonly data: unknown;
+  readonly data: T;
   /** 实际数据 */
   readonly timestamp: number;
 }
