@@ -1,0 +1,16 @@
+syntax = "proto3";
+package com.neutron.core.api;
+option java_outer_classname = "FriendOperationProto";
+
+message AddFriend {
+    string id = 1;
+}
+
+message RemoveFriend {
+    string id = 1;
+}
+
+message SearchFriend {
+    string id = 1;
+    string nickname = 2;
+}

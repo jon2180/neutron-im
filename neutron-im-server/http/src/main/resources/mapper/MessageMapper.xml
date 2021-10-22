@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neutron.im.mapper.MessageMapper">
+    <select id="findOneById" parameterType="java.lang.String" resultType="com.neutron.im.pojo.entity.Message">
+        select *
+        from messages
+        where id = #{id}
+    </select>
+
+    <select id="findBySenderAndReceiver" parameterType="String" resultType="com.neutron.im.pojo.entity.Message">
+        select id,
+               chat_id,
+               chat_type,
+               sender_id,
+               receiver_id,
+               content_type,
+               content,
+               file_info,
+               time,
+               status,
+               extra
+        from neutron_im.messages
+        where (sender_id = #{id1} and receiver_id = #{id2})
+           or (sender_id = #{id2} and receiver_id = #{id1})
+        order by time
+    </select>
+
+    <insert id="insert" parameterType="com.neutron.im.pojo.entity.Message" keyColumn="id"
+            keyProperty="id">
+        insert into neutron_im.messages(neutron_im.messages.id, chat_id,
+                                        neutron_im.messages.chat_type,
+                                        neutron_im.messages.sender_id, neutron_im.messages.receiver_id,
+                                        neutron_im.messages.content_type, neutron_im.messages.content,
+                                        neutron_im.messages.file_info, neutron_im.messages.time,
+                                        neutron_im.messages.status, neutron_im.messages.extra)
+        values (replace(uuid(), '-', ''), #{chat_id}, #{chat_type}, #{sender_id},
+                #{receiver_id}, #{content_type}, #{content}, #{file_info}, #{time},
+                #{status}, #{extra})
+    </insert>
+
+    <select id="findByChatId" parameterType="String" resultType="com.neutron.im.pojo.entity.Message">
+        select id,
+               chat_id,
+               sender_id,
+               receiver_id,
+               chat_type,
+               content_type,
+               content,
+               file_info,
+               time,
+               status,
+               extra
+        from messages
+        where chat_id = #{chatId, jdbcType=VARCHAR}
+        order by time desc
+    </select>
+
+    <select id="countAfter" resultType="java.util.Map">
+        select count(*) count
+        from messages
+        where time > #{time, jdbcType=TIMESTAMP}
+          and chat_id = #{chatId, jdbcType=VARCHAR};
+    </select>
+</mapper>

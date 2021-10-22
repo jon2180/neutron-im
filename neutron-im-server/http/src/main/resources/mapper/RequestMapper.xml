@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neutron.im.mapper.RequestMapper">
+    <select id="findOneById" parameterType="java.lang.String" resultType="com.neutron.im.pojo.entity.Request">
+        select id,
+               initiator_id,
+               target_id,
+               type,
+               submit_reason,
+               submit_time,
+               solved_result,
+               solved_reason,
+               solved_time,
+               extra
+        from requests
+        where id = #{id}
+    </select>
+    <select id="findByOriginatorId" parameterType="java.lang.String" resultType="com.neutron.im.pojo.vo.RequestVO">
+        select requests.id,
+               target_id account_id,
+               avatar,
+               nickname,
+               type,
+               submit_reason,
+               submit_time,
+               solved_result,
+               solved_reason,
+               solved_time,
+               requests.extra
+        from requests
+                 left join neutron_im.accounts on accounts.id = target_id
+        where initiator_id = #{id}
+    </select>
+    <select id="findByTargetId" parameterType="java.lang.String" resultType="com.neutron.im.pojo.vo.RequestVO">
+        select requests.id,
+               initiator_id account_id,
+               avatar,
+               nickname,
+               type,
+               submit_reason,
+               submit_time,
+               solved_result,
+               solved_reason,
+               solved_time,
+               requests.extra
+        from requests
+                 left join accounts a on requests.initiator_id = a.id
+        where target_id = #{id}
+    </select>
+    <insert id="insertRequest" useGeneratedKeys="true" parameterType="com.neutron.im.pojo.entity.Request">
+        insert into requests(id, initiator_id, target_id, type, submit_reason, solved_result, solved_reason,
+                             solved_time,
+                             extra)
+        values (replace(uuid(), '-', ''), #{initiator_id}, #{target_id}, #{type}, #{submit_reason}, #{solved_result},
+                #{solved_reason},
+                #{solved_time}, #{extra})
+    </insert>
+    <update id="updateRequest" parameterType="com.neutron.im.pojo.entity.Request">
+        update requests
+        <set>
+            <if test="submit_reason !=null and submit_reason != ''">submit_reason=#{submit_reason},</if>
+            <if test="submit_time !=null">submit_time=#{submit_time},</if>
+            <if test="solved_result !=null and solved_result != ''">solved_result=#{solved_result},</if>
+            <if test="solved_reason !=null and solved_reason != ''">solved_reason=#{solved_reason},</if>
+            <if test="solved_time !=null">solved_time=#{solved_time},</if>
+            <if test="extra !=null and extra != ' '">extra=#{extra}</if>
+        </set>
+        where id = #{id}
+    </update>
+    <delete id="deleteRequest" parameterType="java.lang.String">
+        delete
+        from requests
+        where id = #{id}
+    </delete>
+
+    <select id="findOne" parameterType="java.lang.String" resultType="com.neutron.im.pojo.entity.Request">
+        select *
+        from requests
+        where ((target_id = #{firstId} and initiator_id = #{secondId})
+            or (initiator_id = #{firstId} and target_id = #{secondId}))
+          and solved_result = 0
+        order by solved_time desc
+        limit 1;
+    </select>
+</mapper>

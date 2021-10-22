@@ -1,0 +1,11 @@
+POST http://localhost:80/api/item
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="field-name"
+
+field-value
+--WebAppBoundary--
+
+###
+

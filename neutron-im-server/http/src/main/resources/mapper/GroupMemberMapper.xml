@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neutron.im.mapper.GroupMemberMapper">
+    <select id="findByGroupId" parameterType="String" resultType="com.neutron.im.pojo.entity.GroupMember">
+        select id,
+               mid,
+               group_id,
+               avatar,
+               group_nickname,
+               group_role,
+               group_status,
+               muted_time,
+               muted_during,
+               enter_time,
+               extra
+        from groups_members
+        where group_id = #{groupId， jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insertGroupMember" parameterType="com.neutron.im.pojo.entity.GroupMember" keyProperty="id">
+        insert into groups_members(id, mid, group_id, avatar, group_nickname, group_role, group_status, muted_time,
+                                   muted_during, enter_time, extra)
+        values (#{id}, #{mid}, #{group_id}, #{avatar}, #{group_nickname}, #{group_role}, #{group_status},
+                #{muted_time}, #{muted_during}, #{enter_time}, #{extra})
+    </insert>
+
+    <delete id="deleteGroupMemberById" parameterType="String">
+        delete
+        from groups_members
+        where id = #{id, jdbcType=VARCHAR}
+    </delete>
+
+    <delete id="deleteGroupMemberByMId">
+        delete
+        from groups_members
+        where mid = #{mid, jdbcType=VARCHAR}
+          and group_id = #{groupId, jdbcType=VARCHAR}
+    </delete>
+</mapper>

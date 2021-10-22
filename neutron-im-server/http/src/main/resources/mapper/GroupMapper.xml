@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neutron.im.mapper.GroupMapper">
+
+    <insert id="insert" parameterType="com.neutron.im.pojo.entity.Group">
+        insert into `groups`(id, gid, name, `desc`, tags, avatar, numbers, owner_id,
+                             managers_json, create_time, type, status, extra)
+        values (replace(uuid(), '-', ''), #{gid}, #{name}, #{desc}, #{tags}, #{avatar}, #{numbers},
+                #{owner_id}, #{managers_json}, #{create_time}, #{type}, #{status}, #{extra})
+    </insert>
+
+    <delete id="deleteById" parameterType="String">
+        delete
+        from friends
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteByGId" parameterType="String">
+        delete
+        from friends
+        where id = #{gid}
+    </delete>
+
+    <update id="updateGroup" parameterType="com.neutron.im.pojo.entity.Group" keyColumn="id" keyProperty="id">
+        update `groups`
+        <set>
+            <if test="gid != null and gid != ''">gid=#{gid}</if>
+            <if test="name != null and name != ''">`name`=#{name}</if>
+            <if test="desc != null and desc != ''">`desc`=#{name}</if>
+            <if test="tags != null and tags != ''">`tags`=#{tags}</if>
+            <if test="avatar != null and avatar != ''">`avatar`=#{avatar}</if>
+            <if test="numbers != null and numbers != 0">`numbers`=#{numbers}</if>
+            <if test="owner_id != null and owner_id != 0">`owner_id`=#{owner_id}</if>
+            <if test="managers_json != null managers_json name != ''">`managers_json`=#{managers_json}</if>
+            <if test="create_time != null and create_time != ''">`create_time`=#{create_time}</if>
+            <if test="type != null and type != 0">`type`=#{type}</if>
+            <if test="status != null and status != 0">`status`=#{status}</if>
+            <if test="extra != null and extra != ''">`extra`=#{extra}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="findOneById" parameterType="String" resultType="com.neutron.im.pojo.entity.Group">
+        select id,
+               gid,
+               name,
+               `desc`,
+               tags,
+               avatar,
+               numbers,
+               owner_id,
+               managers_json,
+               create_time,
+               type,
+               status,
+               extra
+        from `groups`
+        where id = #{id}
+    </select>
+
+    <select id="findOneByGId" parameterType="String" resultType="com.neutron.im.pojo.entity.Group">
+        select id,
+               gid,
+               name,
+               `desc`,
+               tags,
+               avatar,
+               numbers,
+               owner_id,
+               managers_json,
+               create_time,
+               type,
+               status,
+               extra
+        from `groups`
+        where gid = #{gid}
+    </select>
+</mapper>

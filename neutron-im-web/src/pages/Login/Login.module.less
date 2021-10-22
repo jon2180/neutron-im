@@ -1,0 +1,52 @@
+.fullscreenContainer {
+  width: 100%;
+  height: 100%;
+
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center bottom;
+
+  .formContainer {
+    position: relative;
+    left: 50%;
+    top: 50%;
+    // TODO
+    width: 400px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    transform: translate(-50%, -50%);
+    padding: 16px 32px;
+    box-sizing: border-box;
+  }
+
+  .title {
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .loginForm {
+    max-width: 300px;
+    height: 280px;
+    margin: 0 auto;
+  }
+  .login-form-forgot {
+    float: right;
+  }
+  .ant-col-rtl .loginFormForgot {
+    float: left;
+  }
+  .loginFormButton {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .fullscreenContainer {
+    .formContainer {
+      border-radius: 8px;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+  }
+}

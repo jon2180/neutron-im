@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neutron.im.mapper.ChatsMapper">
+    <select id="findByAccountId" parameterType="String" resultType="java.util.HashMap">
+        select chats.id,
+               account_id,
+               target_id,
+               type,
+               sender_id,
+               receiver_id,
+               last_msg_time,
+               last_msg_id,
+               last_msg_content,
+               unread_count,
+               chats.status,
+               email           account_email,
+               nickname        account_nickname,
+               signature       account_signature,
+               avatar          account_avatar,
+               accounts.status account_status
+        from chats
+                 left join accounts on chats.target_id = accounts.id
+        where account_id = #{id, jdbcType=VARCHAR}
+        union
+        select chats.id,
+               account_id,
+               target_id,
+               type,
+               sender_id,
+               receiver_id,
+               last_msg_time,
+               last_msg_id,
+               last_msg_content,
+               unread_count,
+               chats.status,
+               email           account_email,
+               nickname        account_nickname,
+               signature       account_signature,
+               avatar          account_avatar,
+               accounts.status account_status
+        from chats
+                 left join accounts on chats.account_id = accounts.id
+        where target_id = #{id, jdbcType=VARCHAR}
+    </select>
+
+    <select id="findById" parameterType="String" resultType="com.neutron.im.pojo.entity.RecentChat">
+        select id,
+               account_id,
+               target_id,
+               type,
+               sender_id,
+               receiver_id,
+               last_msg_time,
+               last_msg_id,
+               last_msg_content,
+               unread_count,
+               status
+        from neutron_im.chats
+        where id = #{id}
+    </select>
+
+    <update id="update" parameterType="com.neutron.im.pojo.entity.RecentChat" keyProperty="id">
+        update neutron_im.chats
+        <set>
+            <if test="type != null">type=#{type},</if>
+            <if test="sender_id != null and sender_id != ''">sender_id=#{sender_id},</if>
+            <if test="receiver_id != null and receiver_id != ''">receiver_id=#{receiver_id},</if>
+            <if test="last_msg_time != null">last_msg_time=#{last_msg_time},</if>
+            <if test="last_msg_id != null and last_msg_id != ''">last_msg_id=#{last_msg_id},</if>
+            <if test="last_msg_content != null and last_msg_content != ''">last_msg_content=#{last_msg_content},</if>
+            <if test="unread_count != null">unread_count=#{unread_count},</if>
+            <if test="status != null">`status`=#{status}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="delete" parameterType="String">
+        delete
+        from neutron_im.chats
+        where neutron_im.chats.id = #{id}
+    </delete>
+
+    <insert id="insert" parameterType="com.neutron.im.pojo.entity.RecentChat" useGeneratedKeys="true" keyProperty="id"
+            keyColumn="id">
+        insert into neutron_im.chats (neutron_im.chats.id, neutron_im.chats.account_id,
+                                      target_id,
+                                      neutron_im.chats.type,
+                                      neutron_im.chats.sender_id, neutron_im.chats.receiver_id,
+                                      neutron_im.chats.last_msg_time,
+                                      neutron_im.chats.last_msg_id,
+                                      neutron_im.chats.last_msg_content,
+                                      neutron_im.chats.unread_count)
+        values (replace(uuid(), '-', ''), #{account_id}, #{target_id}, #{type},
+                #{sender_id}, #{receiver_id}, #{last_msg_time}, #{last_msg_id}, #{last_msg_content},
+                #{unread_count})
+    </insert>
+
+    <insert id="insertByDefault" parameterType="com.neutron.im.pojo.entity.RecentChat" useGeneratedKeys="true"
+            keyProperty="id"
+            keyColumn="id">
+        insert into neutron_im.chats (neutron_im.chats.id, neutron_im.chats.account_id,
+                                      target_id,
+                                      neutron_im.chats.type)
+        values (replace(uuid(), '-', ''), #{account_id}, #{target_id}, #{type})
+    </insert>
+
+    <select id="findByDoubleId" parameterType="String" resultType="com.neutron.im.pojo.vo.ChatVO">
+        select c.id,
+               account_id,
+               target_id,
+               type,
+               sender_id,
+               receiver_id,
+               last_msg_time,
+               last_msg_id,
+               last_msg_content,
+               unread_count,
+               c.status,
+               email           account_email,
+               nickname        account_nickname,
+               signature       account_signature,
+               avatar          account_avatar,
+               accounts.status account_status
+        from (select *
+              from chats
+              where (account_id = #{id1} and target_id = #{id2})
+                 or (account_id = #{id2} and target_id = #{id1})) c
+                 left join accounts on accounts.id = #{id1}
+        limit 1
+    </select>
+
+    <select id="findOneByIds" parameterType="java.lang.String" resultType="com.neutron.im.pojo.entity.RecentChat">
+        select *
+        from chats
+        where (account_id = #{id1} and target_id = #{id2})
+           or (account_id = #{id2} and target_id = #{id1})
+    </select>
+</mapper>

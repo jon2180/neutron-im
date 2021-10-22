@@ -1,0 +1,63 @@
+.listBox {
+  height: 100%;
+}
+
+.listItem {
+  padding: 8px !important;
+}
+
+.chatsBox {
+  height: calc(100% - 48px);
+  overflow: hidden auto;
+}
+
+.itemBox {
+  width: inherit;
+  height: 48px;
+  display: flex;
+  box-sizing: border-box;
+
+  .infoBox {
+    margin-left: 8px;
+    width: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+  }
+
+  .nameAndTimeBox,
+  .contentAndUnreadBox {
+    // width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .name {
+    color: #333;
+  }
+
+  .time {
+    color: #999;
+  }
+
+  .content {
+    width: 80%;
+    color: #666;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .unread {
+    margin: 4px 0 0;
+    width: 16px;
+    height: 16px;
+    text-align: center;
+    line-height: 16px;
+    font-size: 10px;
+    color: #ffffff;
+    background-color: #e00000;
+    border-radius: 50%;
+  }
+}
