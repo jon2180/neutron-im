@@ -1,0 +1,18 @@
+allprojects {
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/public/' }
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/apache-snapshots' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        mavenLocal()
+        mavenCentral()
+    }
+
+    version = '1.0'
+    group = 'com.neutron'
+
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+    }
+}

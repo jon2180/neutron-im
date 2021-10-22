@@ -1,0 +1,123 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id "com.google.protobuf" version "0.8.12"
+}
+
+group 'com.neutron.core'
+version '1.0-SNAPSHOT'
+sourceCompatibility = '11'
+
+dependencies {
+    // lombok support
+    compileOnly 'org.projectlombok:lombok:1.18.18'
+    annotationProcessor 'org.projectlombok:lombok:1.18.18'
+    testCompileOnly 'org.projectlombok:lombok:1.18.18'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.18'
+
+    // protobuf support
+    implementation 'com.google.protobuf:protobuf-java:3.9.0'
+
+    // https://mvnrepository.com/artifact/commons-io/commons-io
+    implementation 'commons-io:commons-io:2.7'
+    // https://mvnrepository.com/artifact/commons-codec/commons-codec
+    implementation 'commons-codec:commons-codec:1.14'
+
+    // Log4j + Slf4j 支持
+//    // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+//    implementation 'org.slf4j:slf4j-api:+'
+//    // https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12
+//    implementation 'org.slf4j:slf4j-log4j12:+'
+//    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core
+//    implementation 'org.apache.logging.log4j:log4j-core:+'
+
+    // Log4j + Slf4j 支持
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+    implementation 'org.slf4j:slf4j-api:1.7.30'
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-log4j12
+    implementation 'org.slf4j:slf4j-log4j12:1.7.30'
+    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core
+    implementation 'org.apache.logging.log4j:log4j-core:2.14.0'
+    // junit 支持
+    testImplementation 'org.junit.platform:junit-platform-launcher:1.6.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
+    testImplementation 'org.junit.vintage:junit-vintage-engine:5.6.2'
+}
+
+protobuf {
+    generatedFilesBaseDir = "$buildDir/extracted-protos"
+    protoc {
+        artifact = 'com.google.protobuf:protoc:3.0.0'
+    }
+    plugins {
+        javalite {
+            artifact = 'com.google.protobuf:protoc-gen-javalite:3.0.0'
+        }
+    }
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                java {}
+            }
+            ofSourceSet('main')
+        }
+    }
+}
+
+clean {
+    delete protobuf.generatedFilesBaseDir
+}
+
+idea {
+    module {
+        // proto files and generated Java files are automatically added as
+        // source dirs.
+        // If you have additional sources, add them here:
+//        sourceDirs += file("/path/to/other/sources");
+    }
+}
+
+// 解决 protobuf 复制时候报错
+// Copying or archiving duplicate paths with the default duplicates strategy has been deprecated.
+// This is scheduled to be removed in Gradle 7.0. Duplicate path: "chat_message.proto".
+// Explicitly set the duplicates strategy to 'DuplicatesStrategy.INCLUDE' if you want to allow duplicate paths.
+// Consult the upgrading guide for further information:
+// https://docs.gradle.org/6.5/userguide/upgrading_version_5.html#implicit_duplicate_strategy_for_copy_or_archive_tasks_has_been_deprecated
+processResources {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE // allow duplicates
+}
+
+
+sourceSets {
+    main {
+        proto {
+            // In addition to the default 'src/main/proto'
+            srcDirs = ['src/main/proto']
+//            srcDir 'src/main/protocolbuffers'
+            // In addition to the default '**/*.proto' (use with caution).
+            // Using an extension other than 'proto' is NOT recommended,
+            // because when proto files are published along with class files, we can
+            // only tell the type of a file from its extension.
+//            include '**/*.protodevel'
+        }
+        java {
+            exclude("$projectDir/gen")
+        }
+    }
+//    test {
+//        proto {
+//            // In addition to the default 'src/test/proto'
+//            srcDirs = ['src/test/proto']
+//        }
+//    }
+}
+
+// 解决 warning 信息
+// Note: Some input files use or override a deprecated API.
+// Note: Recompile with -Xlint:deprecation for details.
+// Note: Some input files use unchecked or unsafe operations.
+// Note: Recompile with -Xlint:unchecked for details.
+tasks.withType(JavaCompile) {
+    options.compilerArgs << '-Xlint:unchecked'
+    options.deprecation = false
+}

@@ -1,0 +1,47 @@
+package com.neutron.im.pojo.code;
+
+/**
+ * 自定义类 HTTP 状态码
+ */
+public enum StatusCode {
+
+    S200_OK(20000),
+
+    S400_BAD_REQUEST(40000),
+    S400_EMPTY_PARAMETER(40001),
+    S400_INVALID_PARAMETERS_FORMAT(40002),
+    S400_INVALID_CAPTCHA(40003),
+
+    S401_UNAUTHORIZED(40100),
+    S401_EMPTY_TOKEN(40101),
+    S401_EXPIRED_TOKEN(40102),
+    S401_INVALID_PARAMETERS_TOKEN(40103),
+    S401_INVALID_TOKEN_FORMAT(40104),
+    S401_INVALID_TOKEN(40105),
+    S401_NO_SUCH_ACCOUNT(40106),
+    S401_UNMATCHED_PRIVATE_KEY(40107),
+    S401_DISABLED_ACCOUNT(40108),
+
+    S402_PAYMENT_REQUIRED(40200),
+
+    S403_FORBIDDEN(40300),
+
+    S404_NOT_FOUND(40400),
+
+    S405_METHOD_NOT_ALLOWED(40500),
+
+    S500_INTERNAL_SERVER_ERROR(50000),
+    S500_SQL_ERROR(50001),
+    S500_LOGIC_ERROR(50002),
+    S500_FILE_STORAGE_ERROR(50003);
+
+    private final int code;
+
+    StatusCode(int statusCode) {
+        this.code = statusCode;
+    }
+
+    public int getCode() {
+        return code;
+    }
+}

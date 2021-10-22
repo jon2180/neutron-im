@@ -1,0 +1,28 @@
+syntax = "proto3";
+package com.neutron.core.api;
+option java_outer_classname = "MessageHeaderProto";
+
+message MessageHeader {
+    uint32 contentLength = 1;
+    string url = 2;
+    uint32 statusCode = 3;
+    ContentType contentType = 4;
+    uint64 time = 5;
+    string token = 6;
+    string from = 7; // 消息发送方
+    string to = 8; // 消息接收方
+    enum ContentType {
+        SIGN_IN = 0;
+        SIGN_IN_RESP = 1;
+        SIGN_ON = 2;
+        SIGN_ON_RESP = 3;
+        NOTIFY_ONLINE = 4;
+        GET_USER_INFO = 5;
+        GET_USER_LIST = 6;
+        REMOVE_FRIEND = 7;
+        ADD_FRIEND = 8;
+        SEARCH_FRIEND = 9;
+        MESSAGE = 10;
+        BROADCAST_MESSAGE = 11;
+    }
+}

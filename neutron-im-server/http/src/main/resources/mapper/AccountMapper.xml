@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neutron.im.mapper.AccountMapper">
+    <select id="searchFuzzily" parameterType="java.lang.String" resultType="com.neutron.im.pojo.entity.Account">
+        select id,
+               email,
+               nickname,
+               signature,
+               tel,
+               avatar,
+               password,
+               birthday,
+               gender,
+               reg_time,
+               status,
+               extra
+        from accounts
+        where nickname like concat('%', #{keyword}, '%')
+           or email = #{keyword}
+    </select>
+
+    <insert id="insertAccount" parameterType="com.neutron.im.pojo.entity.Account" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into accounts(id,email,nickname,signature,tel,avatar,password,birthday,gender)
+        values (replace(uuid(), '-', '') ,#{email},#{nickname},#{signature},#{tel},#{avatar},#{password},#{birthday},
+        #{gender})
+        <!--        insert into accounts-->
+        <!--        <trim prefix="(" suffix=")" suffixOverrides=",">-->
+        <!--            uid,email,nickname,signature,tel,avatar,password,salt,birthday)-->
+        <!--        </trim>-->
+        <!--        <trim prefix="values (" suffix=")" suffixOverrides=",">-->
+        <!--            #{uid},#{email},#{nickname},#{signature},#{tel},#{avatar},#{password},#{salt},#{birthday})-->
+        <!--        </trim>-->
+    </insert>
+
+    <update id="update" parameterType="com.neutron.im.pojo.entity.Account">
+        update accounts
+        <set>
+            <if test="email != null and email != ''">email=#{email},</if>
+            <if test="nickname != null and nickname != ''">nickname=#{nickname},</if>
+            <if test="signature != null and signature != ''">signature=#{signature},</if>
+            <if test="tel != null">tel=#{tel},</if>
+            <if test="avatar != null">avatar=#{avatar},</if>
+            <if test="password != null">password=#{password},</if>
+            <if test="birthday != null">birthday=#{birthday},</if>
+            <if test="gender == 0 or gender==1 or gender == 2">gender=#{gender},</if>
+            <if test="status != null">status=#{status}</if>
+            <if test="extra != null">extra=#{extra}</if>
+        </set>
+        where id=#{id}
+    </update>
+</mapper>

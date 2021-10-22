@@ -1,0 +1,16 @@
+spring:
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+    serialization:
+      write-dates-as-timestamps: true
+  servlet:
+    multipart:
+      max-file-size: 1024000000
+      max-request-size: 2048000000
+mybatis:
+  mapper-locations: classpath:mapper/**/*Mapper.xml
+  configuration:
+    use-generated-keys: true
+    use-column-label: true
+  # Single file max size  即单个文件大小
