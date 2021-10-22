@@ -26,16 +26,16 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     
-    # - name: Install yarn cli
-    #   run: npm i -g yarn
+    - name: Install yarn cli
+      run: npm i -g yarn
     
-    # - name: Cache
-    #   uses: actions/cache@v2.1.6
-    #   with:
-    #     # A list of files, directories, and wildcard patterns to cache and restore
-    #     path: ./node_modules
+    - name: Cache
+      uses: actions/cache@v2.1.6
+      with:
+        # A list of files, directories, and wildcard patterns to cache and restore
+        path: ./node_modules
 
-    # - name: Generate files
-    #   run: |
-    #     yarn
-    #     yarn run build --if-present
+    - name: Generate files
+      run: |
+        yarn
+        yarn run build --if-present
