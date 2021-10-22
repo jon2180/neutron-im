@@ -2,12 +2,6 @@
 
 ## 一、概述
 
-Neutron IM 是一个即时通讯应用，另有 
-
-- [网页端](//github.com/jon2180/neutron-im-web)。
-- [neutron-im-static-server](//github.com/jon2180/neutron-im-static-server)。此外，如图片等静态资源文件，因须占用大量的 IO
-  性能，因此使用了独立为一个仓库
-
 ## 二、项目结构
 
 本项目构建系统为 Gradle 7.x （不断更新）。
