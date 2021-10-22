@@ -1,0 +1,22 @@
+syntax = "proto3";
+package com.neutron.core.api;
+option java_outer_classname = "UserInfoProto";
+
+message UserInfo {
+    int32 id = 1;
+    string nickname = 2;
+    string phone = 3;
+    string email = 4;
+    string signature = 5;
+    string avatar = 6;
+    string birthday = 9;
+}
+
+// FriendList 保存有 分组信息
+message FriendList {
+    // UserList 不包含 分组信息，只是纯粹的列表
+    message UserList {
+        repeated  UserInfo friends = 1; // 好友信息
+    }
+    map<string, UserList> projects = 3;
+}

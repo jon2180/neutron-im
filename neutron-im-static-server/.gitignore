@@ -1,0 +1,17 @@
+
+# dependencies directories
+node_modules
+
+# build target
+dist
+build
+
+# external libraries
+lib
+
+# editor
+.idea
+.vscode
+
+# build cache
+tsconfig.tsbuildinfo

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neutron.im.mapper.MomentMapper">
+    <select id="find" parameterType="String" resultType="com.neutron.im.pojo.entity.Moment">
+        select id,
+        title,
+        author_id,
+        create_time,
+        update_time,
+        content_type,
+        is_original,
+        content,
+        copyright,
+        version,
+        status
+        from moments
+        <where>
+            <if test="keyword != null and keyword != ''">title like concat('%', #{keyword, jdbcType=VARCHAR}, '%')</if>
+            <if test="authorId != null">and author_id = #{authorId, jdbcType=VARCHAR}</if>
+            <if test="contentType != -1">and content_type = #{contentType, jdbcType=TINYINT}</if>
+            and status = 0
+        </where>
+        order by create_time desc;
+    </select>
+
+    <select id="findById" parameterType="String" resultType="com.neutron.im.pojo.entity.Moment">
+        select id,
+               title,
+               author_id,
+               create_time,
+               update_time,
+               content_type,
+               is_original,
+               content,
+               copyright,
+               version,
+               status
+        from moments
+        where id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="com.neutron.im.pojo.entity.Moment" keyProperty="id">
+        insert into moments(id, title, author_id, create_time, update_time, content_type,
+                            is_original, content, copyright, version, `status`)
+        values (replace(uuid(), '-', ''), #{title}, #{author_id}, #{create_time}, #{update_time}, #{content_type},
+                #{is_original}, #{content}, #{copyright}, #{version}, #{status});
+    </insert>
+
+    <update id="update" parameterType="com.neutron.im.pojo.entity.Moment" keyProperty="id" keyColumn="id">
+        update moments
+        <set>
+            title=#{title},
+            update_time=#{update_time},
+            content_type=#{content_type},
+            is_original=#{is_original},
+            content=#{content}
+            copyright=#{copyright}
+            version=#{version}
+            `status`=#{status}
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

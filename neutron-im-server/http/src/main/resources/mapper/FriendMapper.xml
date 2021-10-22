@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neutron.im.mapper.FriendMapper">
+    <select id="findByAccountId" parameterType="java.lang.String" resultType="com.neutron.im.pojo.vo.FriendVO">
+        select *
+        from (select friends.id,
+                     -- fid_1 的用户信息
+                     accounts.id           account_id,
+                     accounts.nickname,
+                     accounts.signature,
+                     accounts.avatar,
+                     -- fid_1 在 fid_2 这边的好友信息
+                     friends.cate_name_2   category,
+                     friends.remark_name_2 remark_name,
+                     friends.status_2      `status`,
+                     friends.link_time,
+                     friends.type
+              from friends
+                       left join accounts on fid_1 = accounts.id
+              where fid_2 = #{accountId}
+              union
+              select friends.id,
+                     accounts.id           account_id,
+                     accounts.nickname,
+                     accounts.signature,
+                     accounts.avatar,
+                     friends.cate_name_1   category,
+                     friends.remark_name_1 remark_name,
+                     friends.status_1      `status`,
+                     friends.link_time,
+                     friends.type
+              from friends
+                       left join accounts on fid_2 = accounts.id
+              where fid_1 = #{accountId}) as my_friends
+    </select>
+
+    <update id="updateOne" parameterType="com.neutron.im.pojo.entity.Friend">
+        update neutron_im.friends
+        <set>
+            <if test="cate_name_1 != null and cate_name_1 != ''">cate_name_1=#{cate_name_1},</if>
+            <if test="remark_name_1 != null and remark_name_1 != ''">remark_name_1=#{remark_name_1},</if>
+            <if test="cate_name_2 != null and cate_name_2 != ''">cate_name_2=#{cate_name_2},</if>
+            <if test="remark_name_2 != null and remark_name_2 != ''">remark_name_2=#{remark_name_2},</if>
+            <if test="status_1 != null">`status_1`=#{status_1},</if>
+            <if test="status_2 != null">`status_2`=#{status_2},</if>
+            <if test="link_time != null">link_time=#{link_time},</if>
+            <if test="type != null">type=#{type},</if>
+        </set>
+        <where>
+            fid_1 = #{fid_1, jdbcType=VARCHAR} and fid_2 = #{fid_2, jdbcType=VARCHAR}
+        </where>
+    </update>
+
+    <insert id="insertOne" parameterType="com.neutron.im.pojo.entity.Friend" keyProperty="id" keyColumn="id">
+        insert into friends(id, fid_1, cate_name_1, remark_name_1, fid_2, cate_name_2, remark_name_2,
+                            link_time, status_1, status_2, type, extra)
+        values (replace(uuid(), '-', ''), #{fid_1}, #{cate_name_1}, #{remark_name_1},
+                #{fid_2}, #{cate_name_2}, #{remark_name_2},
+                #{link_time}, #{status_1}, #{status_2}, #{type}, #{extra})
+    </insert>
+
+    <select id="findOne" parameterType="java.lang.String" resultType="com.neutron.im.pojo.entity.Friend">
+        select id,
+               fid_1,
+               cate_name_1,
+               remark_name_1,
+               status_1,
+               fid_2,
+               cate_name_2,
+               remark_name_2,
+               status_2,
+               link_time,
+               type,
+               extra
+        from neutron_im.friends
+        where (fid_1 = #{myId, jdbcType=VARCHAR} and fid_2 = #{id, jdbcType=VARCHAR})
+           or (fid_1 = #{id, jdbcType=VARCHAR} and fid_2 = #{myId, jdbcType=VARCHAR}) limit 1;
+    </select>
+</mapper>

@@ -1,0 +1,52 @@
+.recordBox {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.recording {
+  width: 48px;
+  height: 48px;
+  margin: 16px 0;
+  border-radius: 50%;
+  border: red solid 1px;
+  animation: recording 1s linear infinite;
+}
+
+@keyframes recording {
+  0% {
+    border-color: #ff0000;
+  }
+
+  12.5% {
+    border-color: #cc0000;
+  }
+
+  25% {
+    border-color: #aa0000;
+  }
+
+  37.5% {
+    border-color: #990000;
+  }
+
+  50% {
+    border-color: #770000;
+  }
+
+  62.5% {
+    border-color: #660000;
+  }
+  75% {
+    border-color: #440000;
+  }
+
+  87.5% {
+    border-color: #220000;
+  }
+
+  100% {
+    border-color: #000000;
+  }
+}

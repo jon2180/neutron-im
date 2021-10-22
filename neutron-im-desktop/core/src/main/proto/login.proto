@@ -1,0 +1,25 @@
+syntax = "proto3";
+package com.neutron.core.api;
+option java_outer_classname = "LoginApiProto";
+
+message LoginReq
+{
+    string username = 1;
+    string password = 2;
+    bool is_need_key = 3; // 是否需要请求私钥
+}
+
+message LoginResp
+{
+    enum LoginRespType
+    {
+        OK = 0;        //登陆成功
+        ERROR = 1;    //用户名密码错误
+        NO_USER = 2;    //用户不存在
+    }
+    LoginRespType resp = 1;
+    string token = 2; // 通讯令牌
+    uint32 id = 3; // 用户id
+    string alias = 4; // 用户别名
+    string prv_key = 5; // 登录成功携带用户通讯私钥
+}
