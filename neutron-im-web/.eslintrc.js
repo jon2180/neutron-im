@@ -17,11 +17,9 @@ module.exports = {
       },
       plugins: ['@typescript-eslint', 'react', 'prettier'],
       extends: [
-        'eslint:recommended',
         'plugin:@typescript-eslint/recommended',
         'plugin:@typescript-eslint/recommended-requiring-type-checking',
         'plugin:react/recommended',
-        'react-app',
         'prettier',
       ],
       rules: {
@@ -29,6 +27,8 @@ module.exports = {
         '@typescript-eslint/consistent-type-imports': 'error',
         '@typescript-eslint/no-floating-promises': 'off',
         '@typescript-eslint/restrict-template-expressions': 'off',
+        quotes: 'off',
+        '@typescript-eslint/quotes': ['error', 'single'],
       },
     },
   ],
