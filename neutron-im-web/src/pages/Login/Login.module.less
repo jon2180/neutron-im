@@ -1,42 +1,74 @@
 .fullscreenContainer {
   width: 100%;
   height: 100%;
-
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: center bottom;
+  background-color: rgba(0, 61, 128, 0.85);
+  background-blend-mode: multiply;
 
   .formContainer {
     position: relative;
     left: 50%;
     top: 50%;
-    // TODO
-    width: 400px;
-    background-color: #ffffff;
+    width: 841px;
+    height: 520px;
     border-radius: 8px;
     transform: translate(-50%, -50%);
+    display: flex;
+  }
+
+  .form {
     padding: 16px 32px;
+    width: 45%;
+    height: 100%;
     box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 1);
+    border: none;
+    border-radius: 0 8px 8px 0;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+  }
+
+  .imgDesc {
+    width: 55%;
+    height: 100%;
+    background-color: #ffffff;
+    background-size: cover;
+    border: none;
+    border-radius: 8px 0 0 8px;
+    position: relative;
+  }
+
+  .brandDescBox {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+  }
+
+  .brandDesc {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 22px;
+  }
+
+  .brandName {
+    font-size: 18px;
+    line-height: 26px;
+    color: rgba(255, 255, 255, 0.85);
   }
 
   .title {
-    font-size: 24px;
+    color: rgba(0, 0, 0, 0.85);
+    font-size: 20px;
+    line-height: 28px;
+    margin-bottom: 48px;
     font-weight: 600;
-    text-align: center;
   }
 
   .loginForm {
-    max-width: 300px;
-    height: 280px;
-    margin: 0 auto;
-  }
-  .login-form-forgot {
-    float: right;
-  }
-  .ant-col-rtl .loginFormForgot {
-    float: left;
-  }
-  .loginFormButton {
+    min-width: 200px;
     width: 100%;
   }
 }

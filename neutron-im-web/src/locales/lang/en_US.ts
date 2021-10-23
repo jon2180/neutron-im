@@ -48,7 +48,7 @@ const enUsMessages = {
   "alt.captcha": "Captcha",
   "app.login": "Sign in",
   "app.login.submit": "Sign in",
-  "app.login.greeting": "Sign in to Neutron-IM",
+  "app.login.greeting": "Welcome to",
   "app.login.logging": "Signing",
   "app.login.logged": "Signed in",
   "app.login.form.invalid_account_password_format":
