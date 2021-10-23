@@ -1,6 +1,6 @@
-import { debounce } from "lodash";
-import { useState, useEffect } from "react";
-import { useLocation } from "react-router";
+import { debounce } from 'lodash';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router';
 
 function getWindowDimensions() {
   const { innerWidth: width, innerHeight: height } = window;
@@ -18,9 +18,14 @@ const defaultWindowsDimensionsHookParams: WindowDimensionsHookParams = {
   debounceTime: 300,
 };
 
+interface WindowDimension {
+  width: number;
+  height: number;
+}
+
 export default function useWindowDimensions(
-  props?: WindowDimensionsHookParams
-) {
+  props?: WindowDimensionsHookParams,
+): WindowDimension {
   const mixedProps = {
     ...defaultWindowsDimensionsHookParams,
     ...props,
@@ -29,7 +34,7 @@ export default function useWindowDimensions(
   const { debounceTime } = mixedProps;
 
   const [windowDimensions, setWindowDimensions] = useState(
-    getWindowDimensions()
+    getWindowDimensions(),
   );
 
   const resizer = debounce(function handleResize() {
@@ -37,37 +42,37 @@ export default function useWindowDimensions(
   }, debounceTime);
 
   useEffect(() => {
-    window.addEventListener("resize", resizer);
-    return () => window.removeEventListener("resize", resizer);
+    window.addEventListener('resize', resizer);
+    return () => window.removeEventListener('resize', resizer);
   }, [resizer]);
 
   return windowDimensions;
 }
 
 export function parseGetParams(
-  paramsStr: string
+  paramsStr: string,
 ): Readonly<Record<string, string>> | null {
-  if (!paramsStr || paramsStr === "" || paramsStr.indexOf("?") < 0) {
+  if (!paramsStr || paramsStr === '' || paramsStr.indexOf('?') < 0) {
     return null;
   }
   const params: Record<string, string> = {};
-  const tempArr = paramsStr.split("?");
+  const tempArr = paramsStr.split('?');
   const pairs = tempArr[tempArr.length - 1]
-    .split("&")
+    .split('&')
     .map((value) => {
-      return value.split("=");
+      return value.split('=');
     })
     .filter((value) => {
-      return value.length === 2 && value[0] && value[0] !== "";
+      return value.length === 2 && value[0] && value[0] !== '';
     });
-  for (let value of pairs) {
+  for (const value of pairs) {
     if (value.length === 2) params[value[0]] = value[1];
   }
   return params;
 }
 
 export function useGetParams<T extends Record<string, string>>(
-  defaultVal?: T
+  defaultVal?: T,
 ): Readonly<T> {
   const location = useLocation();
   const getParams = parseGetParams(location.search);
