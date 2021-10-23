@@ -1,17 +1,19 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState } from 'react';
 
-import { Form, Input, Button, Col, Row, FormInstance } from "antd";
+import type { FormInstance } from 'antd';
+import { Form, Input, Button, Col, Row } from 'antd';
 import {
   CheckOutlined,
   IdcardOutlined,
   LockOutlined,
   LoginOutlined,
   UserOutlined,
-} from "@ant-design/icons";
+} from '@ant-design/icons';
 
-import styles from "./Login.module.less";
-import Captcha from "./Captcha";
-import { FormattedMessage } from "react-intl";
+import styles from './Login.module.less';
+import Captcha from './Captcha';
+import { FormattedMessage } from 'react-intl';
+import type { NimSafeAny } from '@/types';
 
 export interface RegisterParams {
   email: string;
@@ -22,9 +24,9 @@ export interface RegisterParams {
 
 export default function RegisterForm(props: {
   onSubmit: (data: RegisterParams) => void;
-}) {
+}): JSX.Element {
   const [submitting, setSubmitting] = useState(false);
-  const formRef = useRef<FormInstance<any>>(null);
+  const formRef = useRef<FormInstance<NimSafeAny>>(null);
 
   const submitForm = () => {
     setSubmitting(true);
@@ -42,21 +44,40 @@ export default function RegisterForm(props: {
     >
       <Form.Item
         name="email"
-        rules={[{ required: true, message: "Please input your email!" }]}
+        rules={[
+          {
+            required: true,
+            pattern:
+              /^[A-Za-z0-9]+([.+-_][a-zA-Z0-9]+)*@[A-Za-z0-9]+([.-][a-zA-Z0-9]+)*\.[A-Za-z]{2,14}$/,
+            message: 'Please input your email correctly!',
+          },
+        ]}
       >
         <Input prefix={<UserOutlined />} placeholder="E-Mail" />
       </Form.Item>
 
       <Form.Item
         name="nickname"
-        rules={[{ required: true, message: "Please input your nickname!" }]}
+        rules={[
+          {
+            required: true,
+            pattern: /[A-Za-z0-9_\-\u4e00-\u9fa5]+/,
+            message: 'Please input your nickname correctly!',
+          },
+        ]}
       >
         <Input prefix={<IdcardOutlined />} placeholder="Nickname" />
       </Form.Item>
 
       <Form.Item
         name="password"
-        rules={[{ required: true, message: "Please input your password!" }]}
+        rules={[
+          {
+            required: true,
+            pattern: /^\w{6,16}$/,
+            message: 'Please input your password correctly!',
+          },
+        ]}
       >
         <Input.Password prefix={<LockOutlined />} placeholder="Your password" />
       </Form.Item>
@@ -79,8 +100,8 @@ export default function RegisterForm(props: {
           onClick={submitForm}
           loading={submitting}
           icon={<LoginOutlined />}
-          block
         >
+          &nbsp;
           <FormattedMessage id="app.register.submit" defaultMessage="Sign On" />
         </Button>
       </Form.Item>
