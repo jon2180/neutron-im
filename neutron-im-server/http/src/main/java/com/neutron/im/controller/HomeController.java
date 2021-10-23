@@ -2,13 +2,13 @@ package com.neutron.im.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.neutron.im.config.AppConstants;
-import com.neutron.im.util.MailService;
+import com.neutron.im.pojo.code.StatusCode;
+import com.neutron.im.pojo.dto.LoginRequestDTO;
 import com.neutron.im.pojo.dto.RequestDTO;
 import com.neutron.im.pojo.entity.Account;
 import com.neutron.im.pojo.exception.AuthFailedException;
 import com.neutron.im.pojo.exception.DisabledAccountException;
 import com.neutron.im.pojo.exception.NoSuchAccountException;
-import com.neutron.im.pojo.code.StatusCode;
 import com.neutron.im.pojo.vo.ResultVO;
 import com.neutron.im.service.AccountService;
 import com.neutron.im.util.*;
@@ -24,7 +24,10 @@ import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/")
@@ -46,7 +49,6 @@ public class HomeController {
         this.accountService = accountService;
         this.redisUtil = redisUtil;
         this.mapper = mapper;
-//        System.out.println("Mapper == null ? " + (mapper == null ? "yes" : "no"));
         this.mailService = mailService;
     }
 
@@ -64,10 +66,10 @@ public class HomeController {
      * @return 登录成功就返回实体内容
      */
     @PostMapping("/login")
-    public ResultVO postLogin(@RequestBody Map<String, String> loginForm, HttpServletResponse response, HttpSession session) {
-        String email = loginForm.getOrDefault("email", "");
-        String password = loginForm.getOrDefault("password", "");
-        String captcha = loginForm.getOrDefault("captcha", "");
+    public ResultVO postLogin(@RequestBody LoginRequestDTO loginForm, HttpServletResponse response, HttpSession session) {
+        String email = loginForm.getEmail();
+        String password = loginForm.getPassword();
+        String captcha = loginForm.getCaptcha();
 
         // check bot
         String captchaInSession = session.getAttribute("captcha-pic") != null
@@ -101,8 +103,6 @@ public class HomeController {
                     setMaxAge(TokenUtil.EXPIRATION_TIME_IN_SECOND);
                 }}
             );
-//            if (result.getAvatar() != null && "".equals(result.getAvatar()))
-//                result.setAvatar(AppConstants.getAvatarUrl(result.getAvatar()));
             return ResultVO.success(result);
         } catch (NoSuchAccountException e) {
             return ResultVO.failed(StatusCode.S401_NO_SUCH_ACCOUNT, e.getMessage(), null);
