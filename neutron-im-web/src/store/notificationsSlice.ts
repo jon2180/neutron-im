@@ -1,14 +1,14 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 // import { message } from "antd";
-import type { RootState } from "@/types/state";
+import type { RootState } from '@/types/state';
 
 export const fetchNotifications = createAsyncThunk(
-  "notifications/fetchNotifications",
-  async () => {}
+  'notifications/fetchNotifications',
+  async () => {},
 );
 
 const notificationsSlice = createSlice({
-  name: "notifications",
+  name: 'notifications',
   initialState: {
     friendRequests: [],
     groupsInvitations: [],

@@ -1,11 +1,12 @@
-import React, { useState } from "react";
-import { Button, message, Space, Spin } from "antd";
-import { FormattedMessage } from "react-intl";
+import type React from 'react';
+import { useState } from 'react';
+import { Button, message, Space, Spin } from 'antd';
+import { FormattedMessage } from 'react-intl';
 
-import RecordRTC from "recordrtc";
+import RecordRTC from 'recordrtc';
 
-import styles from "./SoundRecord.module.less";
-import { createSemaphore } from "@/utils/wrapper";
+import styles from './SoundRecord.module.less';
+import { createSemaphore } from '@/utils/wrapper';
 
 const recordStatus = createSemaphore();
 
@@ -27,40 +28,40 @@ export default function SoundRecord(props: SoundRecordProps) {
 
   // TODO 录音
   const recordSound: React.MouseEventHandler<HTMLElement> = async (e) => {
-    if (recordStatus.loading === "idle") {
+    if (recordStatus.loading === 'idle') {
       try {
         stream = await navigator.mediaDevices.getUserMedia({ audio: true });
         if (!stream) {
-          message.error("未知原因使录音申请权限失败");
+          message.error('未知原因使录音申请权限失败');
           setRecording(false);
           return;
         }
       } catch (e) {
-        message.error("您拒绝了录音权限的申请");
+        message.error('您拒绝了录音权限的申请');
         setRecording(false);
         return;
       }
 
       try {
-        recorder = new RecordRTC(stream, { type: "audio" });
+        recorder = new RecordRTC(stream, { type: 'audio' });
         recorder.onStateChanged((state: RecordRTC.State) => {
           console.log(state);
         });
-        recordStatus.loading = "pending";
+        recordStatus.loading = 'pending';
         setRecording(true);
         recorder.startRecording();
       } catch (e) {
-        message.error("未知异常");
+        message.error('未知异常');
       }
       return;
-    } else if (recordStatus.loading === "pending" && recorder) {
+    } else if (recordStatus.loading === 'pending' && recorder) {
       recorder.stopRecording(() => {
         try {
           if (recorder) {
             if (
               props &&
               props.handleRecorded &&
-              typeof props.handleRecorded === "function"
+              typeof props.handleRecorded === 'function'
             )
               props.handleRecorded(recorder.getBlob());
 
@@ -69,7 +70,7 @@ export default function SoundRecord(props: SoundRecordProps) {
 
             // recycle record tracks
             if (stream && stream.getTracks) {
-              for (let track of stream.getTracks()) {
+              for (const track of stream.getTracks()) {
                 track.stop();
               }
               stream = null;
@@ -80,10 +81,10 @@ export default function SoundRecord(props: SoundRecordProps) {
           }
         } catch (e) {
           console.error(e);
-          message.error("录音保存失败");
+          message.error('录音保存失败');
         }
         setRecording(false);
-        recordStatus.loading = "idle";
+        recordStatus.loading = 'idle';
         return;
       });
     }
@@ -94,7 +95,7 @@ export default function SoundRecord(props: SoundRecordProps) {
     !navigator.mediaDevices ||
     !navigator.mediaDevices.getUserMedia
   ) {
-    message.error("您的浏览器不支持此 getUserMedia 方法");
+    message.error('您的浏览器不支持此 getUserMedia 方法');
     return (
       <div>
         您的浏览器不支持此 getUserMedia 方法, 请更新您的浏览器至最新版本

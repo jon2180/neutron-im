@@ -126,24 +126,27 @@ export interface RequestsProps {
 function useGetRequests() {
   const [list, setList] = useSafeState<FriendRequest[]>();
 
-  const loadList = useCallback(async function loadList() {
-    if (loadingStatus.loading === 'pending') return;
+  const loadList = useCallback(
+    async function loadList() {
+      if (loadingStatus.loading === 'pending') return;
 
-    loadingStatus.loading = 'pending';
-    const res = await friendService.getMyFriendRequests();
-    loadingStatus.loading = 'idle';
+      loadingStatus.loading = 'pending';
+      const res = await friendService.getMyFriendRequests();
+      loadingStatus.loading = 'idle';
 
-    if (!res || res.status !== 20000) {
-      message.warn('获取数据失败');
-      return;
-    }
+      if (!res || res.status !== 20000) {
+        message.warn('获取数据失败');
+        return;
+      }
 
-    if (!res.data || !Array.isArray(res.data)) {
-      message.info('无数据');
-      return;
-    }
-    setList(res.data);
-  }, [setList]);
+      if (!res.data || !Array.isArray(res.data)) {
+        message.info('无数据');
+        return;
+      }
+      setList(res.data);
+    },
+    [setList],
+  );
 
   useEffect(() => {
     loadList();

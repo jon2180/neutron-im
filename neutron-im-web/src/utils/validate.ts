@@ -44,19 +44,19 @@ export const isEmail = (email: string): boolean =>
     email,
   );
 
-
-
 /**
  * 验证密码格式
  * @param password 密码
  */
-export const isPassword = (password: string): boolean => /^\w{6,16}$/.test(password);
+export const isPassword = (password: string): boolean =>
+  /^\w{6,16}$/.test(password);
 
 /**
  * 验证用户昵称
  * @param nickname 用户昵称
  */
-export const isNickName = (nickname: string): boolean => /[A-Za-z0-9_\-\u4e00-\u9fa5]+/.test(nickname);
+export const isNickName = (nickname: string): boolean =>
+  /[A-Za-z0-9_\-\u4e00-\u9fa5]+/.test(nickname);
 
 /**
  * 验证值空
@@ -65,7 +65,7 @@ export const isNickName = (nickname: string): boolean => /[A-Za-z0-9_\-\u4e00-\u
 export const isEmpty = (value: string): boolean => !!value;
 
 export function isNumber(data: string | number): boolean {
-  if (typeof data === "number") {
+  if (typeof data === 'number') {
     return true;
   }
   return /^[0-9]+.?[0-9]*$/.test(data);
@@ -78,17 +78,20 @@ export function isMoney(data: string | number): boolean {
 }
 
 export function isInteger(data: string | number): boolean {
-  if (typeof data === 'number')
-    return /^[0-9]*$/.test(data.toString());
+  if (typeof data === 'number') return /^[0-9]*$/.test(data.toString());
   return /^[0-9]*$/.test(data);
 }
 
 export function isPhone(data: string): boolean {
-  return /^(13[0-9]{9})|(145[0-9]{8})|(147[0-9]{8})|(149[0-9]{8})|(15[0-3]{1}[0-9]{8})|(15[5-9]{1}[0-9]{8})|(166[0-9]{8})|(171[0-9]{8})|(173[0-9]{8})|(17[5-8]{9})|(18[0-9]{9})|(198[0-9]{8})|(199[0-9]{8})$/.test(data);
+  return /^(13[0-9]{9})|(145[0-9]{8})|(147[0-9]{8})|(149[0-9]{8})|(15[0-3]{1}[0-9]{8})|(15[5-9]{1}[0-9]{8})|(166[0-9]{8})|(171[0-9]{8})|(173[0-9]{8})|(17[5-8]{9})|(18[0-9]{9})|(198[0-9]{8})|(199[0-9]{8})$/.test(
+    data,
+  );
 }
 
 export function isCard(data: string): boolean {
-  return /^(62[0-9]{17})|(356[0-9]{13})|(409[0-9]{13})(409[0-9]{13})(456[0-9]{16})(5[0-9]{15})$/.test(data);
+  return /^(62[0-9]{17})|(356[0-9]{13})|(409[0-9]{13})(409[0-9]{13})(456[0-9]{16})(5[0-9]{15})$/.test(
+    data,
+  );
 }
 
 export function isLandline(data: string): boolean {

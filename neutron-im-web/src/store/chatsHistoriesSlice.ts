@@ -1,17 +1,17 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { queryChatHistory } from "@/services/chat";
-import lodash from "lodash";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { queryChatHistory } from '@/services/chat';
+import lodash from 'lodash';
 
-import type { PayloadAction } from "@reduxjs/toolkit";
-import type { MessageData } from "@/types/http";
-import type { RootState } from "@/types/state";
-import type { QueryType } from "@/services/chat";
+import type { PayloadAction } from '@reduxjs/toolkit';
+import type { MessageData } from '@/types/http';
+import type { RootState } from '@/types/state';
+import type { QueryType } from '@/services/chat';
 
 export const fetchChatHistory = createAsyncThunk<
   { data: MessageData[]; params: QueryType } | undefined,
   QueryType,
   Record<string, never>
->("chats/fetchChatHistory", async (params) => {
+>('chats/fetchChatHistory', async (params) => {
   try {
     const res = await queryChatHistory(params);
     if (res.status !== 20000) {
@@ -34,9 +34,9 @@ export const fetchChatHistory = createAsyncThunk<
  * 聊天记录 slice
  */
 export const chatsSlice = createSlice({
-  name: "chatsHistories",
+  name: 'chatsHistories',
   initialState: {
-    loading: "idle" as "idle" | "pending",
+    loading: 'idle' as 'idle' | 'pending',
     currentRequestId: undefined as string | undefined,
     error: null as any,
     data: {} as {
@@ -53,7 +53,7 @@ export const chatsSlice = createSlice({
         state.data[chat_id],
         (val1, val2) => {
           return val1.id === val2.id;
-        }
+        },
       );
       return state;
     },
@@ -63,7 +63,7 @@ export const chatsSlice = createSlice({
       if (action.payload?.params.chatId) {
         if (state.data[action.payload.params.chatId]) {
           state.data[action.payload.params.chatId].unshift(
-            ...action.payload.data
+            ...action.payload.data,
           );
         } else {
           state.data[action.payload.params.chatId] = [...action.payload.data];

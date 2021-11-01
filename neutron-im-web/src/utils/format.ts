@@ -1,5 +1,5 @@
 export const formatWeek = (function WeekFormatCreater() {
-  const weekMap = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+  const weekMap = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
 
   return (week: number) => {
     return weekMap[week % 7];
@@ -10,8 +10,8 @@ export const formatWeek = (function WeekFormatCreater() {
  *
  */
 export function addPrefix0(m: number) {
-  let mStr = m.toString();
-  return mStr[1] ? m : "0" + m;
+  const mStr = m.toString();
+  return mStr[1] ? m : '0' + m;
 }
 
 /**
@@ -77,8 +77,8 @@ export function formatTimestamp(timestamp: string | number): string {
   const dateNow = new Date();
   const date = new Date(timestamp);
 
-  let isCurrentWeek = isSameWeek(dateNow, date);
-  let isCurrentDay = isSameDay(dateNow, date);
+  const isCurrentWeek = isSameWeek(dateNow, date);
+  const isCurrentDay = isSameDay(dateNow, date);
   let showYear = false;
   let showMonth = true;
 
@@ -87,18 +87,18 @@ export function formatTimestamp(timestamp: string | number): string {
     showMonth = true;
   }
 
-  let day = isCurrentWeek
+  const day = isCurrentWeek
     ? `${formatWeek(date.getDay())}`
     : [
-        showYear ? `${date.getFullYear()}年` : "",
+        showYear ? `${date.getFullYear()}年` : '',
         showMonth
           ? `${addPrefix0(date.getMonth() + 1)}月${addPrefix0(
-              date.getDate()
+              date.getDate(),
             )}日`
-          : "",
-      ].join("");
+          : '',
+      ].join('');
 
-  return `${isCurrentDay ? "" : day} ${addPrefix0(
-    date.getHours()
+  return `${isCurrentDay ? '' : day} ${addPrefix0(
+    date.getHours(),
   )}:${addPrefix0(date.getMinutes())}`;
 }

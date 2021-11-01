@@ -49,7 +49,7 @@ export interface QueryType {
 }
 
 export function sendMessage(message: MessageData): Promise<HttpResponseData> {
-  return request.post(`/messages/`, { data: message });
+  return request.post('/messages/', { data: message });
 }
 
 export function queryChatHistory(data: QueryType): Promise<HttpResponseData> {

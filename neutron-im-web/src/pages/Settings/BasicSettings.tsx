@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from 'react';
 import {
   message,
   Avatar,
@@ -8,21 +8,21 @@ import {
   Select,
   DatePicker,
   Space,
-} from "antd";
-import { UploadOutlined } from "@ant-design/icons";
-import { useSelector } from "react-redux";
-import { fetchUserInfo, selectUserInfo } from "@/store/userInfoSlice";
+} from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+import { useSelector } from 'react-redux';
+import { fetchUserInfo, selectUserInfo } from '@/store/userInfoSlice';
 
-import type { UploadChangeParam } from "antd/lib/upload";
-import type { UploadFile } from "antd/lib/upload/interface";
-import type { FormInstance } from "antd";
+import type { UploadChangeParam } from 'antd/lib/upload';
+import type { UploadFile } from 'antd/lib/upload/interface';
+import type { FormInstance } from 'antd';
 
-import styles from "./BasicSettings.module.less";
-import AvatarUpload from "./AvatarUpload";
-import { userService } from "@/services";
-import { useAppDispatch } from "@/store";
-import moment from "moment";
-import { createSemaphore } from "@/utils/wrapper";
+import styles from './BasicSettings.module.less';
+import AvatarUpload from './AvatarUpload';
+import { userService } from '@/services';
+import { useAppDispatch } from '@/store';
+import moment from 'moment';
+import { createSemaphore } from '@/utils/wrapper';
 
 const uploadStatus = createSemaphore();
 
@@ -34,18 +34,18 @@ export function BasicSettingsForm() {
 
   const submitForm = useCallback(
     async function submitForm() {
-      if (uploadStatus.loading === "pending") return;
+      if (uploadStatus.loading === 'pending') return;
 
       const values = formRef.current?.getFieldsValue();
       setUploading(true);
-      uploadStatus.loading = "pending";
+      uploadStatus.loading = 'pending';
       const resp = await userService.putUserInfo({
         ...values,
         birthday: values.birthday
           ? new Date(values.birthday).getTime()
           : undefined,
       });
-      uploadStatus.loading = "idle";
+      uploadStatus.loading = 'idle';
       setUploading(false);
       console.log(resp);
 
@@ -54,11 +54,11 @@ export function BasicSettingsForm() {
         return;
       }
 
-      message.info("修改成功");
+      message.info('修改成功');
 
       dispatch(fetchUserInfo());
     },
-    [dispatch]
+    [dispatch],
   );
 
   setTimeout(() => {
@@ -67,18 +67,18 @@ export function BasicSettingsForm() {
 
   const onReset = () => {
     formRef.current!.resetFields();
-    console.log("reet");
+    console.log('reet');
   };
 
   const formatGenderNum = (gender: number) => {
     switch (gender) {
       case 1:
-        return "female";
+        return 'female';
       case 2:
-        return "male";
+        return 'male';
       case 0:
       default:
-        return "secret";
+        return 'secret';
     }
   };
 
@@ -90,18 +90,16 @@ export function BasicSettingsForm() {
       initialValues={{
         ...userInfo,
         gender:
-          userInfo.gender && typeof userInfo.gender === "number"
+          userInfo.gender && typeof userInfo.gender === 'number'
             ? formatGenderNum(userInfo.gender)
-            : "secret",
-        birthday: userInfo.birthday
-          ? moment(userInfo.birthday as number)
-          : undefined,
+            : 'secret',
+        birthday: userInfo.birthday ? moment(userInfo.birthday) : undefined,
       }}
       layout="vertical"
       className={styles.form}
       onReset={onReset}
       ref={formRef}
-      name={"update_account"}
+      name={'update_account'}
     >
       <Form.Item label={<>Email</>} name="email">
         <Input disabled />
@@ -154,32 +152,32 @@ export function AvatarSettings() {
   const [avatar, setAvatar] = useState(userInfo.avatar);
 
   const onChange = (info: UploadChangeParam<UploadFile<any>>): void => {
-    const loadingKey = "LOADING_KEY";
+    const loadingKey = 'LOADING_KEY';
     switch (info.file.status) {
-      case "uploading":
+      case 'uploading':
         console.log(info);
-        message.loading({ key: loadingKey, content: "Picture Uploading..." });
+        message.loading({ key: loadingKey, content: 'Picture Uploading...' });
         break;
-      case "done":
-      case "success":
+      case 'done':
+      case 'success':
         message.destroy(loadingKey);
         const { response } = info.file;
         if (response) {
           if (response.status === 20000 && response.data.url) {
             setAvatar(response.data.url);
-            message.success("Picture Upload Successfully");
+            message.success('Picture Upload Successfully');
             dispatch(fetchUserInfo());
           } else {
-            message.error("Picture Upload Failed");
+            message.error('Picture Upload Failed');
           }
         }
         break;
-      case "error":
-      case "removed":
+      case 'error':
+      case 'removed':
       default:
         message.destroy(loadingKey);
         console.log(info);
-        message.error("Picture Upload Failed");
+        message.error('Picture Upload Failed');
     }
   };
 
@@ -193,7 +191,7 @@ export function AvatarSettings() {
       <Avatar
         shape="circle"
         size={144}
-        src={avatar && avatar !== "" ? avatar : userInfo.avatar}
+        src={avatar && avatar !== '' ? avatar : userInfo.avatar}
       />
       <AvatarUpload onChange={onChange}>
         <Button icon={<UploadOutlined />} className={styles.uploadBtn}>

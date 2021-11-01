@@ -179,9 +179,14 @@ export function SearchHeader() {
             type="text"
           ></Button>
         </Dropdown>
-        <Modal visible={visible} onCancel={() => {
-          setVisible(false);
-        }}>console.log('modal')</Modal>
+        <Modal
+          visible={visible}
+          onCancel={() => {
+            setVisible(false);
+          }}
+        >
+          console.log('modal')
+        </Modal>
       </div>
       <div
         className={[styles.overlay, hasResult ? styles.show : ''].join(' ')}

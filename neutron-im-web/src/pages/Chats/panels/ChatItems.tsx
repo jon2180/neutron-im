@@ -1,5 +1,5 @@
-import { Image } from "antd";
-import styles from "./ChatHistories.module.less";
+import { Image } from 'antd';
+import styles from './ChatHistories.module.less';
 
 /**
  * 文本消息
@@ -15,8 +15,8 @@ export function ChatTextItem({
 }) {
   const classNames = [
     styles.messageText,
-    self ? styles.messageSentByMe : "",
-  ].join(" ");
+    self ? styles.messageSentByMe : '',
+  ].join(' ');
 
   return <div className={classNames}>{content}</div>;
 }

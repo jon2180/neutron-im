@@ -29,7 +29,7 @@ export interface TwoColLayoutProps {
  * 两列布局
  * @param leftSider 左侧
  * @param children 内容
- * @returns 
+ * @returns
  */
 export default function TwoColLayout({
   leftSider,

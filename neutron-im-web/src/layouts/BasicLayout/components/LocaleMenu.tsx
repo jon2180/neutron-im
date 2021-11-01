@@ -1,8 +1,8 @@
-import React from "react";
-import { Menu } from "antd";
+import React from 'react';
+import { Menu } from 'antd';
 
-import { exportLocaleSetting } from "@/locales";
-import type { LocaleNameType } from "@/locales";
+import { exportLocaleSetting } from '@/locales';
+import type { LocaleNameType } from '@/locales';
 
 function changeLocale(key: string) {
   if (exportLocaleSetting(key as LocaleNameType)) {
@@ -13,7 +13,7 @@ function changeLocale(key: string) {
 const localeMenu = (
   <Menu
     onClick={(e) => {
-      changeLocale(e.key as string);
+      changeLocale(e.key);
     }}
   >
     <Menu.Item key="zh_CN">中文</Menu.Item>

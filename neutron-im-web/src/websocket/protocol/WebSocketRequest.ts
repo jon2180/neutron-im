@@ -15,8 +15,7 @@ export class WebSocketRequest<T = NimSafeAny> {
     this.requestId = generateUUID(type);
     this.type = type;
     this.body = body;
-    this._callback = (body): void => {
-    };
+    this._callback = (body): void => {};
   }
 
   private _callback: WebSocketRequestCallback;

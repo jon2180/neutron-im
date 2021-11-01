@@ -27,7 +27,7 @@ export const fetchFriendList = createAsyncThunk<Friend[], undefined, {}>(
 );
 
 const friendListSlice = createSlice({
-  name: "friends",
+  name: 'friends',
   initialState: [] as Friend[],
   reducers: {
     pushFriends(state, action: { payload: Friend[] | Friend }) {
@@ -58,7 +58,7 @@ const friendListSlice = createSlice({
 
         state.splice(0, state.length, ...action.payload);
       } else {
-        console.log("更新好友列表失败");
+        console.log('更新好友列表失败');
       }
     });
     builder.addCase(fetchFriendList.rejected, (state, action) => {

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import { Card } from "antd";
-import { contentList, tabList } from "./components/ProfileTabs";
-import type { TabKeyType } from "./components/ProfileTabs";
+import { Card } from 'antd';
+import { contentList, tabList } from './components/ProfileTabs';
+import type { TabKeyType } from './components/ProfileTabs';
 
 export default function ProfileCard({
   id,
@@ -14,7 +14,7 @@ export default function ProfileCard({
   const [tabKey, setTabKey] = useState<TabKeyType>(
     (activeTabKey && tabList.find((value) => value.key === activeTabKey)
       ? activeTabKey
-      : tabList[0].key) as TabKeyType
+      : tabList[0].key) as TabKeyType,
   );
 
   const onTabChange = (key: TabKeyType) => {

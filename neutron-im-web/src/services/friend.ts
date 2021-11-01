@@ -1,8 +1,8 @@
-import request from "@/utils/request";
-import type { HttpResponseData } from "@/types/http";
+import request from '@/utils/request';
+import type { HttpResponseData } from '@/types/http';
 
 export function getFriends(): Promise<HttpResponseData> {
-  return request.get(`/friends/`);
+  return request.get('/friends/');
 }
 
 export function getFriendDetail(data: {
@@ -16,15 +16,15 @@ export function searchAccount(data: {
   keyword: string;
   type: string;
 }): Promise<HttpResponseData> {
-  return request.get("/accounts/search", { params: data });
+  return request.get('/accounts/search', { params: data });
 }
 
 export function getMyFriendRequests(): Promise<HttpResponseData> {
-  return request.get("/requests/friends/$");
+  return request.get('/requests/friends/$');
 }
 
 export function getFriendsRequests(): Promise<HttpResponseData> {
-  return request.get("/requests/friends/");
+  return request.get('/requests/friends/');
 }
 
 export function postAddFriendRequest({
@@ -34,7 +34,9 @@ export function postAddFriendRequest({
   id: string;
   reason: string;
 }): Promise<HttpResponseData> {
-  return request.post(`/requests/friends`, { data: { reason, oppositeId: id } });
+  return request.post('/requests/friends', {
+    data: { reason, oppositeId: id },
+  });
 }
 
 export function putAddFriendConfirm({
@@ -43,7 +45,7 @@ export function putAddFriendConfirm({
   reason,
 }: {
   id: string;
-  type: "accept" | "reject";
+  type: 'accept' | 'reject';
   reason: string;
 }): Promise<HttpResponseData> {
   return request.put(`/requests/friends/${id}`, {

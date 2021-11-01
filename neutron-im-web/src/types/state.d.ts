@@ -1,6 +1,5 @@
 import type { RootState as IRootState } from '@/store';
-import type { NimSafeAny } from "@/types/basic";
-
+import type { NimSafeAny } from '@/types/basic';
 
 /**
  * 用户信息
@@ -20,7 +19,7 @@ export interface UserInfoSubstate {
 
 export interface UserInfoState {
   data: UserInfoSubstate;
-  loading: "idle" | "pending";
+  loading: 'idle' | 'pending';
   currentRequestId: undefined | string;
   hasLogin: boolean;
   error: NimSafeAny;

@@ -15,11 +15,9 @@ export const recentChatsSlice = createSlice({
   name: 'recentChats',
   initialState,
   reducers: {
-      changeTheme(state, action) {
-    },
+    changeTheme(state, action) {},
   },
-  extraReducers(builder) {
-  },
+  extraReducers(builder) {},
 });
 
 export function selectMenuTheme(state: RootState) {

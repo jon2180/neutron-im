@@ -1,4 +1,4 @@
-import type { ResponseError } from "umi-request";
+import type { ResponseError } from 'umi-request';
 
 /**
  * handlePromise 包裹 promise 错误，目的是避免在代码中重复使用 try...catch 语句块
@@ -6,7 +6,7 @@ import type { ResponseError } from "umi-request";
  * @returns 包含有错误信息和数据的元组 [错误信息，数据]
  */
 export async function hp<T, E extends Error>(
-  promise: Promise<T>
+  promise: Promise<T>,
 ): Promise<[null, T] | [E, null]> {
   try {
     const res = await promise;
@@ -24,7 +24,7 @@ export async function hpre<T>(promise: Promise<T>): Promise<
         message: string;
         detail: any;
       }>,
-      null
+      null,
     ]
 > {
   try {
@@ -36,7 +36,7 @@ export async function hpre<T>(promise: Promise<T>): Promise<
 }
 
 interface LoadingStatus {
-  loading: "idle" | "pending";
+  loading: 'idle' | 'pending';
   error?: any;
 }
 
@@ -46,17 +46,17 @@ interface LoadingStatus {
  */
 export function createSemaphore(): LoadingStatus {
   const loadingStatus: LoadingStatus = {
-    loading: "idle",
-    error: "",
+    loading: 'idle',
+    error: '',
   };
 
   return {
     get loading() {
       return loadingStatus.loading;
     },
-    set loading(loading: LoadingStatus["loading"]) {
+    set loading(loading: LoadingStatus['loading']) {
       loadingStatus.loading =
-        loading !== "idle" && loading !== "pending" ? "idle" : loading;
+        loading !== 'idle' && loading !== 'pending' ? 'idle' : loading;
     },
     get error() {
       return loadingStatus.error;

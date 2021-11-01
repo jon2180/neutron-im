@@ -5,9 +5,9 @@ const { Provider, Consumer } = React.createContext(
 );
 
 export enum ThemeList {
-  DEFAULT = "default",
-  LIGHT = "light",
-  dark = "dark",
+  DEFAULT = 'default',
+  LIGHT = 'light',
+  dark = 'dark',
 }
 
 export default function ThemeWrapper({
@@ -27,11 +27,13 @@ export default function ThemeWrapper({
   // headerTag.current?.appendChild(baseLink.current);
   //
   // if (ref.current) ref.current.className = theme;
-  return <Consumer>
-    {(settings) => {
-      return children
-    }}
-  </Consumer>;
+  return (
+    <Consumer>
+      {(settings) => {
+        return children;
+      }}
+    </Consumer>
+  );
 }
 
-export const ThemeContext = { ThemeProvider: Provider, ThemeWrapper }
+export const ThemeContext = { ThemeProvider: Provider, ThemeWrapper };

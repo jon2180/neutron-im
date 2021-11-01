@@ -58,7 +58,9 @@ export function initializeUserInfo(): void {
   }
 
   // 如果存在用户信息，就将用户信息设置进 redux
-  const userInfo: UserInfoSubstate = readJSON(LocalStorageKey.USERINFO) as UserInfoSubstate;
+  const userInfo: UserInfoSubstate = readJSON(
+    LocalStorageKey.USERINFO,
+  ) as UserInfoSubstate;
 
   if (userInfo && userInfo.id && userInfo.email) {
     store.dispatch(setHasLogin(true));
@@ -77,7 +79,9 @@ export function exportFriends(data: NimSafeAny): void {
   writeJSON(LocalStorageKey.FRIEND_LIST, data);
 }
 
-export function importFriends<T extends Record<string, NimSafeAny>>(): T | null {
+export function importFriends<
+  T extends Record<string, NimSafeAny>,
+>(): T | null {
   return readJSON<T>(LocalStorageKey.FRIEND_LIST);
 }
 
@@ -85,6 +89,8 @@ export function exportRecentChat(data: NimSafeAny): void {
   writeJSON(LocalStorageKey.RECENT_CHAT, data);
 }
 
-export function importRecentChat<T extends Record<string, NimSafeAny>>(): T | null  {
+export function importRecentChat<
+  T extends Record<string, NimSafeAny>,
+>(): T | null {
   return readJSON(LocalStorageKey.RECENT_CHAT);
 }

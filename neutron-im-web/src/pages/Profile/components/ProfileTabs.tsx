@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 
 export function ExtraTab() {
   return <p>project content</p>;
 }
 
-export type TabKeyType = "activities" | "codesnips" | "extra";
+export type TabKeyType = 'activities' | 'codesnips' | 'extra';
 
 export interface TabType {
   /** 绑定 tab 的键 */
@@ -19,8 +19,8 @@ export interface TabType {
  */
 export const tabList: TabType[] = [
   {
-    key: "extra",
-    tab: "Extra",
+    key: 'extra',
+    tab: 'Extra',
     component: <ExtraTab />,
   },
 ];
@@ -28,7 +28,7 @@ export const tabList: TabType[] = [
 export const contentList: Record<TabKeyType, JSX.Element> =
   (function transTabListToContentList() {
     const obj = {} as Record<TabKeyType, JSX.Element>;
-    for (let tab of tabList) {
+    for (const tab of tabList) {
       obj[tab.key] = tab.component;
     }
     return obj;

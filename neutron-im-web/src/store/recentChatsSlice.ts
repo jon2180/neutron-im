@@ -73,7 +73,7 @@ export const recentChatsSlice = createSlice({
         if (message.chat_id === state[i].id) break;
       }
 
-      let lastMsg: string = messageTypeMap[message.content_type]
+      const lastMsg: string = messageTypeMap[message.content_type]
         ? messageTypeMap[message.content_type]
         : message.content;
 
@@ -113,7 +113,7 @@ export const recentChatsSlice = createSlice({
       // TODO
       if (Array.isArray(action.payload)) {
         state.splice(0, state.length, ...action.payload);
-        state = action.payload as Chat[];
+        state = action.payload;
       }
     });
     builder.addCase(fetchRecentChats.rejected, (state, action) => {

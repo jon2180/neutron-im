@@ -1,5 +1,5 @@
-import request from "@/utils/request";
-import type { HttpResponseData } from "@/types/http";
+import request from '@/utils/request';
+import type { HttpResponseData } from '@/types/http';
 
 export interface ActivitiesSearchParams {
   /**
@@ -12,23 +12,23 @@ export interface ActivitiesSearchParams {
 }
 
 export function getActivities(
-  params?: ActivitiesSearchParams
+  params?: ActivitiesSearchParams,
 ): Promise<HttpResponseData> {
-  return request.get("/moments/", {
+  return request.get('/moments/', {
     params: {
       ...params,
-      type: "activity",
+      type: 'activity',
     },
   });
 }
 
 export function getCodesnips(
-  params?: ActivitiesSearchParams
+  params?: ActivitiesSearchParams,
 ): Promise<HttpResponseData> {
-  return request.get("/moments/", {
+  return request.get('/moments/', {
     params: {
       ...params,
-      type: "codesnips",
+      type: 'codesnips',
     },
   });
 }
@@ -42,7 +42,7 @@ export function getActivity({
 }: ActivityGetParams): Promise<HttpResponseData> {
   return request.get(`/moments/${encodeURIComponent(id)}`, {
     params: {
-      type: "activity",
+      type: 'activity',
       ...params,
     },
   });
@@ -70,9 +70,9 @@ export function getActivityComments({
 export interface ActivityUploadParams {}
 
 export function postActivity(
-  params: ActivityUploadParams
+  params: ActivityUploadParams,
 ): Promise<HttpResponseData> {
-  return request.post("/moments", { data: params });
+  return request.post('/moments', { data: params });
 }
 
 export interface ActivityDeleteParams {
@@ -80,7 +80,7 @@ export interface ActivityDeleteParams {
 }
 
 export function deleteActivity(
-  params: ActivityDeleteParams
+  params: ActivityDeleteParams,
 ): Promise<HttpResponseData> {
   return request.delete(`/moments/${params.id}`);
 }

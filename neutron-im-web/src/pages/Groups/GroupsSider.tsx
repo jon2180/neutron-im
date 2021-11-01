@@ -21,7 +21,7 @@ export default function GroupsSider(): JSX.Element {
         renderItem={(item, index) => (
           <List.Item>
             <Link
-              to={`groups/`}
+              to={'groups/'}
               style={{
                 display: 'block',
                 width: '100%',

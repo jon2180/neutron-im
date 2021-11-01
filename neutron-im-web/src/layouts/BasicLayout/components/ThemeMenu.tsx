@@ -1,5 +1,5 @@
-import React from "react";
-import { Menu } from "antd";
+import React from 'react';
+import { Menu } from 'antd';
 
 const ThemeMenu = (
   <Menu

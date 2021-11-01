@@ -22,11 +22,10 @@ import styles from './index.module.less';
 import { selectMenuTheme } from '@/store/themeSlice';
 
 const AppNav = withRouter(function PureAppNav(props) {
-
   return (
     <Space className={styles.iconAndNav}>
-      <NavLink to='/' className={styles.iconLink}>
-        <img src={logo} alt='Neutron IM' />
+      <NavLink to="/" className={styles.iconLink}>
+        <img src={logo} alt="Neutron IM" />
       </NavLink>
       {/*<AppNavMenu />*/}
     </Space>
@@ -41,19 +40,19 @@ function AvatarNav() {
   const userInfo = useSelector(selectUserInfo);
 
   return (
-    <Space size={16} align='end' className={styles.rightCol}>
+    <Space size={16} align="end" className={styles.rightCol}>
       <div className={styles.searchLink}>
-        <NavLink to='/search'>
+        <NavLink to="/search">
           <SearchOutlined
-            // style={{ color: "#666666", fontSize: "16px" }}
+          // style={{ color: "#666666", fontSize: "16px" }}
           />
         </NavLink>
       </div>
 
       <div className={styles.docLink}>
-        <NavLink to='/react'>
+        <NavLink to="/react">
           <QuestionCircleOutlined
-            // style={{ color: "#666666", fontSize: "16px" }}
+          // style={{ color: "#666666", fontSize: "16px" }}
           />
         </NavLink>
       </div>
@@ -65,9 +64,9 @@ function AvatarNav() {
       <Dropdown overlay={avatarNavMenu}>
         <div className={styles.avatarNav}>
           <Avatar
-            size='small'
+            size="small"
             src={userInfo.avatar}
-            alt='avatar'
+            alt="avatar"
             className={styles.avatar}
           />
           <span className={styles.username}>{userInfo.nickname}</span>
@@ -94,10 +93,13 @@ function AvatarNav() {
 
 export default withRouter(function BasicHeader(props) {
   return (
-    <Layout.Header className={styles.header} style={{
-      backgroundColor: '#ffffff',
-      color: '#333333'
-    }}>
+    <Layout.Header
+      className={styles.header}
+      style={{
+        backgroundColor: '#ffffff',
+        color: '#333333',
+      }}
+    >
       <AppNav />
       <AvatarNav />
     </Layout.Header>
