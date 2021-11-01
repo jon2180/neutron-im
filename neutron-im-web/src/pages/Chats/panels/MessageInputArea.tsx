@@ -40,7 +40,7 @@ export interface ChatRouteParams {
  * 聊天输入框
  */
 export default function MessageInputArea(): JSX.Element {
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState('');
   const [showSoundRecord, setShowSoundRecord] = useState(false);
   const dispatch = useAppDispatch();
   const params = useParams<ChatRouteParams>();
@@ -70,10 +70,10 @@ export default function MessageInputArea(): JSX.Element {
     };
   }
   const sendMessage = () => {
-    if (inputValue === "") return;
+    if (inputValue === '') return;
 
     if (!chatData) {
-      message.error({ content: "该聊天不" });
+      message.error({ content: '该聊天不' });
       return;
     }
     const msg = buildMessageData({
@@ -81,7 +81,7 @@ export default function MessageInputArea(): JSX.Element {
       content: inputValue,
     });
     if (!msg) {
-      message.error({ content: "该聊天不  " });
+      message.error({ content: '该聊天不  ' });
       return;
     }
     dispatch(pushMessage(msg));
@@ -99,17 +99,17 @@ export default function MessageInputArea(): JSX.Element {
     });
 
     if (!websocketMessage) {
-      message.error({ content: "该聊天不" });
+      message.error({ content: '该聊天不' });
       return;
     }
 
     const returnCode = websocketStore.send(websocketMessage);
     console.log(returnCode);
-    setInputValue("");
+    setInputValue('');
   };
 
   const sentImg = ({ url, filename }: { filename: string; url: string }) => {
-    if (!url || url === "" || !filename || filename === "") return;
+    if (!url || url === '' || !filename || filename === '') return;
 
     const msg = buildMessageData({
       content_type: ChatMessageType.IMAGE,
@@ -117,7 +117,7 @@ export default function MessageInputArea(): JSX.Element {
     });
 
     if (!msg) {
-      message.error({ content: "该聊天不存在" });
+      message.error({ content: '该聊天不存在' });
       return;
     }
     dispatch(pushMessage(msg));
@@ -134,17 +134,17 @@ export default function MessageInputArea(): JSX.Element {
       time: msg.time,
     });
     if (!body) {
-      message.error({ content: "该聊天不存在" });
+      message.error({ content: '该聊天不存在' });
       return;
     }
     console.log(websocketStore);
     const returnCode = websocketStore.send(body);
-    console.log("return Code: %d", returnCode);
-    setInputValue("");
+    console.log('return Code: %d', returnCode);
+    setInputValue('');
   };
 
   const sendAudio = (url: string) => {
-    if (!url || url === "") return;
+    if (!url || url === '') return;
 
     const msg = buildMessageData({
       content_type: ChatMessageType.AUDIO,
@@ -152,7 +152,7 @@ export default function MessageInputArea(): JSX.Element {
     });
 
     if (!msg) {
-      message.error({ content: "该聊天不存在" });
+      message.error({ content: '该聊天不存在' });
       return;
     }
 
@@ -170,30 +170,30 @@ export default function MessageInputArea(): JSX.Element {
       time: msg.time,
     });
     if (!body) {
-      message.error({ content: "该聊天不存在" });
+      message.error({ content: '该聊天不存在' });
       return;
     }
     const returnCode = websocketStore.send(body);
-    console.log("return Code: %d", returnCode);
+    console.log('return Code: %d', returnCode);
     // setInputValue("");
   };
 
   const props = {
-    name: "file",
+    name: 'file',
     action: AppConstants.PIC_UPLOAD_URL,
     headers: {
-      Authorization: Cookie.getCookie("Authorization"),
+      Authorization: Cookie.getCookie('Authorization'),
     },
 
     onChange(info: UploadChangeParam<UploadFile<HttpResponseData>>): void {
-      const loadingKey = "LOADING_KEY";
+      const loadingKey = 'LOADING_KEY';
       switch (info.file.status) {
-        case "uploading":
+        case 'uploading':
           console.log(info);
-          message.loading({ key: loadingKey, content: "Picture Uploading..." });
+          message.loading({ key: loadingKey, content: 'Picture Uploading...' });
           break;
-        case "done":
-        case "success":
+        case 'done':
+        case 'success':
           message.destroy(loadingKey);
           const { response } = info.file;
           if (response) {
@@ -209,18 +209,18 @@ export default function MessageInputArea(): JSX.Element {
                   sentImg({ url: data[i].url, filename: data[i].filename });
                 }
               }
-              message.success("Picture Upload Successfully");
+              message.success('Picture Upload Successfully');
             } else {
-              message.error("Picture Upload Failed");
+              message.error('Picture Upload Failed');
             }
           }
           break;
-        case "error":
-        case "removed":
+        case 'error':
+        case 'removed':
         default:
           message.destroy(loadingKey);
           console.log(info);
-          message.error("Picture Upload Failed");
+          message.error('Picture Upload Failed');
       }
     },
   };
@@ -252,7 +252,7 @@ export default function MessageInputArea(): JSX.Element {
             {...props}
             maxCount={9}
             multiple
-            accept={["image/png", "image/jpeg", "image/gif"].join(",")}
+            accept={['image/png', 'image/jpeg', 'image/gif'].join(',')}
             showUploadList={false}
           >
             <Button type="text" icon={<PictureOutlined />}></Button>

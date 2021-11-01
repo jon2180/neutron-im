@@ -1,31 +1,31 @@
-import React, { useEffect, useRef, useState } from "react";
-import { CalendarOutlined, MailOutlined } from "@ant-design/icons";
-import { Card, Menu } from "antd";
+import React, { useEffect, useRef, useState } from 'react';
+import { CalendarOutlined, MailOutlined } from '@ant-design/icons';
+import { Card, Menu } from 'antd';
 
-import WideContentWrapper from "@/components/WideContentWrapper";
-import BasicSettings from "./BasicSettings";
-import { FormattedMessage } from "react-intl";
+import WideContentWrapper from '@/components/WideContentWrapper';
+import BasicSettings from './BasicSettings';
+import { FormattedMessage } from 'react-intl';
 
-import type { MenuMode } from "antd/lib/menu";
+import type { MenuMode } from 'antd/lib/menu';
 
-import styles from "./ProfileSetting.module.less";
-import "./index.less";
-import AccountBinding from "./AccountBinding";
-import { useSelector } from "react-redux";
-import { selectMenuTheme } from "@/store/themeSlice";
+import styles from './ProfileSetting.module.less';
+import './index.less';
+import AccountBinding from './AccountBinding';
+import { useSelector } from 'react-redux';
+import { selectMenuTheme } from '@/store/themeSlice';
 
-type SelectedKeysType = "basicSettings" | "accountBindings";
+type SelectedKeysType = 'basicSettings' | 'accountBindings';
 
 function getTitle(key: SelectedKeysType) {
   switch (key) {
-    case "basicSettings":
+    case 'basicSettings':
       return (
         <FormattedMessage
           id="accounts.settings.basicSettings"
           defaultMessage="Basic Settings"
         />
       );
-    case "accountBindings":
+    case 'accountBindings':
       return (
         <FormattedMessage
           id="accounts.settings.accountSettings"
@@ -41,10 +41,10 @@ function getMenuItem() {
   return (
     <>
       <Menu.Item key="basicSettings" icon={<MailOutlined />}>
-        {getTitle("basicSettings")}
+        {getTitle('basicSettings')}
       </Menu.Item>
       <Menu.Item key="accountBindings" icon={<CalendarOutlined />}>
-        {getTitle("accountBindings")}
+        {getTitle('accountBindings')}
       </Menu.Item>
     </>
   );
@@ -52,9 +52,9 @@ function getMenuItem() {
 
 function renderChildren(key: SelectedKeysType) {
   switch (key) {
-    case "basicSettings":
+    case 'basicSettings':
       return <BasicSettings />;
-    case "accountBindings":
+    case 'accountBindings':
       return <AccountBinding />;
     default:
       return <div></div>;
@@ -63,9 +63,9 @@ function renderChildren(key: SelectedKeysType) {
 
 export default function ProfileSetting() {
   const [selectedKey, setSelectedKey] =
-    useState<SelectedKeysType>("basicSettings");
+    useState<SelectedKeysType>('basicSettings');
   const main = useRef<HTMLDivElement>(null);
-  const [mode, setMode] = useState<MenuMode>("inline");
+  const [mode, setMode] = useState<MenuMode>('inline');
   const menuTheme = useSelector(selectMenuTheme);
   const resize = () => {
     if (!main) {
@@ -75,13 +75,13 @@ export default function ProfileSetting() {
       if (!main || !main.current) {
         return;
       }
-      let nextMode: "inline" | "horizontal" = "inline";
+      let nextMode: 'inline' | 'horizontal' = 'inline';
       const { offsetWidth } = main.current;
       if (main.current.offsetWidth < 641 && offsetWidth > 400) {
-        nextMode = "horizontal";
+        nextMode = 'horizontal';
       }
       if (window.innerWidth < 768 && offsetWidth > 400) {
-        nextMode = "horizontal";
+        nextMode = 'horizontal';
       }
 
       setMode(nextMode);
@@ -89,12 +89,12 @@ export default function ProfileSetting() {
   };
 
   useEffect(() => {
-    window.addEventListener("resize", resize);
-    console.log("add listener");
+    window.addEventListener('resize', resize);
+    console.log('add listener');
 
     return () => {
-      console.log("remove listener");
-      window.removeEventListener("resize", resize);
+      console.log('remove listener');
+      window.removeEventListener('resize', resize);
     };
   });
 

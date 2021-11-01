@@ -70,7 +70,11 @@ function loadTheme() {
 /**
  * 整个应用的入口，被 umi 自带的路由引用
  */
-export default function Index({ children }: { children: JSX.Element }): JSX.Element {
+export default function Index({
+  children,
+}: {
+  children: JSX.Element;
+}): JSX.Element {
   const localeName = loadLocale();
   const theme = loadTheme();
 

@@ -1,17 +1,17 @@
-import type { PayloadAction } from "@reduxjs/toolkit";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getUserInfo } from "@/services/user";
+import type { PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { getUserInfo } from '@/services/user';
 
-import type { RootState, UserInfoState, UserInfoSubstate } from "@/types/state";
+import type { RootState, UserInfoState, UserInfoSubstate } from '@/types/state';
 
 /**
  * 获取 userInfo
  */
 export const fetchUserInfo = createAsyncThunk<UserInfoSubstate | null, void>(
-  "userInfo/fetchUserInfo",
+  'userInfo/fetchUserInfo',
   async (_, { getState, requestId, rejectWithValue }) => {
     const { currentRequestId, loading } = (getState() as RootState).userInfo;
-    if (loading !== "pending" || requestId !== currentRequestId) {
+    if (loading !== 'pending' || requestId !== currentRequestId) {
       return null;
     }
     const res = await getUserInfo();
@@ -21,22 +21,22 @@ export const fetchUserInfo = createAsyncThunk<UserInfoSubstate | null, void>(
     } else {
       return rejectWithValue(res);
     }
-  }
+  },
 );
 
 const userInfoSlice = createSlice({
-  name: "userInfo",
+  name: 'userInfo',
   initialState: {
-    loading: "idle",
+    loading: 'idle',
     error: null,
     currentRequestId: undefined,
     hasLogin: true,
     data: {
-      id: "",
-      nickname: "",
-      avatar: "",
+      id: '',
+      nickname: '',
+      avatar: '',
       birthday: null,
-      email: "",
+      email: '',
       reg_time: null,
       signature: null,
       gender: 0,
@@ -60,15 +60,15 @@ const userInfoSlice = createSlice({
   },
   extraReducers(builder) {
     builder.addCase(fetchUserInfo.pending, (state, action) => {
-      if (state.loading === "idle") {
-        state.loading = "pending";
+      if (state.loading === 'idle') {
+        state.loading = 'pending';
         state.currentRequestId = action.meta.requestId;
       }
     });
     builder.addCase(fetchUserInfo.fulfilled, (state, action) => {
       const { requestId } = action.meta;
-      if (state.loading === "pending" && state.currentRequestId === requestId) {
-        state.loading = "idle";
+      if (state.loading === 'pending' && state.currentRequestId === requestId) {
+        state.loading = 'idle';
         state.currentRequestId = undefined;
         if (action.payload && action.payload.id)
           state.data = {
@@ -80,8 +80,8 @@ const userInfoSlice = createSlice({
     });
     builder.addCase(fetchUserInfo.rejected, (state, action) => {
       const { requestId } = action.meta;
-      if (state.loading === "pending" && state.currentRequestId === requestId) {
-        state.loading = "idle";
+      if (state.loading === 'pending' && state.currentRequestId === requestId) {
+        state.loading = 'idle';
         state.error = action.error;
         state.currentRequestId = undefined;
       }
@@ -91,7 +91,9 @@ const userInfoSlice = createSlice({
 
 export const { setHasLogin, setUserInfo } = userInfoSlice.actions;
 
-export const selectUserInfo = (state: RootState): UserInfoSubstate => state.userInfo.data;
-export const selectHasLogin = (state: RootState): boolean => state.userInfo.hasLogin;
+export const selectUserInfo = (state: RootState): UserInfoSubstate =>
+  state.userInfo.data;
+export const selectHasLogin = (state: RootState): boolean =>
+  state.userInfo.hasLogin;
 
 export default userInfoSlice.reducer;

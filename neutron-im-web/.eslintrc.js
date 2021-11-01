@@ -6,7 +6,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['./src/**/*.tsx', './src/**/*.ts'],
+      files: ['./src/**/*.{tsx,ts}'],
       parser: '@typescript-eslint/parser',
       parserOptions: {
         ecmaVersion: 11,
@@ -15,21 +15,29 @@ module.exports = {
         },
         project: ['./tsconfig.json'],
       },
-      plugins: ['@typescript-eslint', 'react', 'prettier'],
+      plugins: ['@typescript-eslint', 'react', 'react-hooks', 'prettier'],
       extends: [
+        'eslint:recommended',
         'plugin:@typescript-eslint/recommended',
-        'plugin:@typescript-eslint/recommended-requiring-type-checking',
         'plugin:react/recommended',
+        'plugin:react/jsx-runtime',
+        'plugin:react-hooks/recommended',
         'prettier',
       ],
       rules: {
-        'react/react-in-jsx-scope': 'error',
-        '@typescript-eslint/consistent-type-imports': 'error',
-        '@typescript-eslint/no-floating-promises': 'off',
-        '@typescript-eslint/restrict-template-expressions': 'off',
         quotes: 'off',
         '@typescript-eslint/quotes': ['error', 'single'],
+        '@typescript-eslint/explicit-module-boundary-types': 'off',
+        'react/jsx-uses-react': 'error',
+        'react/react-in-jsx-scope': 'error',
+        'react/jsx-uses-vars': 'error',
       },
     },
   ],
+  settings: {
+    react: {
+      pragma: 'React',
+      version: 'detect',
+    },
+  },
 };

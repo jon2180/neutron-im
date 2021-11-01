@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from 'react';
+import type React from 'react';
+import { useState, useMemo } from 'react';
 import { Button, Dropdown, Layout, Menu } from 'antd';
 import { NavLink, useLocation } from 'umi';
 import SiderAvatar from '@/components/SiderAvatar';
@@ -124,9 +125,14 @@ export default function AppLayout({
               })}
             </Menu>
           </div>
-          <Dropdown overlay={menuNav} placement="topLeft" visible={true} overlayStyle={{
-            width: '250px'
-          }}>
+          <Dropdown
+            overlay={menuNav}
+            placement="topLeft"
+            visible={true}
+            overlayStyle={{
+              width: '250px',
+            }}
+          >
             <Button
               icon={<MenuOutlined />}
               type="text"

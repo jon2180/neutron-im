@@ -12,7 +12,9 @@ export interface SiderAvatarProps {
   collapsed: boolean;
 }
 
-export default function SiderAvatar({ collapsed }: SiderAvatarProps): JSX.Element {
+export default function SiderAvatar({
+  collapsed,
+}: SiderAvatarProps): JSX.Element {
   const intl = useIntl();
   const dispatch = useAppDispatch();
   const userInfo = useSelector(selectUserInfo);
@@ -33,7 +35,7 @@ export default function SiderAvatar({ collapsed }: SiderAvatarProps): JSX.Elemen
       }
       // 不存在，且是 undefined
       if (typeof userInfo === 'undefined') {
-        message.warn({ content: `获取用户信息失败` });
+        message.warn({ content: '获取用户信息失败' });
         return;
       }
     };

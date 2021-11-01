@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Card, Skeleton, Button, message, Space, Divider } from 'antd';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';import {
+import { useSelector } from 'react-redux';
+import {
   GithubOutlined,
   QqOutlined,
   WeiboOutlined,
   ZhihuOutlined,
 } from '@ant-design/icons';
 import { FormattedDate } from 'react-intl';
-
 
 import { chatService, userService } from '@/services';
 
@@ -24,7 +24,7 @@ import {
 import styles from './BasicAccountInfo.module.less';
 import { useHistory, useLocation } from 'umi';
 import { useAppDispatch } from '@/store';
-import { Chat } from '@/types/http';
+import type { Chat } from '@/types/http';
 
 const loadingStatus = createSemaphore();
 
@@ -157,7 +157,7 @@ export default function BasicAccountInfo({ id }: { id: string }) {
               {isMyself ? (
                 <>
                   <span />
-                  <Link to={`/accounts/settings/profile`}>编辑资料</Link>
+                  <Link to={'/accounts/settings/profile'}>编辑资料</Link>
                 </>
               ) : (
                 <>

@@ -29,6 +29,7 @@
 
 # testing
 /coverage
+/eslint
 
 # environments
 .env.local

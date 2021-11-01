@@ -9,24 +9,15 @@
     "sourceMap": true,
     "baseUrl": "./",
     "pretty": true,
-    "typeRoots": [
-      "./node_modules/@types",
-      "./",
-      "./src/types"
-    ],
-    "types": [
-      "typings.d.ts"
-    ],
+    "typeRoots": ["./node_modules/@types", "./src/types"],
     "strict": true,
     "paths": {
-      "@/*": [
-        "src/*"
-      ],
-      "@@/*": [
-        "src/.umi/*"
-      ]
+      "@/*": ["src/*"],
+      "@@/*": ["src/.umi/*"]
     },
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "removeComments": true
   },
   "include": [
     "mock/**/*",
@@ -45,6 +36,7 @@
     "**/__test__",
     "test",
     "docs",
-    "tests"
+    "tests",
+    "eslint"
   ]
 }

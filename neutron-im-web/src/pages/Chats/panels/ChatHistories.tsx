@@ -1,24 +1,24 @@
-import React, { useCallback, useEffect, useRef } from "react";
-import { List, Avatar, Button, Spin } from "antd";
-import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import useWindowDimensions from "@/utils/hooks";
+import React, { useCallback, useEffect, useRef } from 'react';
+import { List, Avatar, Button, Spin } from 'antd';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import useWindowDimensions from '@/utils/hooks';
 import {
   fetchChatHistory,
   selectChatHistoryById,
-} from "@/store/chatsHistoriesSlice";
+} from '@/store/chatsHistoriesSlice';
 
-import { formatTimestamp } from "@/utils/format";
+import { formatTimestamp } from '@/utils/format';
 
-import { selectUserInfo } from "@/store/userInfoSlice";
-import { unwrapResult } from "@reduxjs/toolkit";
-import { useAppDispatch } from "@/store";
-import { selectRecentChatById } from "@/store/recentChatsSlice";
-import { ReloadOutlined } from "@ant-design/icons";
-import { useIntl } from "react-intl";
+import { selectUserInfo } from '@/store/userInfoSlice';
+import { unwrapResult } from '@reduxjs/toolkit';
+import { useAppDispatch } from '@/store';
+import { selectRecentChatById } from '@/store/recentChatsSlice';
+import { ReloadOutlined } from '@ant-design/icons';
+import { useIntl } from 'react-intl';
 
-import styles from "./ChatHistories.module.less";
-import type { MessageData } from "@/types/http";
+import styles from './ChatHistories.module.less';
+import type { MessageData } from '@/types/http';
 import {
   ChatAudioItem,
   ChatCodesnipsItem,
@@ -26,8 +26,8 @@ import {
   ChatImageItem,
   ChatTextItem,
   ChatVideoItem,
-} from "./ChatItems";
-import { ChatMessageType } from "@/websocket/conf";
+} from './ChatItems';
+import { ChatMessageType } from '@/websocket/conf';
 
 /**
  * 把 消息数据 转成 jsx
@@ -79,7 +79,7 @@ function MessageContent({
 // const MS_IN_DAY = 1e3 * 3600 * 24;
 export interface ChatRouteParams {
   id: string;
-  type: "group" | "single";
+  type: 'group' | 'single';
 }
 /**
  * 消息列表框
@@ -92,8 +92,8 @@ export default function ChatHistories() {
   const params = useParams<ChatRouteParams>();
 
   /// 从 store 中获取数据
-  let chatHistory = useSelector(selectChatHistoryById(params.id));
-  let currentChat = useSelector(selectRecentChatById(params.id));
+  const chatHistory = useSelector(selectChatHistoryById(params.id));
+  const currentChat = useSelector(selectRecentChatById(params.id));
   const messagesBox = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = (delay = 300) => {
@@ -108,7 +108,7 @@ export default function ChatHistories() {
   const handleGetHistory = useCallback(
     async (params: { id: string; type: string }) => {
       const resultAction = await dispatch(
-        fetchChatHistory({ chatId: params.id, type: params.type })
+        fetchChatHistory({ chatId: params.id, type: params.type }),
       );
 
       if (fetchChatHistory.fulfilled.match(resultAction)) {
@@ -116,12 +116,12 @@ export default function ChatHistories() {
         console.log(res);
       }
     },
-    [dispatch]
+    [dispatch],
   );
 
   useEffect(() => {
     if (!chatHistory) {
-      handleGetHistory({ id: params.id, type: "single" });
+      handleGetHistory({ id: params.id, type: 'single' });
       scrollToBottom();
     }
   }, [handleGetHistory, chatHistory, params]);
@@ -140,14 +140,14 @@ export default function ChatHistories() {
     return (
       <>
         {shouldShowTime ? (
-          <List.Item style={{ padding: "0" }}>
+          <List.Item style={{ padding: '0' }}>
             <div
               className={styles.time}
               style={{
-                margin: "0 auto",
+                margin: '0 auto',
               }}
             >
-              {typeof item.time === "number"
+              {typeof item.time === 'number'
                 ? formatTimestamp(item.time)
                 : item.time}
             </div>
@@ -156,7 +156,7 @@ export default function ChatHistories() {
           <span />
         )}
 
-        <List.Item style={{ padding: "0" }}>
+        <List.Item style={{ padding: '0' }}>
           <div className={styles.message}>
             <div className={styles.avatar}>
               {userInfo.id === item.sender_id ? (
@@ -190,8 +190,8 @@ export default function ChatHistories() {
           }}
           icon={<ReloadOutlined />}
           title={intl.formatMessage({
-            id: "loadmore",
-            defaultMessage: "Load more",
+            id: 'loadmore',
+            defaultMessage: 'Load more',
           })}
         ></Button>
       </div>

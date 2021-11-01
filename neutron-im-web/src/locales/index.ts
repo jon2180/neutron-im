@@ -1,22 +1,22 @@
-import zh_CN from "./lang/zh_CN";
-import en_US from "./lang/en_US";
+import zh_CN from './lang/zh_CN';
+import en_US from './lang/en_US';
 
-import type { IntlConfig } from "react-intl";
-export type LocaleNameType = "zh_CN" | "en_US";
+import type { IntlConfig } from 'react-intl';
+export type LocaleNameType = 'zh_CN' | 'en_US';
 export type LocaleConfig = Record<LocaleNameType, IntlConfig>;
 
 const intlConfig: LocaleConfig = {
   zh_CN: {
-    locale: "zh-CN",
+    locale: 'zh-CN',
     messages: zh_CN,
   },
   en_US: {
-    locale: "en-US",
+    locale: 'en-US',
     messages: en_US,
   },
 };
 
-const LOCALE_KEY = "app.locale";
+const LOCALE_KEY = 'app.locale';
 
 /**
  * 导入 locale 配置

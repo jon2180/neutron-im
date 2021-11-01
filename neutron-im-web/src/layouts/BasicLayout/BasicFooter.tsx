@@ -83,7 +83,7 @@ export default function BasicFooter() {
               {quickCenter.list.map((val, ind) => {
                 return (
                   <li key={`link${ind}`}>
-                    <NavLink to={val.path} target='_blank'>
+                    <NavLink to={val.path} target="_blank">
                       {val.text}
                     </NavLink>
                   </li>
@@ -98,7 +98,7 @@ export default function BasicFooter() {
               {friendLinks.list.map((val, ind) => {
                 return (
                   <li key={`link${ind}`}>
-                    <NavLink to={val.path} target='_blank'>
+                    <NavLink to={val.path} target="_blank">
                       {val.text}
                     </NavLink>
                   </li>
@@ -112,7 +112,7 @@ export default function BasicFooter() {
               {aboutUs.list.map((val, ind) => {
                 return (
                   <li key={`link${ind}`}>
-                    <NavLink to={val.path} target='_blank'>
+                    <NavLink to={val.path} target="_blank">
                       {val.text}
                     </NavLink>
                   </li>

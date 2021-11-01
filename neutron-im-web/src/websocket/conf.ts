@@ -1,28 +1,28 @@
 export enum FrameType {
-  HEART_BEAT = "HEARTBEAT",
-  QUIT = "QUIT",
-  MESSAGE = "MESSAGE",
+  HEART_BEAT = 'HEARTBEAT',
+  QUIT = 'QUIT',
+  MESSAGE = 'MESSAGE',
 }
 
 /**
  * 消息类型
  */
 export enum MessageType {
-  SINGLE = "single",
-  GROUP = "group",
-  NOTIFICATION = "notification",
+  SINGLE = 'single',
+  GROUP = 'group',
+  NOTIFICATION = 'notification',
 }
 
 /**
  * 聊天消息
  */
 export enum ChatMessageType {
-  TEXT = "text",
-  IMAGE = "image",
-  AUDIO = "audio",
-  VIDEO = "video",
-  CODESNIPS = "codesnips",
-  FAVORITE = "favorite",
+  TEXT = 'text',
+  IMAGE = 'image',
+  AUDIO = 'audio',
+  VIDEO = 'video',
+  CODESNIPS = 'codesnips',
+  FAVORITE = 'favorite',
 }
 
 export interface WebSocketMessage {

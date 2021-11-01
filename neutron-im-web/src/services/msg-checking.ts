@@ -26,5 +26,5 @@ export interface GetEntriesParams {
 }
 
 export function getEntries(): Promise<HttpResponseData> {
-  return request.get(`/mchecks/`);
+  return request.get('/mchecks/');
 }

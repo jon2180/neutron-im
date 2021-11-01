@@ -1,17 +1,17 @@
-import request from "@/utils/request";
+import request from '@/utils/request';
 
-export * as chatService from "./chat";
-export * as friendService from "./friend";
-export * as userService from "./user";
-export * as momentService from "./moment";
-export * as msgCheckingService from "./msg-checking";
-export * as messageService from "./message";
+export * as chatService from './chat';
+export * as friendService from './friend';
+export * as userService from './user';
+export * as momentService from './moment';
+export * as msgCheckingService from './msg-checking';
+export * as messageService from './message';
 
 export const group = {
   postGroups() {
-    return request.post("/groups/", {
+    return request.post('/groups/', {
       data: {
-        keyw: "iamiron",
+        keyw: 'iamiron',
         time: Date.now(),
       },
     });
@@ -46,14 +46,14 @@ export interface BingWallpaperResponse {
 }
 
 export const getBingWallpaper = (): Promise<BingWallpaperResponse> => {
-  return request.get("https://cn.bing.com/HPImageArchive.aspx", {
-    credentials: "omit",
-    mode: "cors",
+  return request.get('https://cn.bing.com/HPImageArchive.aspx', {
+    credentials: 'omit',
+    mode: 'cors',
     params: {
       // 返回数据格式，不存在返回xml格式
       // js (一般使用这个，返回json格式)
       // xml（返回xml格式）
-      format: "js",
+      format: 'js',
 
       //       请求图片截止天数
       // 0 今天
@@ -66,13 +66,13 @@ export const getBingWallpaper = (): Promise<BingWallpaperResponse> => {
 
       // zh-CN
       // ...
-      mkt: "zh-CN",
+      mkt: 'zh-CN',
     },
   });
 };
 
 export function search(params: { keyword: string; type: string }) {
-  return request.get("/search", {
+  return request.get('/search', {
     params,
   });
 }

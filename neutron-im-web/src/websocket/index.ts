@@ -91,7 +91,7 @@ const webSocketStore = (function createWebSocketStore() {
 export const { setRelayServer } = webSocketStore.reducers;
 export const { getters, websocket } = webSocketStore;
 
-export function connect():void {
+export function connect(): void {
   if (!websocket) {
     const ws: WebSocketClient | undefined = connectWebSocket();
     if (ws) setRelayServer(ws);

@@ -1,12 +1,12 @@
-import React from "react";
-import { Picker } from "emoji-mart";
-import type { EmojiData } from "emoji-mart";
-import "./EmojiPicker.less";
+import React from 'react';
+import { Picker } from 'emoji-mart';
+import type { EmojiData } from 'emoji-mart';
+import './EmojiPicker.less';
 
 export type EmojiSelectHandler = (
   emoji: EmojiData & {
     native: any;
-  }
+  },
 ) => void;
 
 export default function EmojiPicker({

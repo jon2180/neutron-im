@@ -1,5 +1,5 @@
-import request from "@/utils/request";
-import type { HttpResponseData } from "@/types/http";
+import request from '@/utils/request';
+import type { HttpResponseData } from '@/types/http';
 
 /**
  * 登录参数类型
@@ -41,27 +41,27 @@ export interface UserinfoQueryParams {
  * @param data 登录参数
  */
 export function postAccountLogin(
-  params: LoginParams
+  params: LoginParams,
 ): Promise<HttpResponseData> {
-  return request.post("/login", { data: params, credentials: "include" });
+  return request.post('/login', { data: params, credentials: 'include' });
 }
 
 /**
  * 退出登录
  */
 export function postLogout(): Promise<HttpResponseData> {
-  return request.post("/logout", { credentials: "include" });
+  return request.post('/logout', { credentials: 'include' });
 }
 
 /**
  * 注册
  */
 export function postAccount(params: RegisterParams): Promise<HttpResponseData> {
-  return request.post("/register", { data: params, credentials: "include" });
+  return request.post('/register', { data: params, credentials: 'include' });
 }
 
 export function getUserInfo(): Promise<HttpResponseData> {
-  return request.get("/accounts/");
+  return request.get('/accounts/');
 }
 
 /**
@@ -74,19 +74,21 @@ export function getAccountInfo({
   // TODO
   if (uid)
     return request.get(`/accounts/${encodeURIComponent(uid)}`, { params });
-  return request.get(`/accounts/`);
+  return request.get('/accounts/');
 }
 
 /**
  * 更新用户信息
  * @param params 更新用户信息
  */
-export function putUserInfo(params: UserInfoUpdateParams): Promise<HttpResponseData> {
-  return request.put(`/accounts/`, {
+export function putUserInfo(
+  params: UserInfoUpdateParams,
+): Promise<HttpResponseData> {
+  return request.put('/accounts/', {
     data: params,
   });
 }
 
 export function deleteUser() {
-  return request.delete(`/accounts/`);
+  return request.delete('/accounts/');
 }

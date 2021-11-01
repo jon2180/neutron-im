@@ -1,27 +1,27 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import type { RouteProps } from "react-router-dom";
+import type React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import type { RouteProps } from 'react-router-dom';
 
-import PrivateRoute from "../components/PrivateRoute";
+import PrivateRoute from '../components/PrivateRoute';
 
 export interface RouterConfig {
   /**
    * 路由路径
    */
-  path?: RouteProps["path"];
+  path?: RouteProps['path'];
   /**
    * 是否精确匹配
    */
-  exact?: RouteProps["exact"];
+  exact?: RouteProps['exact'];
   /**
    * 路由匹配是否对大小写敏感
    */
-  sensitive?: RouteProps["sensitive"];
+  sensitive?: RouteProps['sensitive'];
   /**
    * 是否精确匹配后缀斜线
    */
-  strict?: RouteProps["strict"];
-  location?: RouteProps["location"];
+  strict?: RouteProps['strict'];
+  location?: RouteProps['location'];
 
   /**
    * 路由命名，主要用来指定 key
@@ -59,7 +59,7 @@ export function traverseChildrenPath(
   routes: RouterConfig[],
   options?: {
     depth: number;
-  }
+  },
 ): string[] {
   const mixedOptions = {
     ...defaultOptions,
@@ -77,23 +77,23 @@ export function traverseChildrenPath(
               traverseChildrenPath(value.children, {
                 ...mixedOptions,
                 depth: mixedOptions.depth,
-              })
+              }),
             );
           } else if (mixedOptions.depth > 0) {
             arr = arr.concat(
               traverseChildrenPath(value.children, {
                 ...mixedOptions,
                 depth: mixedOptions.depth - 1,
-              })
+              }),
             );
           }
         }
 
         if (
           !value.path ||
-          !(typeof value.path === "string" || Array.isArray(value.path))
+          !(typeof value.path === 'string' || Array.isArray(value.path))
         ) {
-          return "";
+          return '';
         }
 
         return arr.concat(value.path);
@@ -101,7 +101,7 @@ export function traverseChildrenPath(
       .flat()
       // 移除空参
       .filter((value) => {
-        return (value && typeof value === "string" && value !== "") as boolean;
+        return (value && typeof value === 'string' && value !== '') as boolean;
       })
       // 数组去重化
       .filter((value, index, thisArr) => {
