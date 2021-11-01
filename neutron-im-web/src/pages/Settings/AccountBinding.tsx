@@ -4,12 +4,13 @@ import { Button, Form, Input, Space } from 'antd';
 import { useSelector } from 'react-redux';
 import { selectUserInfo } from '@/store/userInfoSlice';
 import styles from './BasicSettings.module.less';
+import type { NimSafeAny } from '@/types';
 
 export default function AccountBindings(): JSX.Element {
   const userInfo = useSelector(selectUserInfo);
-  const formRef = useRef<FormInstance<any>>(null);
+  const formRef = useRef<FormInstance<NimSafeAny>>(null);
 
-  const onFinish = (values: any) => {
+  const onFinish = (values: NimSafeAny) => {
     console.log(values);
   };
 

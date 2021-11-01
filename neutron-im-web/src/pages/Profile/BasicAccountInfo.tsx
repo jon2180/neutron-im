@@ -15,14 +15,10 @@ import { chatService, userService } from '@/services';
 import { selectUserInfo } from '@/store/userInfoSlice';
 import type { UserInfo } from '@/types/state';
 import { createSemaphore } from '@/utils/wrapper';
-import {
-  pushChat,
-  selectAllChats,
-  selectChatByAccountId,
-} from '@/store/recentChatsSlice';
+import { pushChat, selectChatByAccountId } from '@/store/recentChatsSlice';
 
 import styles from './BasicAccountInfo.module.less';
-import { useHistory, useLocation } from 'umi';
+import { useHistory } from 'umi';
 import { useAppDispatch } from '@/store';
 import type { Chat } from '@/types/http';
 

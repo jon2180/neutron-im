@@ -2,10 +2,11 @@ import React from 'react';
 import { Picker } from 'emoji-mart';
 import type { EmojiData } from 'emoji-mart';
 import './EmojiPicker.less';
+import { NimSafeAny } from '@/types';
 
 export type EmojiSelectHandler = (
   emoji: EmojiData & {
-    native: any;
+    native: NimSafeAny;
   },
 ) => void;
 

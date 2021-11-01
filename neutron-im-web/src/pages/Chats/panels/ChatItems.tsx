@@ -1,3 +1,4 @@
+import React from 'react';
 import { Image } from 'antd';
 import styles from './ChatHistories.module.less';
 

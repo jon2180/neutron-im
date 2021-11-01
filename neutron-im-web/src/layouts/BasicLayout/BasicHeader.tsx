@@ -21,7 +21,7 @@ import NotificationsTab from './components/NotificationsTab';
 import styles from './index.module.less';
 import { selectMenuTheme } from '@/store/themeSlice';
 
-const AppNav = withRouter(function PureAppNav(props) {
+const AppNav = withRouter(function PureAppNav() {
   return (
     <Space className={styles.iconAndNav}>
       <NavLink to="/" className={styles.iconLink}>
@@ -91,7 +91,7 @@ function AvatarNav() {
   );
 }
 
-export default withRouter(function BasicHeader(props) {
+export default withRouter(function BasicHeader() {
   return (
     <Layout.Header
       className={styles.header}

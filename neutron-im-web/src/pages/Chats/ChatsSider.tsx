@@ -19,6 +19,7 @@ import {
 
 import 'react-contexify/dist/ReactContexify.css';
 import { SearchHeader } from '@/components/Search';
+import type { NimSafeAny } from '@/types';
 
 const MENU_ID = 'menu-id';
 
@@ -66,10 +67,11 @@ export function ChatItem(props: { data: Chat }): JSX.Element {
   );
 }
 
-function handleItemClick({ event, props, triggerEvent, data }: any) {
+function handleItemClick({ event, props, triggerEvent, data }: NimSafeAny) {
   console.log(event, props, triggerEvent, data);
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const CONTEXT_MENU = (
   <Menu id={MENU_ID}>
     <Item onClick={handleItemClick}>Item 1</Item>

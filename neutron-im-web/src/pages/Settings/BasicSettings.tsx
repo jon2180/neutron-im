@@ -23,13 +23,14 @@ import { userService } from '@/services';
 import { useAppDispatch } from '@/store';
 import moment from 'moment';
 import { createSemaphore } from '@/utils/wrapper';
+import type { NimSafeAny } from '@/types';
 
 const uploadStatus = createSemaphore();
 
 export function BasicSettingsForm() {
   const userInfo = useSelector(selectUserInfo);
   const dispatch = useAppDispatch();
-  const formRef = useRef<FormInstance<any>>(null);
+  const formRef = useRef<FormInstance<NimSafeAny>>(null);
   const [uploading, setUploading] = useState(false);
 
   const submitForm = useCallback(
@@ -66,8 +67,9 @@ export function BasicSettingsForm() {
   });
 
   const onReset = () => {
-    formRef.current!.resetFields();
-    console.log('reet');
+    if (formRef.current) {
+      formRef.current.resetFields();
+    }
   };
 
   const formatGenderNum = (gender: number) => {
@@ -151,15 +153,16 @@ export function AvatarSettings() {
   const userInfo = useSelector(selectUserInfo);
   const [avatar, setAvatar] = useState(userInfo.avatar);
 
-  const onChange = (info: UploadChangeParam<UploadFile<any>>): void => {
+  const onChange = (info: UploadChangeParam<UploadFile<NimSafeAny>>): void => {
     const loadingKey = 'LOADING_KEY';
     switch (info.file.status) {
-      case 'uploading':
+      case 'uploading': {
         console.log(info);
         message.loading({ key: loadingKey, content: 'Picture Uploading...' });
         break;
+      }
       case 'done':
-      case 'success':
+      case 'success': {
         message.destroy(loadingKey);
         const { response } = info.file;
         if (response) {
@@ -172,12 +175,14 @@ export function AvatarSettings() {
           }
         }
         break;
+      }
       case 'error':
       case 'removed':
-      default:
+      default: {
         message.destroy(loadingKey);
         console.log(info);
         message.error('Picture Upload Failed');
+      }
     }
   };
 

@@ -44,24 +44,24 @@ function useSelectedKeys(): string[] {
   return [menuKey];
 }
 
-function useUnreadCount() {
-  // TODO 添加未读指示徽标
-  // const [unreadCount, setUnreadCount] = useState(0);
-  // const recentChats = useSelector(selectAllChats);
-  // // 更新未读数量
-  // useEffect(() => {
-  //   if (Array.isArray(recentChats)) {
-  //     let unread = 0;
-  //     for (let i = 0; i < recentChats.length; ++i) {
-  //       unread += recentChats[i].unread_count;
-  //     }
-  //     setUnreadCount(unread);
-  //   }
-  // }, [recentChats]);
-  return {
-    chats: 0,
-  };
-}
+// function useUnreadCount() {
+//   // TODO 添加未读指示徽标
+//   // const [unreadCount, setUnreadCount] = useState(0);
+//   // const recentChats = useSelector(selectAllChats);
+//   // // 更新未读数量
+//   // useEffect(() => {
+//   //   if (Array.isArray(recentChats)) {
+//   //     let unread = 0;
+//   //     for (let i = 0; i < recentChats.length; ++i) {
+//   //       unread += recentChats[i].unread_count;
+//   //     }
+//   //     setUnreadCount(unread);
+//   //   }
+//   // }, [recentChats]);
+//   return {
+//     chats: 0,
+//   };
+// }
 
 export default function AppLayout({
   children,
@@ -70,7 +70,8 @@ export default function AppLayout({
 }): JSX.Element {
   const [collapsed] = useState(true);
   const selectedKeys = useSelectedKeys();
-  const unreadCount = useUnreadCount();
+  
+  // const unreadCount = useUnreadCount();
   const intl = useIntl();
 
   const onChangeLocale = (e: { key: React.Key }) => {
@@ -94,7 +95,7 @@ export default function AppLayout({
         </Menu.Item>
       </Menu.SubMenu>
       <Menu.Item key="accountCenter">
-        <a target="_blank" rel="noopener noreferrer" href="/accounts">
+        <a target="_blank" rel="noopener noreferrer" href="/accounts" title="link to Account">
           <FormattedMessage
             id="menu.accountCenter"
             defaultMessage="Account Center"

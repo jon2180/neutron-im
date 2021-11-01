@@ -4,13 +4,12 @@ import { Card } from 'antd';
 import { contentList, tabList } from './components/ProfileTabs';
 import type { TabKeyType } from './components/ProfileTabs';
 
-export default function ProfileCard({
-  id,
-  activeTabKey,
-}: {
+interface ProfileCardProps {
   id: string;
   activeTabKey: string;
-}) {
+}
+
+export default function ProfileCard({ activeTabKey }: ProfileCardProps) {
   const [tabKey, setTabKey] = useState<TabKeyType>(
     (activeTabKey && tabList.find((value) => value.key === activeTabKey)
       ? activeTabKey

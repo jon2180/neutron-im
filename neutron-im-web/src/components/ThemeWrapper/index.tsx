@@ -10,13 +10,12 @@ export enum ThemeList {
   dark = 'dark',
 }
 
-export default function ThemeWrapper({
-  children,
-  theme,
-}: {
+interface ThemeWrapperProps {
   children: JSX.Element;
   theme: ThemeList;
-}) {
+}
+
+export default function ThemeWrapper({ children }: ThemeWrapperProps) {
   // const htmlTag = document.getElementsByTagName("html").item(0);
   // const ref = useRef(htmlTag);
   // const headerTag = useRef(document.getElementsByTagName("head").item(0));
@@ -30,6 +29,7 @@ export default function ThemeWrapper({
   return (
     <Consumer>
       {(settings) => {
+        console.log(settings);
         return children;
       }}
     </Consumer>

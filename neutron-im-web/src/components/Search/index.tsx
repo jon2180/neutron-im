@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useCallback, useState } from 'react';
 import { postAddFriendRequest, searchAccount } from '@/services/friend';
 import type { UserInfoSubstate } from '@/types/state';
@@ -9,29 +10,31 @@ import { useSelector } from 'react-redux';
 import { selectUserInfo } from '@/store/userInfoSlice';
 import Modal from 'antd/lib/modal/Modal';
 
+interface SearchParam {
+  keyword: string;
+  type: string;
+}
+
 function useSearch() {
   const [result, setResult] = useState([] as UserInfoSubstate[]);
 
-  const onSearch = useCallback(
-    ({ keyword, type }: { keyword: string; type: string }) => {
-      console.log(keyword);
-      if (keyword && keyword !== '') {
-        searchAccount({ keyword: keyword, type: 'all' })
-          .then((res) => {
-            console.log(res);
-            if (res.status === 20000 && res.data && Array.isArray(res.data)) {
-              setResult(res.data);
-            } else {
-              console.log('搜索失败');
-            }
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      }
-    },
-    [],
-  );
+  const onSearch = useCallback(({ keyword, type }: SearchParam) => {
+    console.log(keyword);
+    if (keyword && keyword !== '') {
+      searchAccount({ keyword: keyword, type: type || 'all' })
+        .then((res) => {
+          console.log(res);
+          if (res.status === 20000 && res.data && Array.isArray(res.data)) {
+            setResult(res.data);
+          } else {
+            console.log('搜索失败');
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  }, []);
 
   return {
     page: {
@@ -118,7 +121,9 @@ function AddFriend({ result, ...props }: { result: UserInfoSubstate[] }) {
   );
 }
 
-export function SearchInput() {}
+export function SearchInput() {
+  return <div></div>;
+}
 
 export function SearchHeader() {
   const [hasResult, setHasResult] = useState(false);
@@ -185,7 +190,7 @@ export function SearchHeader() {
             setVisible(false);
           }}
         >
-          console.log('modal')
+          console.log(modal)
         </Modal>
       </div>
       <div

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Avatar, message } from 'antd';
 import { useSelector } from 'react-redux';
 import { connect } from '@/websocket';
@@ -23,6 +23,16 @@ export default function SiderAvatar({
     connect();
   }, []);
 
+  const i18nMsg = useMemo(
+    () => ({
+      fetchUserInfoFailed: intl.formatMessage({
+        id: 'fetch_user_info',
+        defaultMessage: `获取用户信息成功 ${userInfo.nickname}`,
+      }),
+    }),
+    [userInfo.nickname, intl],
+  );
+
   useEffect(() => {
     const func = async () => {
       const resultAction = await dispatch(fetchUserInfo());
@@ -30,7 +40,7 @@ export default function SiderAvatar({
 
       // 存在，说明请求成功
       if (userInfo) {
-        message.info({ content: `获取用户信息成功 ${userInfo.nickname}` });
+        message.info({ content: i18nMsg.fetchUserInfoFailed });
         return;
       }
       // 不存在，且是 undefined
@@ -40,7 +50,7 @@ export default function SiderAvatar({
       }
     };
     func().then();
-  }, [dispatch]);
+  }, [dispatch, i18nMsg]);
 
   return (
     <div className={styles.headerContainer}>
