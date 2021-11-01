@@ -30,6 +30,7 @@ import { messageService, msgCheckingService } from '@/services';
 import { ChatMessageType } from '@/websocket/conf';
 import SoundRecord from './SoundRecord';
 import { buildSingleChatMessage } from '@/websocket/protocol/messageHelper';
+import type { NimSafeAny } from '@/types';
 
 export interface ChatRouteParams {
   id: string;
@@ -188,12 +189,13 @@ export default function MessageInputArea(): JSX.Element {
     onChange(info: UploadChangeParam<UploadFile<HttpResponseData>>): void {
       const loadingKey = 'LOADING_KEY';
       switch (info.file.status) {
-        case 'uploading':
+        case 'uploading': {
           console.log(info);
           message.loading({ key: loadingKey, content: 'Picture Uploading...' });
           break;
+        }
         case 'done':
-        case 'success':
+        case 'success': {
           message.destroy(loadingKey);
           const { response } = info.file;
           if (response) {
@@ -215,12 +217,14 @@ export default function MessageInputArea(): JSX.Element {
             }
           }
           break;
+        }
         case 'error':
         case 'removed':
-        default:
+        default: {
           message.destroy(loadingKey);
           console.log(info);
           message.error('Picture Upload Failed');
+        }
       }
     },
   };
@@ -269,12 +273,12 @@ export default function MessageInputArea(): JSX.Element {
                       !res ||
                       res.status !== 20000 ||
                       !res.data ||
-                      !(res.data as Record<string, any>).url
+                      !(res.data as Record<string, NimSafeAny>).url
                     ) {
                       message.error(res.message, 0.5);
                       return;
                     }
-                    sendAudio((res.data as Record<string, any>).url);
+                    sendAudio((res.data as Record<string, NimSafeAny>).url);
                   });
                 }}
               />

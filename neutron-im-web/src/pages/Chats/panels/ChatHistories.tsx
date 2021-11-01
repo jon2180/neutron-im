@@ -28,12 +28,13 @@ import {
   ChatVideoItem,
 } from './ChatItems';
 import { ChatMessageType } from '@/websocket/conf';
+import type { NimSafeAny } from '@/types';
 
 /**
  * 把 消息数据 转成 jsx
  * @param data 消息主体
  */
-const contentTypeMap: Record<any, ChatMessageType> = {
+const contentTypeMap: Record<NimSafeAny, ChatMessageType> = {
   0: ChatMessageType.TEXT,
   1: ChatMessageType.IMAGE,
   2: ChatMessageType.AUDIO,
@@ -143,9 +144,6 @@ export default function ChatHistories() {
           <List.Item style={{ padding: '0' }}>
             <div
               className={styles.time}
-              style={{
-                margin: '0 auto',
-              }}
             >
               {typeof item.time === 'number'
                 ? formatTimestamp(item.time)

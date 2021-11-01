@@ -6,8 +6,8 @@
     "build": "umi build",
     "postinstall": "umi generate tmp",
     "prettier": "prettier --write src/**/*.{js,jsx,tsx,ts,less,md,json}",
-    "lint:report": "npx eslint 'src/**/*.{tsx, ts}' -f html -o eslint/eslint-report.html",
-    "lint": "npx eslint --fix \"src/**/*.{tsx, ts}\"",
+    "lint:report": "npx eslint \"src/**/*.{tsx, ts}\" -f html -o eslint/eslint-report.html --ignore-path .eslintignore",
+    "lint": "npx eslint --fix \"src/**/*.{tsx, ts}\" --ignore-path .eslintignore",
     "test": "umi-test",
     "test:coverage": "umi-test --coverage"
   },

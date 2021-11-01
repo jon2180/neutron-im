@@ -27,7 +27,7 @@ export default function SoundRecord(props: SoundRecordProps) {
   const [recording, setRecording] = useState(false);
 
   // TODO 录音
-  const recordSound: React.MouseEventHandler<HTMLElement> = async (e) => {
+  const recordSound: React.MouseEventHandler<HTMLElement> = async () => {
     if (recordStatus.loading === 'idle') {
       try {
         stream = await navigator.mediaDevices.getUserMedia({ audio: true });

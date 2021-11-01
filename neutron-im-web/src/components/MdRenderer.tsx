@@ -12,7 +12,8 @@ import type {
 import styles from './MdRenderer.module.less';
 
 const components: Partial<NormalComponents & SpecialComponents> = {
-  code({ node, inline, className, children, ...props }) {
+  // another parameter: node
+  code({ inline, className, children, ...props }) {
     const match = /language-(\w+)/.exec(className || '');
     return !inline && match ? (
       <SyntaxHighlighter

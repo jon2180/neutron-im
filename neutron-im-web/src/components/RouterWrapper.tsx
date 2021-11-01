@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import type { RouteProps } from 'react-router-dom';
 
 import PrivateRoute from '../components/PrivateRoute';
+import type { NimSafeAny } from '@/types';
 
 export interface RouterConfig {
   /**
@@ -38,7 +39,7 @@ export interface RouterConfig {
   /**
    * 当前组件，只会使用 children 来渲染
    */
-  component: React.ComponentType<any>;
+  component: React.ComponentType<NimSafeAny>;
 }
 
 const defaultOptions = {

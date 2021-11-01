@@ -8,6 +8,7 @@ import type { UploadChangeParam } from 'antd/lib/upload';
 import type { UploadFile } from 'antd/lib/upload/interface';
 
 import './AvatarUpload.less';
+import type { NimSafeAny } from '@/types';
 
 const defaultUploadAvatarProps = {
   name: 'file',
@@ -21,7 +22,7 @@ const defaultUploadAvatarProps = {
 
 export interface AvatarUploadProps {
   children: JSX.Element | JSX.Element[];
-  onChange: (info: UploadChangeParam<UploadFile<any>>) => void;
+  onChange: (info: UploadChangeParam<UploadFile<NimSafeAny>>) => void;
 }
 
 export default function AvatarUpload(props: AvatarUploadProps) {

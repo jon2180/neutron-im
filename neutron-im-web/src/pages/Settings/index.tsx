@@ -67,6 +67,11 @@ export default function ProfileSetting() {
   const main = useRef<HTMLDivElement>(null);
   const [mode, setMode] = useState<MenuMode>('inline');
   const menuTheme = useSelector(selectMenuTheme);
+
+  useEffect(() => {
+    console.log(mode);
+  }, [mode]);
+
   const resize = () => {
     if (!main) {
       return;

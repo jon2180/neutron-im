@@ -1,11 +1,8 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { List, Avatar, Button } from 'antd';
+import { List } from 'antd';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchFriendList, selectFriendList } from '@/store/friendsSlice';
-
-import type { Friend } from '@/types/http';
 import { SearchHeader } from '@/components/Search';
 import Requests from '@/components/Requests/Requests';
 import { FriendListItem } from './components/FriendListItem';
@@ -42,15 +39,6 @@ export function Friends() {
 
 export default function FriendsSider() {
   const [left, setLeft] = useState('0px');
-  const btn = (
-    <Button
-      onClick={() => {
-        setLeft(left === '-100%' ? '0' : '-100%');
-      }}
-    >
-      hello
-    </Button>
-  );
 
   return (
     <div className={styles.siderBox}>
