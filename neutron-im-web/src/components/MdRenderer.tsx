@@ -6,6 +6,7 @@ import { materialLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import gfm from 'remark-gfm';
 import math from 'remark-math';
 import type {
+  CodeComponent,
   NormalComponents,
   SpecialComponents,
 } from 'react-markdown/src/ast-to-react';
@@ -13,14 +14,13 @@ import styles from './MdRenderer.module.less';
 
 const components: Partial<NormalComponents & SpecialComponents> = {
   // another parameter: node
-  code({ inline, className, children, ...props }) {
+  code: (({ inline, className,  children, ...props }) => {
     const match = /language-(\w+)/.exec(className || '');
     return !inline && match ? (
       <SyntaxHighlighter
         style={materialLight}
         language={match[1]}
         PreTag="div"
-        {...props}
       >
         {String(children).replace(/\n$/, '')}
       </SyntaxHighlighter>
@@ -29,7 +29,7 @@ const components: Partial<NormalComponents & SpecialComponents> = {
         {children}{' '}
       </code>
     );
-  },
+  }) as CodeComponent,
 };
 
 export default function MdRenderer({

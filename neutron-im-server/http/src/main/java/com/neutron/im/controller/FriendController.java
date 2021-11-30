@@ -53,7 +53,8 @@ public class FriendController {
      * @return 好友信息
      */
     @PutMapping("/{id}")
-    public ResultVO updateFriend(@PathVariable String id,
+    public ResultVO updateFriend(
+        @PathVariable String id,
                                  @RequestAttribute("claims") TokenUtil.JwtClaimsData data,
                                  @RequestBody RequestDTO.UpdateFriendForm friendForm
     ) {
