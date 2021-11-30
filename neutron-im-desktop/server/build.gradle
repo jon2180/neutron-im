@@ -6,7 +6,7 @@ plugins {
 group 'com.neutron.server'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = '11'
+sourceCompatibility = '17'
 mainClassName = 'me.iqq.server.Server'
 
 dependencies {

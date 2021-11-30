@@ -1,9 +1,13 @@
 import path from 'path';
 
-export const dirRoot = path.join(__dirname, '../../');
-export const dirSrc = path.join(__dirname, '../');
+const cwd = process.cwd();
 
-export const pathKey = path.join(dirRoot, 'config/localhost-privkey.pem');
-export const pathCert = path.join(dirRoot, 'config/localhost-cert.pem');
-// export const pathKey = path.join(dirRoot, 'config/3962244_wuog.top.key');
-// export const pathCert = path.join(dirRoot, 'config/3962244_wuog.top.pem');
+export const pathKey = path.join(cwd, 'config/localhost-privkey.pem');
+export const pathCert = path.join(cwd, 'config/localhost-cert.pem');
+
+export default {
+    dirRoot: cwd,
+    dirSrc: path.resolve(cwd, 'src'),
+    dirStatic: path.resolve(cwd, 'static'),
+    dirUpload: path.resolve(cwd, 'upload')
+};
