@@ -1,7 +1,9 @@
 import jwt from 'jsonwebtoken';
 import fs from 'fs';
 import path from 'path';
-import { dirRoot } from './paths';
+import paths from './paths';
+
+const { dirRoot } = paths;
 
 /** 私钥，签发 toke 时使用私钥 */
 const privateKey = fs.readFileSync(path.join(dirRoot, 'config/rsa_private_key.pem'));
