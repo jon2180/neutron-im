@@ -33,7 +33,6 @@ jobs:
     - name: Cache
       id: cache-node-modules
       uses: actions/cache@v2.1.6
-      working-directory: neutron-im-web
       with:
         # A list of files, directories, and wildcard patterns to cache and restore
         path: ~/.npm
