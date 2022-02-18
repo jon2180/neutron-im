@@ -25,12 +25,10 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
-    
-    - name: Change directory to work dir
-      run: cd neutron-im-web
 
     - name: Install node deps and run build
-      run: npm i
+      working-directory: neutron-im-web
+      run: npm ci
     
     - name: Cache
       uses: actions/cache@v2.1.6
