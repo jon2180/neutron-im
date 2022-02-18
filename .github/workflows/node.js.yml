@@ -41,5 +41,6 @@ jobs:
           ${{ runner.os }}-node-
 
     - name: Generate files
+      working-directory: neutron-im-web
       run: |
         npm run build --if-present
