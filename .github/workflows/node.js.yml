@@ -28,7 +28,7 @@ jobs:
 
     - name: Install node deps and run build
       working-directory: neutron-im-web
-      run: npm ci
+      run: npm ci --cache .npm --quiet --no-progress
     
     - name: Cache
       uses: actions/cache@v2.1.6
