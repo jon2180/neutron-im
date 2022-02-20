@@ -1,7 +1,7 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Build Web
+name: Basic CI
 
 on:
   push:
@@ -10,8 +10,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
-
+  web:
     runs-on: ubuntu-latest
 
     strategy:
@@ -44,3 +43,30 @@ jobs:
       working-directory: neutron-im-web
       run: |
         npm run build --if-present
+
+  gradle:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Build with Gradle
+      uses: gradle/gradle-build-action@2.1.3
+      env:
+        CI: true
+      with:
+        build-root-directory: neutron-im-server
+        # Cache downloaded JDKs in addition to the default directories.
+        gradle-home-cache-includes: |
+            caches
+            notifications
+            jdks
+        # Exclude the local build-cache from the directories cached.
+        gradle-home-cache-excludes: |
+            caches/build-cache-1
+        arguments: build
