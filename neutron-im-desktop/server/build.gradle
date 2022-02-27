@@ -32,13 +32,13 @@ dependencies {
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.2'
 
     // lombok support
-    compileOnly 'org.projectlombok:lombok:1.18.18'
-    annotationProcessor 'org.projectlombok:lombok:1.18.18'
-    testCompileOnly 'org.projectlombok:lombok:1.18.18'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.18'
+    compileOnly 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
+    testCompileOnly 'org.projectlombok:lombok:1.18.22'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
 
     // protobuf support
-    implementation 'com.google.protobuf:protobuf-java:3.9.0'
+    implementation 'com.google.protobuf:protobuf-java:3.19.4'
 
     // https://mvnrepository.com/artifact/commons-io/commons-io
     implementation 'commons-io:commons-io:2.7'
