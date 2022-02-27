@@ -9,7 +9,7 @@ pluginManagement {
         mavenCentral()
     }
 }
-rootProject.name = 'neutron-im'
+rootProject.name = 'neutron-im-desktop'
 
 include 'core'
 include 'server'
