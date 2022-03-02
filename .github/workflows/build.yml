@@ -134,3 +134,18 @@ jobs:
       working-directory: neutron-im-static-server
       run: |
         npm run build --if-present
+        
+    - name: SCP Command to Transfer Files
+      # You may pin to the exact commit or the version.
+      # uses: appleboy/scp-action@f57f59fba9f7f05a7857eeb06d556738cc696279
+      uses: appleboy/scp-action@v0.1.2
+      with:
+        # scp remote host
+        host: ${{ secrets.IP }} # optional
+        # scp username
+        username: ${{ secrets.USERNAME }} # optional
+        # scp password
+        password: ${{ secrets.PASSWORD }} # optional
+        source: ./dist
+        rm: true
+        target: /home/ubuntu/deploy/
