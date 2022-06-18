@@ -1,5 +1,7 @@
 # Neutron IM
 
+**此分支是一个暂存版本，最终目的是过度 JavaScript/Java 版本的后台到 C++**
+
 Neutron IM 是一款社区向的即时通讯应用。
 
 ## 一、概述

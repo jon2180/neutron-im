@@ -2,7 +2,7 @@ package com.neutron.im.websocket.util;
 
 import com.neutron.im.websocket.WebSocketServerEndpoint;
 
-import javax.websocket.Session;
+import jakarta.websocket.Session;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 

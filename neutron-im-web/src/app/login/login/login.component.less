@@ -1,0 +1,95 @@
+.fullscreenContainer {
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: rgba(0, 61, 128, 0.85);
+  background-blend-mode: multiply;
+
+  .formContainer {
+    position: relative;
+    left: 50%;
+    top: 50%;
+    width: 841px;
+    height: 520px;
+    border-radius: 8px;
+    transform: translate(-50%, -50%);
+    display: flex;
+  }
+
+  .form {
+    padding: 16px 32px;
+    width: 45%;
+    height: 100%;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 1);
+    border: none;
+    border-radius: 0 8px 8px 0;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+  }
+
+  .imgDesc {
+    width: 55%;
+    height: 100%;
+    background-color: #ffffff;
+    background-size: cover;
+    border: none;
+    border-radius: 8px 0 0 8px;
+    position: relative;
+  }
+
+  .brandDescBox {
+    position: absolute;
+    left: 67px;
+    bottom: 200px;
+    transform: rotate(21deg);
+  }
+
+  .brandDesc {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 22px;
+  }
+
+  .brandName {
+    font-size: 18px;
+    line-height: 26px;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .title {
+    color: rgba(0, 0, 0, 0.85);
+    font-size: 20px;
+    line-height: 28px;
+    margin-bottom: 48px;
+    font-weight: 600;
+  }
+
+  .loginForm {
+    min-width: 200px;
+    width: 100%;
+  }
+
+  .text-switch-or {
+    color: rgba(0, 0, 0, 0.45)
+  }
+
+  .text-switch-to {
+    text-decoration: underline;
+    cursor: pointer;
+    color: rgba(0, 0, 0, 0.65);
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .fullscreenContainer {
+    .formContainer {
+      border-radius: 8px;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+  }
+}

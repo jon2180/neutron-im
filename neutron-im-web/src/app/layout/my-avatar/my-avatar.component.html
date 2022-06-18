@@ -1,0 +1,15 @@
+
+<nz-avatar [nzSize]="48" nzIcon="user" nzShape="square"></nz-avatar>
+<!--nz-dropdown [nzDropdownMenu]="menu"-->
+<!--<nz-dropdown-menu #menu="nzDropdownMenu">
+  <ul nz-menu nzSelectable>
+    <li nz-menu-item>1st menu item</li>
+    <li nz-menu-item>2nd menu item</li>
+    <li nz-menu-item>3rd menu item</li>
+    <li nz-menu-item nzDanger>4th danger item</li>
+  </ul>
+</nz-dropdown-menu>-->
+
+<div *ngIf="!collapsed" className={styles.nickname} title={userInfo.nickname}>
+  {{user.nickname || 'hello world'}}
+</div>

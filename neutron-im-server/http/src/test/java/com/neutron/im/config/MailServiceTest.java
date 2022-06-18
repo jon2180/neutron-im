@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import javax.annotation.Resource;
-import javax.mail.MessagingException;
+import jakarta.annotation.Resource;
+import jakarta.mail.MessagingException;
 
 @SpringBootTest
 @Disabled

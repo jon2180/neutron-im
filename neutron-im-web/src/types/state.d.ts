@@ -1,4 +1,4 @@
-import type { RootState as IRootState } from '@/store';
+// import type { RootState as IRootState } from '@/store';
 import type { NimSafeAny } from '@/types/basic';
 
 /**
@@ -55,4 +55,4 @@ export interface IActivity {
   tags?: string | string[];
 }
 
-export type RootState = IRootState;
+// export type RootState = IRootState;

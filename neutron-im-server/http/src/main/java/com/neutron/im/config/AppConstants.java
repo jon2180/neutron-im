@@ -1,13 +1,18 @@
 package com.neutron.im.config;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
 public class AppConstants {
+
     /**
      * production
      */
-    public static final String PROD_ASSETS_BASE_URL = "im.wuog.top/assets/";
-    public static final String PROD_BACKEND_BASE_URL = "im.wuog.top/api/";
-    public static final String PROD_FRONTEND_DOMAIN = "im.wuog.top";
-    public static final String PROD_COOKIE_DOMAIN = ".wuog.top";
+    public static final String PROD_ASSETS_BASE_URL = "im.showmecode.cc/assets/";
+    public static final String PROD_BACKEND_BASE_URL = "im.showmecode.cc/apis/";
+    public static final String PROD_FRONTEND_DOMAIN = "im.showmecode.cc";
+    public static final String PROD_COOKIE_DOMAIN = ".showmecode.cc";
 
     /**
      * DEV
@@ -43,7 +48,7 @@ public class AppConstants {
     }
 
     public static String getImCookieDomain() {
-        return isEnabledProduction() ? ".wuog.top" : "localhost";
+        return isEnabledProduction() ? ".showmecode.cc" : "localhost";
     }
 
     private static String getAssetsPath() {

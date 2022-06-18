@@ -1,0 +1,74 @@
+<div class="fullscreenContainer" style="background-image: 'url(/assets/login-bg.jpg)'">
+  <div class="formContainer">
+    <div style="background-image: 'url(/assets/login-bg.jpg)' " class="imgDesc">
+      <div class="brandDescBox">
+        <div class="brandDesc">Made for Developers</div>
+        <div class="brandDesc">
+          更<span style="color: 'rgba(64, 169, 255, 0.65)'">「 IT 」</span>的即时通讯工具
+        </div>
+        <div class="brandName">Neutron IM</div>
+      </div>
+    </div>
+    <div class="form">
+      <div class="title">
+        <span style="font-Size: '14px'; line-Height: '22px';color: 'rgba(0, 0, 0, 0.45)'; font-Weight: 500">
+          {{ 'app.login.greeting' | i18n:'Eric' }}
+        </span>
+        <br />
+        Neutron IM
+      </div>
+      <form nz-form class="loginForm" [formGroup]="validateForm" (ngSubmit)="login()">
+        <nz-form-item>
+          <nz-input-group nzPrefixIcon="mail">
+            <input nz-input type="email" formControlName="email" placeholder="{{ 'app.login.email' }}" />
+          </nz-input-group>
+        </nz-form-item>
+
+        <nz-form-item *ngIf="!isLogin">
+          <nz-input-group nzPrefixIcon="idcard">
+            <input nz-input type="text" formControlName="name" placeholder="{{ 'app.login.username' }}" />
+          </nz-input-group>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-input-group nzPrefixIcon="lock">
+            <input nz-input type="password" formControlName="password" placeholder="{{ 'app.login.password' }}" />
+          </nz-input-group>
+        </nz-form-item>
+
+        <nz-form-item *ngIf="!isLogin">
+          <nz-input-group nzPrefixIcon="lock">
+            <input nz-input type="password" formControlName="repassword" placeholder="{{ 'app.login.repassword' }}" />
+          </nz-input-group>
+        </nz-form-item>
+
+        <nz-form-item [nzGutter]="8">
+          <nz-col nzSpan="16">
+            <nz-input-group>
+              <input nz-input formControlName="captcha" placeholder="{{ 'app.login.captcha' }}" />
+            </nz-input-group>
+          </nz-col>
+          <nz-col nzSpan="8">
+            <nim-captcha></nim-captcha>
+          </nz-col>
+        </nz-form-item>
+
+        <nz-form-item nzAlign="bottom" nzGutter="16">
+          <nz-col>
+            <button nz-button nzType="primary" [nzLoading]="isSubmitting">
+              <i nz-icon nzType="login" nzTheme="outline"></i><span>{{ 'app.login.submit' | i18n }}</span>
+            </button>
+          </nz-col>
+
+          <nz-col>
+            <span class="text-switch-or">Or</span>
+            <span class="text-switch-mode" (click)="switchLoginOrReg()">
+              {{isLogin ? ('app.register' | i18n) : ('app.login' | i18n)}}
+            </span>
+          </nz-col>
+        </nz-form-item>
+      </form>
+
+    </div>
+  </div>
+</div>

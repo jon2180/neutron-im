@@ -1,4 +1,3 @@
-import type { ResponseError } from 'umi-request';
 
 /**
  * handlePromise 包裹 promise 错误，目的是避免在代码中重复使用 try...catch 语句块
@@ -13,25 +12,6 @@ export async function hp<T, E extends Error>(
     return [null, res];
   } catch (err) {
     return [err as E, null];
-  }
-}
-
-export async function hpre<T>(promise: Promise<T>): Promise<
-  | [null, T]
-  | [
-      ResponseError<{
-        error: string;
-        message: string;
-        detail: any;
-      }>,
-      null,
-    ]
-> {
-  try {
-    const res = await promise;
-    return [null, res];
-  } catch (err) {
-    return [err as ResponseError, null];
   }
 }
 

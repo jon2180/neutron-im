@@ -48,8 +48,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         conf.setAllowCredentials(true);
         conf.setAllowedHeaders(Arrays.asList("Authorization", "X-Requested-With", "Connection", "Upgrade", "Content-Type"));
         conf.setMaxAge(60 * 60 * 24L);
-        conf.setAllowedOriginPatterns(Arrays.asList("http://localhost:[*]", "http://im.com:[*]"));
-        conf.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+        conf.setAllowedOriginPatterns(Arrays.asList("http://localhost:[*]", "https://im.showmecode.cc"));
+        conf.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         var source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", conf);
         return source;

@@ -22,7 +22,7 @@ export interface HttpResponseData<T = NimSafeAny> {
   readonly page: PageConfig;
 }
 
-export interface HttpErrResponse<T = NimSafeAny> {
+export interface ErrResponse<T = NimSafeAny> {
   readonly error: string;
   readonly status: string;
   readonly message: string;

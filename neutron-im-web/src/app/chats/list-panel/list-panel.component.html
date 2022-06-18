@@ -1,0 +1,23 @@
+<a *ngFor="let item of list" routerLink="/chats/{{item.id}}" routerLinkActive="router-link-active"
+  style="display: block; width: 100%" onContextMenu={show}>
+  <div class="itemBox">
+    <div class="avatarBox">
+      <nz-avatar [nzSize]="48" [nzSrc]="item.avatar"></nz-avatar>
+    </div>
+    <div class="infoBox">
+      <div class="nameAndTimeBox">
+        <div class="name">{{item.nickname}}</div>
+        <div class="time">
+          formatTimestamp(item.last_msg_time)
+        </div>
+      </div>
+      <div class="contentAndUnreadBox">
+        <div class="content">{{item.lastMsgContent}} </div>
+        <div *ngIf="item.unread === 0; else elseContent" class="unread">Math.min(item.unread_count, 99)</div>
+        <ng-template #elseContent>
+          <div></div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</a>

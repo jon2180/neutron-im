@@ -31,6 +31,7 @@ export const codeMessage: {
 const UNAUTHORITED_NOTICE_KEY = 'UNAUTHORITED_NOTICE_KEY';
 // const UNCONNECTTED_NOTICE_KEY = "UNCONNECTTED_NOTICE_KEY";
 const REDIRECT_WAIT_TIME_IN_MS = 300;
+
 /**
  * 配置request请求时的默认参数
  */
@@ -102,6 +103,11 @@ const request = extend({
       message: errorText,
     } as HttpResponseData;
   },
+});
+
+request.interceptors.response.use((handler, options) => {
+  console.log(handler, options);
+  return handler;
 });
 
 export default request;

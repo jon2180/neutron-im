@@ -1,0 +1,49 @@
+<div class="left-nav">
+  <nim-my-avatar [collapsed]="collapsed"></nim-my-avatar>
+
+  <ul class="menu" nz-menu nzMode="vertical" nzTheme="light">
+    <li nz-menu-item>
+      <a referrerpolicy="origin" routerLink="/chats">
+        <i nz-icon nzType="message" nzTheme="outline"></i>
+        <span>对话</span>
+      </a>
+    </li>
+    <li nz-menu-item>
+      <!-- nz-icon  nzTheme="outline" nzType="team" -->
+      <a referrerpolicy="origin" routerLink="/friends">
+        <i nz-icon nzType="team" nzTheme="outline"></i>
+        <span>好友</span>
+      </a>
+    </li>
+    <li nz-menu-item>
+      <!-- nz-icon nzTheme="outline" nzType="paper-clip" -->
+      <a referrerpolicy="origin" routerLink="/collections">
+        <i nz-icon nzType="paper-clip" nzTheme="outline"></i>
+        <span>收集</span>
+      </a>
+    </li>
+  </ul>
+
+</div>
+
+<div nz-space nzDirection="vertical" nzAlign="center" nzSize="large">
+  <button nz-button nzType="text"><i nz-icon nzTheme="outline" nzType="alert"></i></button>
+  <button nz-button nzType="text"><i nz-icon nzTheme="outline" nzType="user-add"></i></button>
+
+  <button nz-button nzType="text"><i nz-icon nzTheme="outline" nzType="search"></i></button>
+  <button nz-button nzType="text"><i nz-icon nzTheme="outline" nzType="bg-colors"></i></button>
+  <button nz-button nzType="text"><i nz-icon nzType="border" nzTheme="outline"></i></button>
+
+  <button class="moreOptionBen" nz-button nzType="text" nz-dropdown nzPlacement="topLeft">
+    <i nz-icon nzTheme="outline" nzType="menu"></i>
+  </button>
+  <!--  [nzDropdownMenu]="menu"-->
+  <!--<nz-dropdown-menu #menu>
+    <ul nz-menu nzSelectable>
+      <li nz-menu-item>1st menu item</li>
+      <li nz-menu-item>2nd menu item</li>
+      <li nz-menu-item>3rd menu item</li>
+      <li nz-menu-item nzDanger>4th danger item</li>
+    </ul>
+  </nz-dropdown-menu>-->
+</div>

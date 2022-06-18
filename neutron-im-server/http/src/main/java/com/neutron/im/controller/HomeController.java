@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.neutron.im.config.AppConstants;
 import com.neutron.im.pojo.code.StatusCode;
 import com.neutron.im.pojo.dto.LoginRequestDTO;
-import com.neutron.im.pojo.dto.RequestDTO;
+import com.neutron.im.pojo.dto.RegisterDto;
 import com.neutron.im.pojo.entity.Account;
 import com.neutron.im.pojo.exception.AuthFailedException;
 import com.neutron.im.pojo.exception.DisabledAccountException;
@@ -12,15 +12,15 @@ import com.neutron.im.pojo.exception.NoSuchAccountException;
 import com.neutron.im.pojo.vo.ResultVO;
 import com.neutron.im.service.AccountService;
 import com.neutron.im.util.*;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -129,7 +129,7 @@ public class HomeController {
      * @return 注册结果
      */
     @PostMapping("/register")
-    public ResultVO postRegister(@RequestBody RequestDTO.RegisterForm form) {
+    public ResultVO postRegister(@RequestBody RegisterDto form) {
         // check format
         if (StringUtil.isEmpty(form.getEmail()) || !Validator.isEmail(form.getEmail())) {
             return ResultVO.failed(StatusCode.S400_INVALID_PARAMETERS_FORMAT, "邮箱格式验证失败，请确认后重新登录", null);
@@ -142,27 +142,13 @@ public class HomeController {
         }
         int res = accountService.doRegister(form.getEmail(), form.getPassword(), form.getNickname());
 
-        String message = "";
+        String message;
         switch (res) {
-            case 0: {
-                message = "OK";
-                break;
-            }
-            case 1: {
-                message = "注册失败，可能是服务器内部错误";
-                break;
-            }
-            case 2: {
-                message = "邮箱被占用";
-                break;
-            }
-            case 3: {
-                message = "密码或邮箱格式错误";
-                break;
-            }
-            default: {
-                message = "服务器内部错误";
-            }
+            case 0 -> message = "OK";
+            case 1 -> message = "注册失败，可能是服务器内部错误";
+            case 2 -> message = "邮箱被占用";
+            case 3 -> message = "密码或邮箱格式错误";
+            default -> message = "服务器内部错误";
         }
 
         return ResultVO.success(null).setMessage(message);

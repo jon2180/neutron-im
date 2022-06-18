@@ -1,5 +1,8 @@
-import request from '@/utils/request';
+// import request from '@/utils/request';
 import type { HttpResponseData } from '@/types/http';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
 
 /**
  * 登录参数类型
@@ -36,59 +39,69 @@ export interface UserinfoQueryParams {
   uid?: string;
 }
 
-/**
- * 登录接口
- * @param data 登录参数
- */
-export function postAccountLogin(
-  params: LoginParams,
-): Promise<HttpResponseData> {
-  return request.post('/login', { data: params, credentials: 'include' });
-}
+@Injectable({
+  providedIn: 'root'
+})
+export class UserRestService {
 
-/**
- * 退出登录
- */
-export function postLogout(): Promise<HttpResponseData> {
-  return request.post('/logout', { credentials: 'include' });
-}
+  constructor(private request: HttpClient) {
 
-/**
- * 注册
- */
-export function postAccount(params: RegisterParams): Promise<HttpResponseData> {
-  return request.post('/register', { data: params, credentials: 'include' });
-}
+  }
 
-export function getUserInfo(): Promise<HttpResponseData> {
-  return request.get('/accounts/');
-}
+  /**
+   * 登录接口
+   * @param data 登录参数
+   */
+  postAccountLogin(
+    params: LoginParams,
+  ): Observable<HttpResponseData> {
+    return this.request.post<HttpResponseData>('/login', { data: params, credentials: 'include' });
+  }
 
-/**
- * 获取用户信息
- */
-export function getAccountInfo({
-  uid,
-  ...params
-}: UserinfoQueryParams): Promise<HttpResponseData> {
-  // TODO
-  if (uid)
-    return request.get(`/accounts/${encodeURIComponent(uid)}`, { params });
-  return request.get('/accounts/');
-}
+  /**
+   * 退出登录
+   */
+  postLogout(): Observable<HttpResponseData> {
+    return this.request.post<HttpResponseData>('/logout', { credentials: 'include' });
+  }
 
-/**
- * 更新用户信息
- * @param params 更新用户信息
- */
-export function putUserInfo(
-  params: UserInfoUpdateParams,
-): Promise<HttpResponseData> {
-  return request.put('/accounts/', {
-    data: params,
-  });
-}
+  /**
+   * 注册
+   */
+  postAccount(params: RegisterParams): Observable<HttpResponseData> {
+    return this.request.post<HttpResponseData>('/register', { data: params, credentials: 'include' });
+  }
 
-export function deleteUser() {
-  return request.delete('/accounts/');
+  getUserInfo(): Observable<HttpResponseData> {
+    return this.request.get<HttpResponseData>('/accounts/');
+  }
+
+  /**
+   * 获取用户信息
+   */
+  getAccountInfo({
+    uid,
+    ...params
+  }: UserinfoQueryParams): Observable<HttpResponseData> {
+    // TODO
+    // if (uid)
+    //   return this.request.get<HttpResponseData>(`/accounts/${encodeURIComponent(uid)}`, { params });
+    return this.request.get<HttpResponseData>('/accounts/');
+  }
+
+  /**
+   * 更新用户信息
+   * @param params 更新用户信息
+   */
+  putUserInfo(
+    params: UserInfoUpdateParams,
+  ): Observable<HttpResponseData> {
+    return this.request.put<HttpResponseData>('/accounts/', {
+      data: params,
+    });
+  }
+
+  deleteUser() {
+    return this.request.delete('/accounts/');
+  }
 }
