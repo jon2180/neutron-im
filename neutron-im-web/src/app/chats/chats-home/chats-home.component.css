@@ -1,37 +1,45 @@
+:host {
+  width: 100%;
+  height: 100%;
+}
 
-      :host {
-        text-align: center;
-      }
+.chats-page {
+  /*width: 100%;*/
+  height: 100%;
+}
 
-      nz-header,
-      nz-footer {
-        background: #7dbcea;
-        color: #fff;
-      }
+:host {
+  text-align: center;
+}
 
-      nz-footer {
-        line-height: 1.5;
-      }
+nz-header,
+nz-footer {
+  background: #7dbcea;
+  color: #fff;
+}
 
-      nz-sider {
-        background: #3ba0e9;
-        color: #fff;
-        line-height: 120px;
-      }
+nz-footer {
+  line-height: 1.5;
+}
 
-      nz-content {
-        background: rgba(16, 142, 233, 1);
-        color: #fff;
-        min-height: 120px;
-        line-height: 120px;
-      }
+nz-sider {
+  background: #3ba0e9;
+  color: #fff;
+  line-height: 120px;
+}
 
-      nz-layout {
-        margin-bottom: 48px;
-      }
+nz-content {
+  background: rgba(16, 142, 233, 1);
+  color: #fff;
+  min-height: 120px;
+  line-height: 120px;
+}
 
-      nz-layout nz-layout,
-      nz-layout:last-child {
-        margin: 0;
-      }
-    
+nz-layout {
+  margin-bottom: 48px;
+}
+
+nz-layout nz-layout,
+nz-layout:last-child {
+  margin: 0;
+}

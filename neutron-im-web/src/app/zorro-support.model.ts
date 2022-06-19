@@ -8,16 +8,25 @@ import { NzFormModule } from "ng-zorro-antd/form";
 import { NzInputModule } from "ng-zorro-antd/input";
 import { NzMessageModule } from "ng-zorro-antd/message";
 import { NzResultModule } from "ng-zorro-antd/result";
+import { Provider } from "@angular/core";
+import { NzSpaceModule } from "ng-zorro-antd/space";
+import { getLocaleInfo, LOCALE_CONF_TOKEN } from "@/components/i18n";
 
-export const I18N_CONFIG = {};
+export const I18N_CONFIG: Provider = {
+  provide: LOCALE_CONF_TOKEN,
+  useValue: getLocaleInfo()
+};
+
 export const USING_ZORRO_MODULES = [
   NzAvatarModule,
   NzDropDownModule,
   NzButtonModule,
   NzIconModule,
   NzLayoutModule,
-  NzMenuModule, NzFormModule,
+  NzMenuModule,
+  NzFormModule,
   NzInputModule,
   NzMessageModule,
-  NzResultModule
+  NzResultModule,
+  NzSpaceModule
 ];

@@ -1,6 +1,6 @@
-<div class="fullscreenContainer" style="background-image: 'url(/assets/login-bg.jpg)'">
+<div class="fullscreenContainer">
   <div class="formContainer">
-    <div style="background-image: 'url(/assets/login-bg.jpg)' " class="imgDesc">
+    <div class="imgDesc">
       <div class="brandDescBox">
         <div class="brandDesc">Made for Developers</div>
         <div class="brandDesc">
@@ -11,41 +11,43 @@
     </div>
     <div class="form">
       <div class="title">
-        <span style="font-Size: '14px'; line-Height: '22px';color: 'rgba(0, 0, 0, 0.45)'; font-Weight: 500">
+        <span style="font-size: '14px'; line-Height: '22px';color: 'rgba(0, 0, 0, 0.45)'; font-Weight: 500">
           {{ 'app.login.greeting' | i18n:'Eric' }}
         </span>
         <br />
         Neutron IM
       </div>
-      <form nz-form class="loginForm" [formGroup]="validateForm" (ngSubmit)="login()">
+      <form (ngSubmit)="login()" [formGroup]="formGroup" class="loginForm" nz-form>
         <nz-form-item>
           <nz-input-group nzPrefixIcon="mail">
-            <input nz-input type="email" formControlName="email" placeholder="{{ 'app.login.email' }}" />
+            <input formControlName="email" nz-input placeholder="{{ 'app.login.email' | i18n}}" type="email" />
           </nz-input-group>
         </nz-form-item>
 
         <nz-form-item *ngIf="!isLogin">
           <nz-input-group nzPrefixIcon="idcard">
-            <input nz-input type="text" formControlName="name" placeholder="{{ 'app.login.username' }}" />
+            <input formControlName="name" nz-input placeholder="{{ 'app.login.username' | i18n }}" type="text" />
           </nz-input-group>
         </nz-form-item>
 
         <nz-form-item>
           <nz-input-group nzPrefixIcon="lock">
-            <input nz-input type="password" formControlName="password" placeholder="{{ 'app.login.password' }}" />
+            <input formControlName="password" nz-input placeholder="{{ 'app.login.password'  | i18n}}"
+                   type="password" />
           </nz-input-group>
         </nz-form-item>
 
         <nz-form-item *ngIf="!isLogin">
           <nz-input-group nzPrefixIcon="lock">
-            <input nz-input type="password" formControlName="repassword" placeholder="{{ 'app.login.repassword' }}" />
+            <input formControlName="repassword" nz-input placeholder="{{ 'app.login.repassword' | i18n }}"
+                   type="password" />
           </nz-input-group>
         </nz-form-item>
 
         <nz-form-item [nzGutter]="8">
           <nz-col nzSpan="16">
             <nz-input-group>
-              <input nz-input formControlName="captcha" placeholder="{{ 'app.login.captcha' }}" />
+              <input formControlName="captcha" nz-input placeholder="{{ 'app.login.captcha' | i18n }}" />
             </nz-input-group>
           </nz-col>
           <nz-col nzSpan="8">
@@ -55,14 +57,14 @@
 
         <nz-form-item nzAlign="bottom" nzGutter="16">
           <nz-col>
-            <button nz-button nzType="primary" [nzLoading]="isSubmitting">
-              <i nz-icon nzType="login" nzTheme="outline"></i><span>{{ 'app.login.submit' | i18n }}</span>
+            <button [nzLoading]="isSubmitting" nz-button nzType="primary">
+              <i nz-icon nzTheme="outline" nzType="login"></i><span>{{ 'app.login.submit' | i18n }}</span>
             </button>
           </nz-col>
 
           <nz-col>
             <span class="text-switch-or">Or</span>
-            <span class="text-switch-mode" (click)="switchLoginOrReg()">
+            <span (click)="switchLoginOrReg()" class="text-switch-to">
               {{isLogin ? ('app.register' | i18n) : ('app.login' | i18n)}}
             </span>
           </nz-col>

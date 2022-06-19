@@ -58,6 +58,11 @@ const zh_CN = {
 
   // login/register
   'app.login': '登录',
+  'app.login.email': '邮箱',
+  'app.login.username': '用户名',
+  'app.login.password': '密码',
+  'app.login.repassword': '确认密码',
+  'app.login.captcha': '验证码',
   'app.login.submit': '登录',
   'app.login.greeting': '欢迎来到',
   'app.login.logging': '正在登录...',

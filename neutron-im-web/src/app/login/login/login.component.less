@@ -1,3 +1,5 @@
+@login-background: url(/assets/login-bg.jpg);
+
 .fullscreenContainer {
   width: 100%;
   height: 100%;
@@ -5,6 +7,7 @@
   background-size: cover;
   background-color: rgba(0, 61, 128, 0.85);
   background-blend-mode: multiply;
+  background-image: @login-background;
 
   .formContainer {
     position: relative;
@@ -36,6 +39,7 @@
     height: 100%;
     background-color: #ffffff;
     background-size: cover;
+    background-image: @login-background;
     border: none;
     border-radius: 8px 0 0 8px;
     position: relative;

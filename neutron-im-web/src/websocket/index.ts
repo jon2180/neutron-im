@@ -1,15 +1,15 @@
-import { Cookie } from '@/utils/cookie';
-import { importUserInfo } from '@/utils/localStorage';
-import AppConstants from '@/config/url.const';
-import WebSocketClient from '@/websocket/protocol/WebSocketClient';
-import HeartBeatPlugin from '@/websocket/protocol/HeartBeatPlugin';
-import type { NimSafeAny } from '@/types';
+import { importUserInfo } from "@/utils/localStorage";
+import WebSocketClient from "@/websocket/protocol/WebSocketClient";
+import HeartBeatPlugin from "@/websocket/protocol/HeartBeatPlugin";
+import type { NimSafeAny } from "@/types";
+import { environment } from "@/environments/environment";
+import { cookieStorage } from "@/components/storage/CookieStorage";
 
 export function connectWebSocket(): WebSocketClient | undefined {
   // 在进入应用的时候开始读取 localStorage 中是否存在用户信息
   // 先检测是否存在授权
   const token =
-    Cookie.getCookie('authorization') || Cookie.getCookie('Authorization');
+    cookieStorage.getItem("authorization") || cookieStorage.getItem("Authorization");
   if (!token) {
     return;
   }
@@ -19,24 +19,24 @@ export function connectWebSocket(): WebSocketClient | undefined {
   if (userInfo && userInfo.id && userInfo.email) {
     return (
       new WebSocketClient(
-        `${AppConstants.WEBSOCKET_URL}/relay/${userInfo.id}`,
+        `${environment.network.baseWsUrl}/relay/${userInfo.id}`,
         {
           onClose(ev) {
-            console.log('close ', ev);
+            console.log("close ", ev);
           },
           onMessage(ev) {
-            console.log('message ', ev);
+            console.log("message ", ev);
           },
           onOpen(ev) {
-            console.log('open ', ev);
+            console.log("open ", ev);
           },
           onError(ev) {
-            console.log('error ', ev);
-          },
-        },
+            console.log("error ", ev);
+          }
+        }
       )
         // .addPlugin('reconnect', ReconnectPlugin())
-        .addPlugin('heartbeat', HeartBeatPlugin())
+        .addPlugin("heartbeat", HeartBeatPlugin())
     );
   } else {
     return undefined;
@@ -45,7 +45,7 @@ export function connectWebSocket(): WebSocketClient | undefined {
 
 const webSocketStore = (function createWebSocketStore() {
   const initialState = {
-    relayServer: undefined as undefined | WebSocketClient,
+    relayServer: undefined as undefined | WebSocketClient
   };
   return {
     get websocket(): WebSocketClient | undefined {
@@ -59,13 +59,13 @@ const webSocketStore = (function createWebSocketStore() {
     getters: {
       get websocket() {
         return initialState.relayServer;
-      },
+      }
     },
 
     reducers: {
       setRelayServer(websocket: WebSocketClient) {
         if (websocket) initialState.relayServer = websocket;
-      },
+      }
     },
 
     /**
@@ -79,12 +79,12 @@ const webSocketStore = (function createWebSocketStore() {
         return 2;
 
       let success = false;
-      if (typeof source === 'object') {
+      if (typeof source === "object") {
         this.websocket.send(source as NimSafeAny);
         success = true;
       }
       return success ? 0 : 3;
-    },
+    }
   };
 })();
 

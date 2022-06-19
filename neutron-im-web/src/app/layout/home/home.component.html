@@ -1,9 +1,12 @@
 <div class="outterBox">
   <nz-layout class="innerBox layout-1">
-    <nz-sider [nzWidth]="128" nzBreakpoint="lg" [nzCollapsible]="true" [nzCollapsedWidth]="64" nzTheme="light">
+    <nz-sider [nzWidth]="64" nzBreakpoint="lg" [nzCollapsible]="false" [nzCollapsedWidth]="64" nzTheme="dark">
       <nim-nav [collapsed]="true"></nim-nav>
     </nz-sider>
-    <router-outlet></router-outlet>
+
+    <nz-content>
+      <router-outlet></router-outlet>
+    </nz-content>
   </nz-layout>
 </div>
 
