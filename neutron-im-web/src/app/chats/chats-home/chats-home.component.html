@@ -1,8 +1,9 @@
-<nz-layout class="chats-page">
-  <nz-sider>
+<div nz-row>
+  <div nz-col nzSpan="10">
     <nim-list-panel></nim-list-panel>
-  </nz-sider>
-  <nz-content>
-    <nim-chat-panel></nim-chat-panel>
-  </nz-content>
-</nz-layout>
+  </div>
+
+  <div nz-col nzSpan="14">
+    <router-outlet></router-outlet>
+  </div>
+</div>

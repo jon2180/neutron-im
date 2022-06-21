@@ -2,7 +2,6 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { HttpResponseData } from "@/types";
 import { Observable } from "rxjs";
-import request from "@/utils/request";
 
 interface BingWallpaperImage {
   startdate: string;
@@ -93,16 +92,21 @@ export class UtilRestService {
   providedIn: "root"
 })
 export class MessageCheckingRestService {
-  update(targetId: string): Promise<HttpResponseData> {
-    return request.put(`/mchecks/${targetId}`);
+
+  constructor(private request: HttpClient) {
+
   }
 
-  get(targetId: string): Promise<HttpResponseData> {
-    return request.get(`/mchecks/${encodeURIComponent(targetId)}`);
+  update(targetId: string): Observable<HttpResponseData> {
+    return this.request.put<HttpResponseData>(`/mchecks/${targetId}`, {});
   }
 
-  getEntries(): Promise<HttpResponseData> {
-    return request.get("/mchecks/");
+  get(targetId: string): Observable<HttpResponseData> {
+    return this.request.get<HttpResponseData>(`/mchecks/${encodeURIComponent(targetId)}`);
+  }
+
+  getEntries(): Observable<HttpResponseData> {
+    return this.request.get<HttpResponseData>("/mchecks/");
   }
 
 }

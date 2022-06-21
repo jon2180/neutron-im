@@ -1,9 +1,18 @@
-<!--<p>chat-panel works!</p>-->
+<nz-layout class="chat-panel">
+  <nz-header></nz-header>
 
-<!--<nz-header>-->
+  <nz-content>
+    <div class="chat-panel-historyPanel">
 
-<!--</nz-header>-->
-<a href="https://github.com/NG-ZORRO/ng-zorro-antd" style="display: flex;align-items: center;justify-content: center;height: 100%;width: 100%;"
-   target="_blank">
-  <img height="300" src="https://img.alicdn.com/tfs/TB1X.qJJgHqK1RjSZFgXXa7JXXa-89-131.svg">
-</a>
+      <ul nz-list [nzDataSource]="chatHistories" nzSize="small">
+        <li nz-list-item *ngFor="let item of chatHistories">
+          {{ item.account_nickname }}
+        </li>
+      </ul>
+    </div>
+  </nz-content>
+
+  <nz-footer>
+    <textarea class="chat-panel-inputArea" contenteditable="true"></textarea>
+  </nz-footer>
+</nz-layout>

@@ -14,6 +14,14 @@ import { LocalStorageService } from "@/components/storage/local-storage.service"
 export class LoginComponent {
   formGroup!: FormGroup;
 
+  get loginFormValue() {
+    return this.formGroup.value as LoginParams;
+  }
+
+  get registerFormValue() {
+    return this.formGroup.value as RegisterParams;
+  }
+
   isLogin = true;
 
   isSubmitting = false;
@@ -37,19 +45,7 @@ export class LoginComponent {
     });
   }
 
-  switchLoginOrReg() {
-    this.isLogin = !this.isLogin;
-
-    // 以下内容仅注册时需要填写
-    // name: [null, [Validators.required]],
-    // repassword: [null, [Validators.required]],
-    if (this.isLogin) {
-      this.formGroup.removeControl("name");
-      this.formGroup.removeControl("repassword");
-    } else {
-      this.formGroup.addControl("name", new FormControl(null, [Validators.required]));
-      this.formGroup.addControl("repassword", new FormControl(null, [Validators.required]));
-    }
+  private updateGetParam() {
     // const searchStr = new URLSearchParams({
     //   ...urlParams,
     //   tab: isLogin ? 'logon' : 'login',
@@ -61,25 +57,39 @@ export class LoginComponent {
     // });
   }
 
-  get loginFormValue() {
-    return this.formGroup.value as LoginParams;
+  switchLoginOrReg() {
+    this.isLogin = !this.isLogin;
+
+    // 以下内容仅注册时需要填写
+    // name: [null, [Validators.required]],
+    // repassword: [null, [Validators.required]],
+    if (this.isLogin) {
+      this.formGroup.removeControl("nickname");
+      this.formGroup.removeControl("repassword");
+    } else {
+      this.formGroup.addControl("nickname", new FormControl(null, [Validators.required]));
+      this.formGroup.addControl("repassword", new FormControl(null, [Validators.required]));
+    }
+    this.updateGetParam();
   }
 
-  get registerFormValue() {
-    return this.formGroup.value as RegisterParams;
-  }
-
-  login() {
+  submitForm() {
     if (this.isSubmitting) {
       return;
     }
     this.isSubmitting = true;
-
     this.formGroup.updateValueAndValidity();
+    if (this.isLogin) {
+      this.submitLoginForm();
+    } else {
+      this.submitRegisterForm();
+    }
+  }
+
+  private submitLoginForm() {
     const { email, password, captcha } = this.loginFormValue;
     // 检查验证码的合理性
     if (!isEmail(email) || !isPassword(password) || !captcha) {
-
       // this.message.remove();
       console.log("错误提示：表单有错");
       this.message.error(
@@ -102,6 +112,34 @@ export class LoginComponent {
         this.isSubmitting = false;
       }
     });
+  }
+
+  private submitRegisterForm() {
+    const { email, password, captcha, nickname } = this.registerFormValue;
+    // 检查验证码的合理性
+    if (!isEmail(email) || !isPassword(password) || !captcha) {
+      console.log("错误提示：表单有错");
+      this.message.error(
+        this.i18n.get("app.login.form.invalid_account_password_format")
+        // { nzDuration: 0.5 }
+      );
+      this.isSubmitting = false;
+      return;
+    }
+    this.userRest.postAccount({ email, password, captcha, nickname }).subscribe({
+      next: res => {
+        console.log(res);
+        this.isSubmitting = false;
+      },
+      error: (err) => {
+        console.error(err);
+        this.isSubmitting = false;
+      },
+      complete: () => {
+        this.isSubmitting = false;
+      }
+    });
+
 
     // this.submitting = true;
     // this.message.loading(this.i18n.get('app.login.logging'));
@@ -110,7 +148,6 @@ export class LoginComponent {
     //   console.log(val)
     // });
   }
-
 }
 
 

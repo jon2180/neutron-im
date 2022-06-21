@@ -17,7 +17,7 @@
         <br />
         Neutron IM
       </div>
-      <form (ngSubmit)="login()" [formGroup]="formGroup" class="loginForm" nz-form>
+      <form (ngSubmit)="submitForm()" [formGroup]="formGroup" class="loginForm" nz-form>
         <nz-form-item>
           <nz-input-group nzPrefixIcon="mail">
             <input formControlName="email" nz-input placeholder="{{ 'app.login.email' | i18n}}" type="email" />

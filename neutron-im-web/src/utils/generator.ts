@@ -4,15 +4,17 @@ export const numbersStr = '0123456789';
 
 export const baseStr = upperCaseStr + lowerCaseStr + numbersStr;
 
+interface AccountIdGenerateOption {
+  prefix?: string;
+  length?: number;
+  ext?: string;
+}
+
 export function generateAccountId({
   prefix = '',
   length = 10,
   ext = '',
-}: {
-  prefix?: string;
-  length?: number;
-  ext?: string;
-}): string {
+}: AccountIdGenerateOption): string {
   let uid = prefix || '';
   for (let i = 0; i < (length || 10); i += 1) {
     uid += baseStr[Math.floor(Math.random() * baseStr.length)];

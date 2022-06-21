@@ -62,6 +62,7 @@ import { StoreModule } from '@ngrx/store';
     ReactiveFormsModule,
     ...USING_ZORRO_MODULES,
     StoreModule.forRoot({}, {}),
+
   ],
   providers: [
     I18N_CONFIG,
