@@ -88,10 +88,13 @@ public class AccountController {
 
         final Account account = accountService.findByID(claims.getId());
 
-        if (!StringUtil.isEmpty(nickname))
+        if (!StringUtil.isEmpty(nickname)) {
             account.setNickname(nickname);
-        if (!StringUtil.isEmpty(signature))
+        }
+
+        if (!StringUtil.isEmpty(signature)) {
             account.setSignature(signature);
+        }
         if (!StringUtil.isEmpty(gender)) {
             int val = 0;
             switch (gender) {

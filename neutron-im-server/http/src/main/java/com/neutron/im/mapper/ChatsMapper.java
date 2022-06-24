@@ -12,7 +12,8 @@ public interface ChatsMapper {
 
     /**
      * 查找用户的所有会话信息
-     *
+     * spring boot - mybatis-plus - spring security - aj-capte - java
+     * hadoop 14
      * @param id 用户账户 id
      * @return 会话信息列表
      */
