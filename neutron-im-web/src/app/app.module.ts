@@ -26,6 +26,9 @@ import { NavComponent } from './layout/nav/nav.component';
 import { HomeComponent } from './layout/home/home.component';
 import { ErrorComponent } from './layout/error/error.component';
 import { StoreModule } from '@ngrx/store';
+import { AboutusComponent } from './layout/aboutus/aboutus.component';
+import { NzModalModule } from "ng-zorro-antd/modal";
+import { NzPopoverModule } from "ng-zorro-antd/popover";
 
 @NgModule({
   declarations: [
@@ -46,6 +49,7 @@ import { StoreModule } from '@ngrx/store';
     // Login
     LoginComponent,
     CaptchaComponent,
+    AboutusComponent,
 
   ],
   imports: [
@@ -62,6 +66,8 @@ import { StoreModule } from '@ngrx/store';
     ReactiveFormsModule,
     ...USING_ZORRO_MODULES,
     StoreModule.forRoot({}, {}),
+    NzModalModule,
+    NzPopoverModule
 
   ],
   providers: [

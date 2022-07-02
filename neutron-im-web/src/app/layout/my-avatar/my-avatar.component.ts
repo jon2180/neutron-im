@@ -9,7 +9,7 @@ export class MyAvatarComponent implements OnInit {
 
   @Input() collapsed = false;
 
-  user = { nickname: 'Nick', }
+  userInfo = { nickname: 'Nick', }
 
   constructor() { }
 

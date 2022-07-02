@@ -13,8 +13,8 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     // 校验登录信息
-    this.userRestService.getSelfUserInfo().subscribe((val) => {
-      console.log(val);
-    });
+    // this.userRestService.getSelfUserInfo().subscribe((val) => {
+    //   console.log(val);
+    // });
   }
 }

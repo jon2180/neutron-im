@@ -1,7 +1,16 @@
-<div class="outterBox">
-  <nz-layout class="innerBox layout-1">
-    <nz-sider [nzWidth]="64" nzBreakpoint="lg" [nzCollapsible]="false" [nzCollapsedWidth]="64" nzTheme="dark">
-      <nim-nav [collapsed]="true"></nim-nav>
+<!-- 填充全屏 -->
+<div class="outter-box">
+  <!-- 设置最大宽度布局 -->
+  <nz-layout class="inner-box">
+    <nz-sider
+      [(nzCollapsed)]="navCollapsed"
+      [nzCollapsedWidth]="64"
+      [nzCollapsible]="true"
+      [nzWidth]="96"
+      nzBreakpoint="lg"
+      nzTheme="light"
+    >
+      <nim-nav [collapsed]="navCollapsed"></nim-nav>
     </nz-sider>
 
     <nz-content>
@@ -9,50 +18,3 @@
     </nz-content>
   </nz-layout>
 </div>
-
-
-
-<!--<nz-footer>
-      <div class="footer">
-        <div class="footerContent">
-          <div class="navGroup">
-            <div class="linksTitle">{{quickCenter.name}}</div>
-            <ul class="nav1">
-              <li *ngFor="let val of quickCenter.list; let ind = index">
-                <a [routerLink]="[val.path]" target="_blank">
-                  {{val.text}}
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div class="navGroup">
-            <div class="linksTitle">{{friendLinks.name}}</div>
-            <ul class="nav2">
-              <li *ngFor="let val of friendLinks.list; let ind = index">
-                <a [routerLink]="[val.path]" target="_blank">
-                  {{val.text}}
-                </a>
-              </li>
-              );
-              })}
-            </ul>
-          </div>
-          <div class="navGroup">
-            <div class="linksTitle">{{aboutUs.name}}</div>
-            <ul class="nav3">
-              <li *ngFor="let val of aboutUs.list; let ind = index">
-                <a [routerLink]="[val.path]" target="_blank">
-                  {{val.text}}
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="copyright">
-          <div>&copy;{{fullYear}} Neutron IM All Right Reserved</div>
-          <div><a href="https://beian.miit.gov.cn/" target="_blank">蜀ICP备XXXXX号-X</a></div>
-        </div>
-      </div>
-    </nz-footer>-->

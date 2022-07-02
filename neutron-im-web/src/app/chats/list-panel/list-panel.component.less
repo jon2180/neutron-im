@@ -1,58 +1,81 @@
-.list-panel-listBox {
+@import '../../../themes/index';
+
+.list-panel-search-box {
+  height: 64px;
+  width: 100%;
+  padding: 16px 8px;
+}
+
+.list-panel-search {
+  height: 32px;
+  border-radius: calc(32px / 2);
+}
+
+.list-panel-ul {
   width: 100%;
   height: 100%;
-  padding: 8px;
+  padding: 0;
   overflow: hidden auto;
 }
 
-.itemBox {
-  width: inherit;
-  height: 48px;
-  display: flex;
-  box-sizing: border-box;
+.list-panel-li {
+  padding: 12px;
 
-  .infoBox {
-    margin-left: 8px;
+  &.selected {
+    background-color: @list-sider-selected-background-color;
+  }
+
+  .item-box {
     width: inherit;
+    height: 48px;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    overflow: hidden;
+    box-sizing: border-box;
+
+    .infoBox {
+      margin-left: 8px;
+      width: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+
+    .nameAndTimeBox,
+    .contentAndUnreadBox {
+      // width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .name {
+      color: #333;
+    }
+
+    .time {
+      color: #999;
+    }
+
+    .content {
+      width: 80%;
+      color: #666;
+      text-align: left;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .unread {
+      margin: 4px 0 0;
+      width: 16px;
+      height: 16px;
+      text-align: right;
+      line-height: 16px;
+      font-size: 10px;
+      color: #ffffff;
+      background-color: #e00000;
+      border-radius: 50%;
+    }
   }
 
-  .nameAndTimeBox,
-  .contentAndUnreadBox {
-    // width: 100%;
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .name {
-    color: #333;
-  }
-
-  .time {
-    color: #999;
-  }
-
-  .content {
-    width: 80%;
-    color: #666;
-    text-align: left;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .unread {
-    margin: 4px 0 0;
-    width: 16px;
-    height: 16px;
-    text-align: right;
-    line-height: 16px;
-    font-size: 10px;
-    color: #ffffff;
-    background-color: #e00000;
-    border-radius: 50%;
-  }
 }
+

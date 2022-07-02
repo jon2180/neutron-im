@@ -11,7 +11,7 @@ const StatusDesc: Record<number, CodeDetail> = {
     shorthand: "OK"
   },
   40000: {
-    shorthand: "BAD_REQUEST"
+    shorthand: "BAD_REQUESAuthResultT"
   },
   40001: {
     shorthand: "EMPTY_PARAMETER"

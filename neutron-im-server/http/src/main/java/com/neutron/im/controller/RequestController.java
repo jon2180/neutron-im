@@ -134,8 +134,9 @@ public class RequestController {
         requestService.updateRequest(request);
 
         // update friend list
-        if (isAccept)
+        if (isAccept) {
             friendService.insertOneByDefault(request.getInitiator_id(), request.getTarget_id());
+        }
         return ResultVO.success(request);
     }
 

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { NzMenuItemDirective } from "ng-zorro-antd/menu";
 
 @Component({
   selector: 'nim-nav',
@@ -14,4 +15,7 @@ export class NavComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onMenuClicked(event: NzMenuItemDirective) {
+
+  }
 }

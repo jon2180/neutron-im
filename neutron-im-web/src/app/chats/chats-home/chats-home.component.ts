@@ -11,15 +11,15 @@ export class ChatsHomeComponent implements OnInit {
   constructor(private chatRestService: ChatRestService) { }
 
   ngOnInit(): void {
-    this.chatRestService.getRecentList().subscribe({
-      next: value => {
-        console.log(value);
-      },
-      error: err => {
-        console.log(err);
-      },
-      complete: () => {}
-    })
+    // this.chatRestService.getRecentList().subscribe({
+    //   next: value => {
+    //     console.log(value);
+    //   },
+    //   error: err => {
+    //     console.log(err);
+    //   },
+    //   complete: () => {}
+    // })
   }
 
 }

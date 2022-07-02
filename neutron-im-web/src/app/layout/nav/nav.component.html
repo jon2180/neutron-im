@@ -1,49 +1,67 @@
-<div class="left-nav">
+<!-- @start 靠上的区域-->
+<div class="nav-top">
+  <!--  头像区-->
   <nim-my-avatar [collapsed]="collapsed"></nim-my-avatar>
 
+  <!--  主导航区-->
   <ul class="menu" nz-menu nzMode="vertical" nzTheme="light">
-    <li nz-menu-item>
+    <li class="menu-nav-item" nz-menu-item>
       <a referrerpolicy="origin" routerLink="/chats">
-        <i nz-icon nzType="message" nzTheme="outline"></i>
-        <span>对话</span>
+        <i nz-icon nzTheme="outline" nzType="message"></i>
+        <span *ngIf="!collapsed">对话</span>
       </a>
     </li>
-    <li nz-menu-item>
-      <!-- nz-icon  nzTheme="outline" nzType="team" -->
-      <a referrerpolicy="origin" routerLink="/friends">
-        <i nz-icon nzType="team" nzTheme="outline"></i>
-        <span>好友</span>
+    <li class="menu-nav-item" nz-menu-item>
+      <a class="menu-nav-item-link" referrerpolicy="origin" routerLink="/friends">
+        <i nz-icon nzTheme="outline" nzType="team"></i>
+        <span *ngIf="!collapsed">好友</span>
       </a>
     </li>
-    <li nz-menu-item>
-      <!-- nz-icon nzTheme="outline" nzType="paper-clip" -->
+    <li class="menu-nav-item" nz-menu-item>
       <a referrerpolicy="origin" routerLink="/collections">
-        <i nz-icon nzType="paper-clip" nzTheme="outline"></i>
-        <span>收集</span>
+        <i nz-icon nzTheme="outline" nzType="paper-clip"></i>
+        <span *ngIf="!collapsed">收集</span>
       </a>
     </li>
   </ul>
 
 </div>
+<!-- @end 靠上的区域-->
 
-<div nz-space nzDirection="vertical" nzAlign="center" nzSize="large">
-  <button nz-button nzType="text"><i nz-icon nzTheme="outline" nzType="alert"></i></button>
-  <button nz-button nzType="text"><i nz-icon nzTheme="outline" nzType="user-add"></i></button>
-
-  <button nz-button nzType="text"><i nz-icon nzTheme="outline" nzType="search"></i></button>
-  <button nz-button nzType="text"><i nz-icon nzTheme="outline" nzType="bg-colors"></i></button>
-  <button nz-button nzType="text"><i nz-icon nzType="border" nzTheme="outline"></i></button>
-
-  <button class="moreOptionBen" nz-button nzType="text" nz-dropdown nzPlacement="topLeft">
+<!-- @start 靠下的区域-->
+<nz-space nzAlign="center" nzDirection="vertical" nzSize="middle" class="nav-bottom">
+  <button *nzSpaceItem nz-button nzType="text"><i nz-icon nzTheme="outline" nzType="alert"></i></button>
+  <button *nzSpaceItem nz-button nzType="text"><i nz-icon nzTheme="outline" nzType="user-add"></i></button>
+  <button *nzSpaceItem nz-button nzType="text"><i nz-icon nzTheme="outline" nzType="search"></i></button>
+  <button *nzSpaceItem nz-button nzType="text"><i nz-icon nzTheme="outline" nzType="bg-colors"></i></button>
+  <button *nzSpaceItem nz-button nzType="text"><i nz-icon nzTheme="outline" nzType="border"></i></button>
+  <button
+    *nzSpaceItem
+    [nzDropdownMenu]="menu"
+    nzPlacement="topLeft"
+    class="moreOptionBen"
+    nz-button
+    nz-dropdown
+    nzPlacement="topLeft"
+    nzType="text"
+  >
     <i nz-icon nzTheme="outline" nzType="menu"></i>
   </button>
-  <!--  [nzDropdownMenu]="menu"-->
-  <!--<nz-dropdown-menu #menu>
-    <ul nz-menu nzSelectable>
+
+  <!-- @start 弹出式菜单 -->
+  <nz-dropdown-menu #menu>
+    <ul nz-menu nzSelectable (nzClick)="onMenuClicked($event)">
       <li nz-menu-item>1st menu item</li>
       <li nz-menu-item>2nd menu item</li>
-      <li nz-menu-item>3rd menu item</li>
+      <li nz-menu-item>About us</li>
       <li nz-menu-item nzDanger>4th danger item</li>
     </ul>
-  </nz-dropdown-menu>-->
-</div>
+  </nz-dropdown-menu>
+
+  <nz-modal #aboutus>
+    <nim-aboutus></nim-aboutus>
+  </nz-modal>
+
+  <!-- @end 弹出式菜单 -->
+</nz-space>
+<!-- @end 靠下的区域-->

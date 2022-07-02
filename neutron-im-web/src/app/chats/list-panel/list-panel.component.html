@@ -1,8 +1,19 @@
-<ul nz-list class="list-panel-listBox">
-  <li *ngFor="let item of list" nz-list-item>
+<div>
+  <div>Current message</div>
+  <div>1/12/13</div>
+</div>
+
+<div class="list-panel-search-box">
+  <nz-input-group class="list-panel-search" nzPrefixIcon="search">
+    <input (search)="onSearch()" nz-input>
+  </nz-input-group>
+</div>
+
+<ul class="list-panel-ul" nz-list>
+  <li *ngFor="let item of list" [class.selected]="item.id === selectedChat.id" class="list-panel-li" nz-list-item>
     <a onContextMenu="{show}" routerLink="/chats/{{item.id}}" routerLinkActive="router-link-active"
        style="display: block; width: 100%">
-      <div class="itemBox">
+      <div class="item-box">
         <div class="avatarBox">
           <nz-avatar [nzSize]="48" [nzSrc]="item.avatar"></nz-avatar>
         </div>
