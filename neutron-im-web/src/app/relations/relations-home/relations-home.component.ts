@@ -1,13 +1,12 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit } from '@angular/core';
 import { ChatRestService } from "@/services";
 
 @Component({
-  selector: 'nim-chats-home',
-  templateUrl: './chats-home.component.html',
-  styleUrls: ['./chats-home.component.less']
+  selector: 'nim-relations-home',
+  templateUrl: './relations-home.component.html',
+  styleUrls: ['./relations-home.component.less']
 })
-export class ChatsHomeComponent implements OnInit {
-
+export class RelationsHomeComponent implements OnInit {
   searchKeyword: string = '';
   searchPlaceholder: string = 'Search chats, chat histories and etc.';
 

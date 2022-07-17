@@ -1,20 +1,32 @@
-<nz-layout class="chat-panel">
-  <nz-header>
+<header class="chat-panel-header">
+  <div class="chat-panel-header-left">{{opposite.nickname}}</div>
+  <nz-space class="chat-panel-header-right">
+    <div *nzSpaceItem>V</div>
+    <div *nzSpaceItem>X</div>
+    <div *nzSpaceItem>C</div>
+    <div *nzSpaceItem>Z</div>
+  </nz-space>
+</header>
 
-  </nz-header>
+<div class="chat-panel-content">
+  <div class="chat-panel-historyPanel">
+    <ul [nzDataSource]="chatHistories" [nzSplit]="false" nz-list nzSize="small">
+      <li *ngFor="let item of chatHistories" nz-list-item>
 
-  <nz-content>
-    <div class="chat-panel-historyPanel">
+        <div [class.sentByMyself]="item.sender_id === myself.id" class="chat-panel-historyPanel-item">
+          <nz-avatar [nzSrc]="item.account_avatar" class="chat-panel-historyPanel-item-avatar" nzIcon="user"
+                     nzSize="default"></nz-avatar>
+          <div class="chat-panel-historyPanel-item-content"> {{ item.account_nickname }}</div>
+          <div class="chat-panel-historyPanel-item-time">{{item.time}}</div>
+        </div>
 
-      <ul nz-list [nzDataSource]="chatHistories" nzSize="small">
-        <li nz-list-item *ngFor="let item of chatHistories">
-          {{ item.account_nickname }}
-        </li>
-      </ul>
-    </div>
-  </nz-content>
+      </li>
+    </ul>
+  </div>
+</div>
 
-  <nz-footer>
-    <textarea class="chat-panel-inputArea" contenteditable="true"></textarea>
-  </nz-footer>
-</nz-layout>
+<footer class="chat-panel-footer">
+  <div class="chat-panel-footer-ops"></div>
+  <textarea class="chat-panel-footer-inputArea" contenteditable="true"></textarea>
+  <div class="chat-panel-footer-sendBar"></div>
+</footer>

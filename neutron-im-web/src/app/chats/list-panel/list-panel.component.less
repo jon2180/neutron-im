@@ -1,28 +1,26 @@
 @import '../../../themes/index';
 
-.list-panel-search-box {
-  height: 64px;
+:host {
   width: 100%;
-  padding: 16px 8px;
+  height: 100%;
+  background-color: @sider-background-color;
 }
 
-.list-panel-search {
-  height: 32px;
-  border-radius: calc(32px / 2);
-}
 
 .list-panel-ul {
   width: 100%;
   height: 100%;
+  margin: 0;
   padding: 0;
   overflow: hidden auto;
+  background-color: @sider-background-color;
 }
 
 .list-panel-li {
   padding: 12px;
 
   &.selected {
-    background-color: @list-sider-selected-background-color;
+    background-color: @sider-accent-color;
   }
 
   .item-box {
@@ -66,14 +64,14 @@
 
     .unread {
       margin: 4px 0 0;
-      width: 16px;
+      width: 24px;
       height: 16px;
-      text-align: right;
+      text-align: center;
       line-height: 16px;
-      font-size: 10px;
+      font-size: 8px;
       color: #ffffff;
       background-color: #e00000;
-      border-radius: 50%;
+      border-radius: 8px;
     }
   }
 

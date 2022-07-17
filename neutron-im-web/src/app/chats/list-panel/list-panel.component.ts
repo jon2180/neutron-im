@@ -18,7 +18,7 @@ interface Chat {
 export class ListPanelComponent implements OnInit {
 
   selectedChat = {
-    id: 1,
+    id: -1,
     avatar: "http://localhost:3001/hello.png",
     nickname: "helloworlod",
     lastMsgContent: "helloworlod",
@@ -44,7 +44,4 @@ export class ListPanelComponent implements OnInit {
 
   formatTimestamp = formatTimestamp;
 
-  onSearch() {
-    console.log('search');
-  }
 }

@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -29,6 +29,10 @@ import { StoreModule } from '@ngrx/store';
 import { AboutusComponent } from './layout/aboutus/aboutus.component';
 import { NzModalModule } from "ng-zorro-antd/modal";
 import { NzPopoverModule } from "ng-zorro-antd/popover";
+import { RelationsHomeComponent } from './relations/relations-home/relations-home.component';
+import { RelationsAccountProfileComponent } from './relations/relations-account-profile/relations-account-profile.component';
+import { RelationsListComponent } from './relations/relations-list/relations-list.component';
+import { NzTabsModule } from "ng-zorro-antd/tabs";
 
 @NgModule({
   declarations: [
@@ -51,6 +55,11 @@ import { NzPopoverModule } from "ng-zorro-antd/popover";
     CaptchaComponent,
     AboutusComponent,
 
+    // Relations, 包括好友和群组
+    RelationsHomeComponent,
+    RelationsAccountProfileComponent,
+    RelationsListComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -67,7 +76,9 @@ import { NzPopoverModule } from "ng-zorro-antd/popover";
     ...USING_ZORRO_MODULES,
     StoreModule.forRoot({}, {}),
     NzModalModule,
-    NzPopoverModule
+    NzPopoverModule,
+    FormsModule,
+    NzTabsModule
 
   ],
   providers: [

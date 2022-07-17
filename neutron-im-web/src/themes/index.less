@@ -1,11 +1,19 @@
 @import './default.less';
 
-@nav-sider-background-color: rgb(226, 225, 225);
-@list-sider-background-color: rgb(247, 247, 247);
-@list-sider-selected-background-color: rgb(222, 222, 222);
-@panel-background-color: rgb(255, 255, 255);
+/* 边栏底色 */
+@nav-color-background: #fff;
+@nav-color-accent: #333;
 
-@search-input-background-color: rgb(234, 234, 234);
+/* 主页面背景色 */
+@sider-background-color: #fbfbfb;
+
+/* 主页面强调色 */
+@sider-accent-color: #f5f5f5;
+
+
+@main-background-color: #ffffff;
+@main-section-background-color: #f8f8f8;
+@search-background-color: rgb(234, 234, 234);
 
 /* 滚动槽 */
 ::-webkit-scrollbar {
@@ -33,18 +41,13 @@ body,
 #root {
   width: 100%;
   height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-// body {
-//   margin: 0;
-//   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-//     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-//     sans-serif;
-//   -webkit-font-smoothing: antialiased;
-//   -moz-osx-font-smoothing: grayscale;
-// }
-
-// code {
-//   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-//     monospace;
-// }
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}

@@ -6,6 +6,10 @@ import { ChatsHomeComponent } from "./chats/chats-home/chats-home.component";
 import { ErrorComponent } from "./layout/error/error.component";
 import { HomeComponent } from "./layout/home/home.component";
 import { LoginComponent } from "./login/login/login.component";
+import { RelationsHomeComponent } from "@/app/relations/relations-home/relations-home.component";
+import {
+  RelationsAccountProfileComponent
+} from "@/app/relations/relations-account-profile/relations-account-profile.component";
 
 @NgModule({
   imports: [RouterModule.forRoot([
@@ -34,10 +38,10 @@ import { LoginComponent } from "./login/login/login.component";
         // friends
         {
           path: "friends",
-          component: ChatsHomeComponent,
+          component: RelationsHomeComponent,
           children: [{
             path: ":friendId",
-            component: ChatPanelComponent
+            component: RelationsAccountProfileComponent
           }]
         },
 
