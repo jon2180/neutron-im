@@ -79,8 +79,10 @@ public class TokenUtil {
 
     private static String buildToken(Date now, Date time, Claims claims) {
         return Jwts.builder()
-            .setClaims(claims)             // 签发时间
-            .setIssuedAt(now)             // 过期时间
+            // 签发时间
+            .setClaims(claims)
+            // 过期时间
+            .setIssuedAt(now)
             .setExpiration(time)
             .signWith(key)
             .compact();

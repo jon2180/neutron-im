@@ -20,6 +20,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * @author daydream
+ */
 @Slf4j
 @RestController
 @RequestMapping("/accounts")
@@ -66,8 +69,8 @@ public class AccountController {
      *
      * @param claims token 携带数据
      */
-    @DeleteMapping("/")
-    public ResultVO deleteAccount(@RequestAttribute TokenUtil.JwtClaimsData claims) {
+    @DeleteMapping("/{id}")
+    public ResultVO deleteAccount(@PathVariable String id, @RequestAttribute TokenUtil.JwtClaimsData claims) {
         return accountService.deleteAccountById(claims.getId())
             ? ResultVO.success("OK")
             : ResultVO.failed(StatusCode.S400_EMPTY_PARAMETER, "Delete Failed", null);
@@ -76,8 +79,9 @@ public class AccountController {
     /**
      * 更新账户信息
      */
-    @PutMapping("/")
+    @PutMapping("/{id}")
     public ResultVO putAccountInfo(
+        @PathVariable String id,
         @RequestAttribute TokenUtil.JwtClaimsData claims,
         @RequestBody AccountUpdateDTO map
     ) {
