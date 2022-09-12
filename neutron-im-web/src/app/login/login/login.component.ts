@@ -6,13 +6,21 @@ import { NzMessageService } from "ng-zorro-antd/message";
 import { isEmail, isPassword } from "@/utils/validate";
 import { LocalStorageService } from "@/components/storage/local-storage.service";
 
+interface FormData {
+  email: FormControl<string | null>,
+  name: FormControl<string | null>,
+  password: FormControl<string | null>,
+  repassword: FormControl<string | null>,
+  captcha: FormControl<string | null>
+}
+
 @Component({
   selector: "nim-login",
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.less"]
 })
 export class LoginComponent {
-  formGroup!: FormGroup;
+  formGroup!: FormGroup<FormData>;
 
   get loginFormValue() {
     return this.formGroup.value as LoginParams;
@@ -33,15 +41,17 @@ export class LoginComponent {
     private fb: FormBuilder,
     private local: LocalStorageService
   ) {
-    this.formGroup = this.fb.group({
-      email: ["", [Validators.email]],
-      password: ["", [Validators.required]],
-      captcha: ["", (val: any) => {
+    this.formGroup = this.fb.group<FormData>({
+      email: new FormControl<string>("", [Validators.email]),
+      password: new FormControl<string>("", [Validators.required]),
+      captcha: new FormControl<string>("", (val: any) => {
         // console.log(val)
         return {
           result: true
         };
-      }]
+      }),
+      repassword: new FormControl<string>("", [Validators.required]),
+      name: new FormControl<string>("", [Validators.required]),
     });
   }
 
@@ -64,11 +74,11 @@ export class LoginComponent {
     // name: [null, [Validators.required]],
     // repassword: [null, [Validators.required]],
     if (this.isLogin) {
-      this.formGroup.removeControl("nickname");
-      this.formGroup.removeControl("repassword");
+      // this.formGroup.removeControl("name");
+      // this.formGroup.removeControl("repassword");
     } else {
-      this.formGroup.addControl("nickname", new FormControl(null, [Validators.required]));
-      this.formGroup.addControl("repassword", new FormControl(null, [Validators.required]));
+      this.formGroup.addControl("name", new FormControl<string>("", [Validators.required]));
+      this.formGroup.addControl("repassword", new FormControl<string>("", [Validators.required]));
     }
     this.updateGetParam();
   }

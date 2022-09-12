@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Chat, UserInfo } from "@/types";
+import { Chat } from "@/types";
 
 @Component({
   selector: 'nim-chat-panel',
