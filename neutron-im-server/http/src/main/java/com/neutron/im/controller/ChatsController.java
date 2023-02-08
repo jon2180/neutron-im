@@ -25,7 +25,6 @@ import java.util.Map;
 public class ChatsController {
 
     private final ChatsService chatsService;
-
     private final MessageService messageService;
     private final MessageCheckService messageCheckService;
 
@@ -73,9 +72,7 @@ public class ChatsController {
      * 通过 会话双方的用户 id 来查找会话信息
      */
     @GetMapping("/id")
-    public ResultVO getChatByAccountId(
-        @RequestAttribute("claims") TokenUtil.JwtClaimsData claims,
-        @RequestBody Map<String, String> body) {
+    public ResultVO getChatByAccountId(@RequestAttribute("claims") TokenUtil.JwtClaimsData claims, @RequestBody Map<String, String> body) {
         final String firstId = body.getOrDefault("sender_id", "");
         final String secondId = body.getOrDefault("receiver_id", "");
 
@@ -90,10 +87,7 @@ public class ChatsController {
      * 获取会话
      */
     @GetMapping("/{id}")
-    public ResultVO getChat(
-        @PathVariable String id,
-        @RequestAttribute("claims") TokenUtil.JwtClaimsData claims
-    ) {
+    public ResultVO getChat(@PathVariable String id, @RequestAttribute("claims") TokenUtil.JwtClaimsData claims) {
         if (id == null || "".equals(id)) {
             return ResultVO.failed(StatusCode.S400_EMPTY_PARAMETER, "No Parameter: id", null);
         }
@@ -109,16 +103,11 @@ public class ChatsController {
 
     @Transactional
     @PostMapping("/")
-    public ResultVO postChats(
-        @RequestAttribute("claims") TokenUtil.JwtClaimsData claims,
-        @RequestBody RequestDTO.ChatsRequestForm body
-    ) {
+    public ResultVO postChats(@RequestAttribute("claims") TokenUtil.JwtClaimsData claims, @RequestBody RequestDTO.ChatsRequestForm body) {
         if (body == null) {
             return ResultVO.failed(StatusCode.S400_EMPTY_PARAMETER, "请指定参数", null);
         }
-        if (StringUtil.isEmpty(body.getSender_id())
-            || StringUtil.isEmpty(body.getReceiver_id())
-            || StringUtil.isEmpty(body.getType())) {
+        if (StringUtil.isEmpty(body.getSender_id()) || StringUtil.isEmpty(body.getReceiver_id()) || StringUtil.isEmpty(body.getType())) {
             return ResultVO.failed(StatusCode.S400_BAD_REQUEST, "错误的请求");
         }
 
@@ -144,10 +133,7 @@ public class ChatsController {
 
     @Transactional
     @DeleteMapping("/{id}")
-    public ResultVO deleteChats(
-        @PathVariable String id,
-        @RequestAttribute("claims") TokenUtil.JwtClaimsData claims
-    ) {
+    public ResultVO deleteChats(@PathVariable String id, @RequestAttribute("claims") TokenUtil.JwtClaimsData claims) {
         return ResultVO.failed(StatusCode.S500_LOGIC_ERROR, "NotImplemented", null);
     }
 }

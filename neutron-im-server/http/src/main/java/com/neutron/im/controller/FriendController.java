@@ -1,8 +1,8 @@
 package com.neutron.im.controller;
 
+import com.neutron.im.pojo.code.StatusCode;
 import com.neutron.im.pojo.dto.RequestDTO;
 import com.neutron.im.pojo.entity.Friend;
-import com.neutron.im.pojo.code.StatusCode;
 import com.neutron.im.pojo.vo.FriendVO;
 import com.neutron.im.pojo.vo.ResultVO;
 import com.neutron.im.service.FriendService;
@@ -55,8 +55,8 @@ public class FriendController {
     @PutMapping("/{id}")
     public ResultVO updateFriend(
         @PathVariable String id,
-                                 @RequestAttribute("claims") TokenUtil.JwtClaimsData data,
-                                 @RequestBody RequestDTO.UpdateFriendForm friendForm
+        @RequestAttribute("claims") TokenUtil.JwtClaimsData data,
+        @RequestBody RequestDTO.UpdateFriendForm friendForm
     ) {
         if (StringUtil.isEmpty(id) || StringUtil.isEmpty(data.getId())) {
             return ResultVO.failed(StatusCode.S400_EMPTY_PARAMETER, "请指定要更新状态的对象", null);
