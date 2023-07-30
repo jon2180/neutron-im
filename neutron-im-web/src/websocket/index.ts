@@ -3,7 +3,7 @@ import WebSocketClient from "@/websocket/protocol/WebSocketClient";
 import HeartBeatPlugin from "@/websocket/protocol/HeartBeatPlugin";
 import type { NimSafeAny } from "@/types";
 import { environment } from "@/environments/environment";
-import { cookieStorage } from "@/components/storage/CookieStorage";
+import { cookieStorage } from "@/modules/storage/CookieStorage";
 
 export function connectWebSocket(): WebSocketClient | undefined {
   // 在进入应用的时候开始读取 localStorage 中是否存在用户信息

@@ -2,7 +2,7 @@ import { InjectionToken } from "@angular/core";
 import { DEFAULT_LOCALE, Locale, LocaleInfo, LocaleMessages, SUPPORTED_LOCALE } from "./i18n.model";
 import zh_CN from "./zh-cn/zh_CN";
 import en_US from "./en-us/en_US";
-import { cookieStorage } from "@/components/storage/CookieStorage";
+import { cookieStorage } from "@/modules/storage/CookieStorage";
 
 export type I18nKey = keyof typeof zh_CN;
 

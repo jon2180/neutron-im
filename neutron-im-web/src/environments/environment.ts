@@ -11,6 +11,15 @@ export const environment: EnvironmentModel = {
     baseUrl: 'http://localhost:3000',
     baseApiUrl: 'http://localhost:3001',
     baseWsUrl: 'ws://localhost:3001'
+  },
+
+  // TODO
+  assetUrls: {
+    loginBackground: '/static/login-bg-hnpoppcv.jpeg',
+    captcha: '/captcha-pic?id=${generateCaptcha()}',
+    avatarUpload: '/accounts/avatar',
+    pictureUpload: '/upload/chat-img',
+    websocket: 'ws://${API_BASE_URL}'
   }
 };
 

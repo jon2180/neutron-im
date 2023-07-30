@@ -1,11 +1,26 @@
-import { HTTP_BASE_URL_TOKEN } from '@/components/http/http.token';
+import { HTTP_BASE_URL_TOKEN } from '@/modules/http/http.token';
 import { generateCaptcha } from '@/utils/generator';
 import { Component, Inject } from '@angular/core';
 
 @Component({
   selector: 'nim-captcha',
-  templateUrl: './captcha.component.html',
-  styleUrls: ['./captcha.component.less']
+  template: `
+    <img
+      (click)="reloadCaptcha()"
+      [ngSrc]="captchaUrl"
+      fill
+      alt="{{ ('alt.captcha' | i18n )}}"
+      class="captchaPic"
+    />
+  `,
+  styles: [
+    `@import '../../../themes/index';
+
+    .captchaPic {
+      height: 32px;
+    }
+    `
+  ]
 })
 export class CaptchaComponent {
   captchaUrl = ''

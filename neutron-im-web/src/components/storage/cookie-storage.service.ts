@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-import { StorageBase } from "@/components/storage/storage";
-import { cookieStorage } from "@/components/storage/CookieStorage";
+import { StorageBase } from "@/modules/storage/storage";
+import { cookieStorage } from "@/modules/storage/CookieStorage";
 
 @Injectable({
   providedIn: "root"

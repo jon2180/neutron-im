@@ -46,7 +46,7 @@ function isSameDay(dateNow: Date, datePrev: Date): boolean {
 ## format timestamp
 
 ### 聊天内部时间显示需求：
- 
+
 - 当天：`具体时间`，例如 09:02
 - 当周：`星期 具体时间` 例如 星期二 09:02
 - 当月：`日期 具体时间` 例如 1日 09：02
@@ -64,9 +64,12 @@ function isSameDay(dateNow: Date, datePrev: Date): boolean {
  * @param timestamp 时间戳
  */
 export function formatTimestamp(timestamp: string | number): string {
+  if (typeof timestamp === "string") {
+    return timestamp;
+  }
   // validate param
   if (!Number.isInteger(timestamp)) {
-    return timestamp as string;
+    return timestamp.toString();
   }
 
   if (timestamp < 0) {

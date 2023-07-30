@@ -1,4 +1,4 @@
-import { AuthGuard } from "@/components/http/auth.guard";
+import { AuthGuard } from "@/modules/http/auth.guard";
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { ChatPanelComponent } from "./chats/chat-panel/chat-panel.component";

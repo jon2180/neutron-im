@@ -13,7 +13,14 @@ interface NetworkConfig {
    * websocket 服务运行地址
    */
   baseWsUrl: string;
+}
 
+interface AssetUrlsConfig  {
+  loginBackground: string;
+  captcha: string;
+  avatarUpload: string;
+  pictureUpload: string;
+  websocket: string;
 }
 
 export interface EnvironmentModel {
@@ -26,4 +33,6 @@ export interface EnvironmentModel {
    * 网络 api 配置
    */
   network: NetworkConfig;
+
+  assetUrls: AssetUrlsConfig;
 }

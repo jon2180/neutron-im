@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { StorageBase } from "@/components/storage/storage";
+import { StorageBase } from "@/modules/storage/storage";
 
 @Injectable({
   providedIn: "root"

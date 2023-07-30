@@ -1,18 +1,23 @@
 import { LOCALE_ID, NgModule } from "@angular/core";
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CommonModule, registerLocaleData } from '@angular/common';
+import {CommonModule, NgOptimizedImage, registerLocaleData} from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
+import { StoreModule } from '@ngrx/store';
+import { NzModalModule } from "ng-zorro-antd/modal";
+import { NzPopoverModule } from "ng-zorro-antd/popover";
+import { NzTabsModule } from "ng-zorro-antd/tabs";
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpModule } from '@/components/http/http.module';
-import { HTTP_BASE_URL_TOKEN } from '@/components/http/http.token';
+import { HttpModule } from '@/modules/http/http.module';
+import { HTTP_BASE_URL_TOKEN } from '@/modules/http/http.token';
 import { environment } from '@/environments/environment';
 
 import { I18N_CONFIG, USING_ZORRO_MODULES } from './zorro-support.model';
-import { I18nModule } from "@/components/i18n";
+import { I18nModule } from "@/modules/i18n";
 
 import { CaptchaComponent } from './login/captcha/captcha.component';
 import { LoginComponent } from './login/login/login.component';
@@ -25,14 +30,10 @@ import { MyAvatarComponent } from './layout/my-avatar/my-avatar.component';
 import { NavComponent } from './layout/nav/nav.component';
 import { HomeComponent } from './layout/home/home.component';
 import { ErrorComponent } from './layout/error/error.component';
-import { StoreModule } from '@ngrx/store';
 import { AboutusComponent } from './layout/aboutus/aboutus.component';
-import { NzModalModule } from "ng-zorro-antd/modal";
-import { NzPopoverModule } from "ng-zorro-antd/popover";
 import { RelationsHomeComponent } from './relations/relations-home/relations-home.component';
 import { RelationsAccountProfileComponent } from './relations/relations-account-profile/relations-account-profile.component';
 import { RelationsListComponent } from './relations/relations-list/relations-list.component';
-import { NzTabsModule } from "ng-zorro-antd/tabs";
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { NzTabsModule } from "ng-zorro-antd/tabs";
     NzModalModule,
     NzPopoverModule,
     FormsModule,
-    NzTabsModule
+    NzTabsModule,
+    NgOptimizedImage
 
   ],
   providers: [

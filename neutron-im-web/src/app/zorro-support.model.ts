@@ -10,7 +10,7 @@ import { NzMessageModule } from "ng-zorro-antd/message";
 import { NzResultModule } from "ng-zorro-antd/result";
 import { Provider } from "@angular/core";
 import { NzSpaceModule } from "ng-zorro-antd/space";
-import { getLocaleInfo, LOCALE_CONF_TOKEN } from "@/components/i18n";
+import { getLocaleInfo, LOCALE_CONF_TOKEN } from "@/modules/i18n";
 import { NzListModule } from "ng-zorro-antd/list";
 
 export const I18N_CONFIG: Provider = {

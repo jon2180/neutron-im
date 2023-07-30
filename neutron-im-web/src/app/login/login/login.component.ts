@@ -1,10 +1,10 @@
-import { I18nService } from "@/components/i18n";
+import { I18nService } from "@/modules/i18n";
 import { LoginParams, RegisterParams, UserRestService } from "@/services/user-rest.service";
 import { Component } from "@angular/core";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { NzMessageService } from "ng-zorro-antd/message";
 import { isEmail, isPassword } from "@/utils/validate";
-import { LocalStorageService } from "@/components/storage/local-storage.service";
+import { LocalStorageService } from "@/modules/storage/local-storage.service";
 
 interface FormData {
   email: FormControl<string | null>,
